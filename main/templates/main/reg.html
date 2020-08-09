@@ -1,0 +1,39 @@
+{% extends 'layout/base.html' %}
+
+{% load static %}
+
+{% block title %}
+Регестрация
+{% endblock title %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/reg2.css' %}">
+{% endblock link %}
+
+{% block content %}
+<div class="articles">
+    <div class="regestration">
+        <div style="font-family: 'Source Sans Pro', sans-serif;margin-bottom:2em;font-size:1.2em">Регестрация</div>
+        <div class="user-form">
+            <form style="display:flex;align-items:center;flex-direction:column" method="POST" action="{% url "Reg" %}">
+                {% csrf_token %}
+                <div>Логин:</div>
+                {{form.username}}
+                <div>E-mail:</div>
+                {{form.email}}
+                <div>Имя:</div>
+                {{form.first_name}}
+                <div>Фамилия:</div>
+                {{form.last_name}}
+                <div>Номер телефона:</div>
+                {{form.phone}}
+                <div>Пароль:</div>
+                {{form.password1}}
+                <div>Подтверждение пароля:</div>
+                {{form.password2}}
+                <button style="height:2.5em;margin-top:1em;border:0px;color:#ffffff;background-color:#323e35" type="submit" id="navbutton" class="btn btn-outline-success">Зарегестрироватся!</button>
+            </form>
+        </div>
+    </div>    
+</div>
+{% endblock content %}

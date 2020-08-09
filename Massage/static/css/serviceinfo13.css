@@ -1,0 +1,79 @@
+.service-image {
+    max-width: 100%;
+    width: 45em;
+    height: 24em;
+    margin-bottom: 3em;
+}
+
+.service-info {
+    max-width: 100%;
+    width: 43em;
+    height: 26.5em;
+}
+
+.about {
+    max-width: 100%;
+    width: 47em;
+    height: 55em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.service-desc {
+    max-width: 100%;
+    margin-top: 1em;
+    width: 42em;
+    height: 21em;
+}
+
+.recording-button {
+    max-width: 100%;
+    margin-top: .5em;
+    width: 15em;
+    height: 3em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.desc {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.close {
+    transition: transform .2s ease-in-out;
+}
+
+.close:hover {
+    transform: rotateZ(90deg);
+    outline: none;
+}
+
+.close:visited {
+    outline: none;
+}
+
+.close:focus {
+    outline: none;
+}
+
+#buttons{
+    max-width: 100%;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+
+
+.toast{
+    opacity: 1 !important;
+}
+

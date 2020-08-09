@@ -1,0 +1,43 @@
+.serv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+    max-width: 100%;
+    min-height: 100vh;
+}
+
+.services {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+}
+
+@media screen and (min-width:650px) {
+    .list-service {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 40.5em;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .list-service {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        width: 40.5em;
+        max-width: 100%;
+    }
+}
+
+.card {
+    max-width: 95%;
+}

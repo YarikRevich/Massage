@@ -1,0 +1,61 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block title %}
+Услуги
+{% endblock title %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/services5.css' %}">
+{% endblock link %}
+
+{% block content %}
+<div class="articles" style="max-width:100%">
+    <div class="serv">
+        <div style="max-width:95%;width:40em;min-height:26em;padding:1em;max-width:100%" class="jumbotron">
+            <h1 class="display-4" style="text-align:center">Привет, мир!</h1>
+            <p class="lead" style="margin-bottom:2em">Это простой пример блока с компонентом в стиле jumbotron для
+                привлечения дополнительного
+                внимания к содержанию или информации.</p>
+            <hr class="my-4">
+            <p>Использются служебные классы для типографики и расстояния содержимого в контейнере большего размера.</p>
+            <p class="lead">
+                <a class="custum-button" href="#" role="button">Learn more</a>
+            </p>
+        </div>
+        <div class="services">
+            {% for service1,service2 in services %}
+            <div class="list-service">
+                <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{service1.name}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                        <div class="custum-button-div">
+                            <a href="{{ service1.get_absolute_url }}" class="custum-button">Детальнее</a>
+                        </div>
+                    </div>
+                </div>
+                {% if service2 is not None %}
+                <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{service2}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the
+                            card's content.</p>
+                       <div class="custum-button-div">
+                            <a href="{{ service2.get_absolute_url }}" class="custum-button">Детальнее</a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                {% endif %}
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block link%} 
+<link rel="stylesheet" href="{% static "css/landing7.css"%}">
+{% endblock link %}
+{% block title %}
+Домашняя страница
+{% endblock %}
+{% block content %}
+<div style="max-width:95%" class="articles"> 
+    <div class="container">
+    <div class="row" style="justify-content:center;align-items:center">
+    <div style="max-width:100%" id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+        <div style="width:43em;max-width:100%" class="carousel-inner">
+        <div style="width:43em;max-width:100%;border-radius:10px" class="carousel-item active" data-interval="10000">
+            <img style="max-width:100%;border-radius:10px" src="https://imgclf.112.ua/original/2018/03/29/338039.jpeg?timestamp=1522312166" class="d-block w-100 images" alt="...">
+        </div>
+        <div class="carousel-item" style="border-radius:10px" data-interval="10000">
+            <img style="max-width:100%;border-radius:10px" src="https://msk.ramsaydiagnostics.ru/blog/wp-content/uploads/2019/12/cover-not-afraid-doctors.png" class="d-block w-100 images" alt="...">
+        </div>
+        <div class="carousel-item" style="border-radius:10px" data-interval="10000">
+            <img style="max-width:100%;border-radius:10px" src="https://img.gazeta.ru/files3/571/10396571/shutterstock_92474629-pic905-895x505-2290.jpg" class="d-block w-100 images" alt="...">
+        </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Назад</span>
+        </a>
+        <a style="left:85%" class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Далее</span>
+        </a>
+    </div>
+
+    <div style="max-width:95%;margin-top:3.5em" class="info">
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}

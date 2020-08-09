@@ -1,0 +1,60 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block title %}
+Учётная запись
+{% endblock title%}
+{% block link%} 
+<link rel="stylesheet" href="{% static "css/account16.css"%}">
+{% endblock link %}
+{% block content %}
+<div class="articles">
+    <div class="everything">
+        <div class="user">
+            {% if form is not None %}
+            <span style="margin-bottom:1.5em;max-width:95%;font-size:18px;text-align:center">Пройдите авторизацию!</span>
+            <form class="user-form" method="POST">
+                {% csrf_token %}
+                <div style="align-self:center;width:17em;float:left;max-width:95%">E-mail:</div>
+                {{form.username}}
+                <div style="align-self:center;width:17em;float:left;max-width:95%">Пароль:</div>
+                {{form.password}}
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" name="check" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">Вход по умолчанию</label>
+                </div>
+                <div style="display:flex;justify-content:center;align-items:center">
+                    <button style="height:2.5em;margin-top:1em;border:0px;color:#ffffff" type="submit" class="custum-button">Ввойти</button>
+                </div>
+                <div style="margin-top:.4em;max-width:95%"><a href="{% url "Reg" %}" style="text-decoration:none;color:#000000;max-width:95%">Зарегестрироваться!</a></div>
+            </form>
+            {% else %}
+            <div class="user-info">
+                <div style="font-family: 'Source Sans Pro', sans-serif;font-size:1.3em;margin-bottom:1em;">Информация пользователя</div>
+                <ul class="list-group" style="max-width:100%">
+                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Email:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{email}}</div></li>
+                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Логин:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{user}}</div></li>
+                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Имя:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{first_name}}</div></li>
+                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Фамилия:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{last_name}}</div></li>
+                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Номер:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{email}}</div></li>
+                
+                </ul>
+            </div>
+            {% endif %}
+        </div>    
+        <div class="info" style="margin-bottom:2em">
+            <div class="devided-line"></div>
+            <div style="font-family: 'Source Sans Pro', sans-serif;font-size:1.3em;margin-bottom:1em;text-align:center;margin-top:2.3em">История записей</div>
+            <div class="cards" style="max-width:95%;margin-left:1em">
+                <div class="card">
+                    <p style="height:2em;text-align:left" class="card-header">Featured</p>
+                    <div style="font-size:.8em" class="card-body">
+                        <p class="card-title">Специальный заголовок</p>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        <button type="button" class="rec-button">Удалить запись</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
