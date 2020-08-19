@@ -1,83 +1,133 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from main.models import Record
 from main.models import ModificatedUser
+from typing import Union,Dict
 import random
 
 
-def get_username_by_email(**credentials) -> "username":
+def get_username_by_email(**credentials: Dict[str,object]) -> Union[str,None]:
     """Returns user's username got by email"""
+    
+    try:
+        user = User.objects.get(email=credentials["email"])    
+        return user.username
+    except ObjectDoesNotExist:
+        return None
 
-    username = User.objects.filter(email=credentials["email"])
-    if username:
-        return [x.username for x in username][0]
-    return None
-
-
-def create_user_id(username: str) -> "random numbers":
+def create_user_id(username: str) -> int:
     """Returns a random special user_id to check whether user is authentificated"""
 
-    number = [1, 2, 3, 4, 5, 6, 7, 8]
+    number = ["1", "2", "3", "4", "5", "6", "7", "8"]
     random.shuffle(number)
-    code = "0"
-    for num in number:
-        code += str(num)
-    for element in ModificatedUser.objects.all():
-        if element.number_of_user == code:
-            return create_user_id(username=username)
-    return int(code)
+    user_id = "".join(number)
+    all_user_ids = [elem.number_of_user for elem in ModificatedUser.objects.all()]
+    
+    return int(user_id) if user_id not in all_user_ids else create_user_id(username=username)
 
-def check_admin(username: str) -> "True or False":
+def check_admin(username: str) -> bool:
     """Check whether user is admin"""
 
     user = User.objects.get(username=username)
-    if user.is_staff:
-        return True
-    return False
+    return True if user.is_staff else False
 
+def get_users_records(**kwargs: dict) -> object:
+    """Returns user's records"""
+    
+    if kwargs.get("request"):
+        user = User.objects.get(username=kwargs["request"].user.username)
+        return Record.objects.filter(author=user)
+    elif kwargs.get("cookies"):
+        user = ModificatedUser.objects.select_related("user").get(number_of_user=kwargs["cookies"]).user
+        return Record.objects.filter(author=user)
 
-
-def get_user_id_by_username(username: str) -> "User":
+def get_user_id_by_username(username: str) -> Union[object, None]:
     """Returns a user_id to save it to cookies"""
 
-    query = ModificatedUser.objects.select_related("user")
-    user_id = [element.number_of_user for element in query if element.user.username == username]
-
-    if user_id:
-        return user_id[0]
-    return None
+    try:
+        user_instanse = User.objects.get(username=username)
+        query = ModificatedUser.objects.select_related("user").get(user=user_instanse)
+        return query.number_of_user
+    except ObjectDoesNotExist:
+        return None
     
-
-def get_email(cookie) -> "email":
+def get_email(cookie: int) -> str:
     """Returns user's email"""
 
     user_id = ModificatedUser.objects.get(number_of_user=cookie)
     return user_id.user.email
 
-
-def get_last_name(cookie) -> "last_name":
+def get_last_name(cookie: int) -> str:
     """Returns user's last_name"""
 
     user_id = ModificatedUser.objects.get(number_of_user=cookie)
     return user_id.user.last_name
 
-
-def get_user(cookie) -> "username":
+def get_user(**kwargs) -> str:
     """Returns user's username"""
 
-    user_id = ModificatedUser.objects.get(number_of_user=cookie)
-    return user_id.user.username
+    if kwargs.get("cookie"):
+        return ModificatedUser.objects.get(number_of_user=kwargs["cookie"]).user.username
+    elif kwargs.get("request"):
+        if kwargs["request"].COOKIES.get("*1%"):
+            return ModificatedUser.objects.get(number_of_user=kwargs["request"].COOKIES["*1%"]).user.username
+        else:
+            if username := kwargs["request"].user.username:
+                return username
+            return None
 
-
-def get_first_name(cookie) -> "first_name":
+def get_first_name(cookie: int) -> str:
     """Retuns user's first_name"""
 
     user_id = ModificatedUser.objects.get(number_of_user=cookie)
     return user_id.user.first_name
 
 
+def encode_phone_number(number: Union[int, str]) -> str:
+    """Returns already encoded user's number"""
+
+    encoded_number = [digit if len(number) - index <= 4 else "*" for index,digit in enumerate(str(number))]
+    return "".join(encoded_number)
+
+def get_user_phone_number(**kwargs: Dict[object,int]) -> str or None:
+    """Returns response from the 'encoded_phone_number' func"""
+
+    if kwargs.get("request"):
+        user = User.objects.get(username=kwargs["request"].user.username)
+        try:
+            phone_number = ModificatedUser.objects.get(user=user).number
+            return encode_phone_number(phone_number)
+        except ObjectDoesNotExist:
+            return None
+    username = get_user(cookie=kwargs["cookie"])
+    try:
+        user = User.objects.get(username=username)
+        phone_number = ModificatedUser.objects.get(user=user).number
+        return encode_phone_number(phone_number)
+    except ObjectDoesNotExist:
+        return None
+
+def made_records(**kwargs) -> Union[bool,None]:
+    """Checks whether user has already made any records"""
+
+    if kwargs.get("request"):
+        user = User.objects.get(username=kwargs["request"].user.username)
+        try:
+            return ModificatedUser.objects.get(user=user).made_records
+        except ObjectDoesNotExist:
+            return None
+    elif kwargs.get("cookies"):
+        try:
+            return ModificatedUser.objects.get(number_of_user=kwargs["cookies"]).made_records
+        except ObjectDoesNotExist:
+            return None
+    else:
+        assert False, "You passed not right data"
+
+
 class SplitedQuerySet:
 
-    def _create_separated_query_set(self, model):
+    def _create_separated_query_set(self, model: object) -> None:
         """
         Separates query_set on two parts 
         (consists of len of the query_set)
@@ -87,7 +137,7 @@ class SplitedQuerySet:
         self.first_part = int(len(self.query_set) / 2)
         self.second_part = len(self.query_set) - self.first_part
 
-    def _create_first_list(self):
+    def _create_first_list(self) -> object:
         """Returns parts of the first query_set"""
 
         if self.first_part == self.second_part:
@@ -97,23 +147,23 @@ class SplitedQuerySet:
             for article in range(0, self.first_part + 1):
                 yield self.query_set[article]
 
-    def _create_second_list(self):
+    def _create_second_list(self) -> object:
         """Returns parts of the second query_set"""
 
         for article in range(self.second_part, len(self.query_set)):
             yield self.query_set[article]
 
-    def _get_first_list(self):
+    def _get_first_list(self) -> None:
         """Creates the first separated list"""
 
         self.first = self._create_first_list()
 
-    def _get_second_list(self):
+    def _get_second_list(self) -> None:
         """Creates the second separated list"""
 
         self.second = self._create_second_list()
 
-    def _first_gen(self):
+    def _first_gen(self) -> Union[object,None]:
         """Returns the parts of the first generator"""
 
         try:
@@ -121,7 +171,7 @@ class SplitedQuerySet:
         except StopIteration:
             pass
 
-    def _second_gen(self):
+    def _second_gen(self) -> Union[object,None]:
         """Returns the parts of the second generator"""
 
         try:
@@ -129,19 +179,16 @@ class SplitedQuerySet:
         except StopIteration:
             pass
 
-    def _get_finall_list(self):
+    def _get_finall_list(self) -> list:
         """Returns the finall list of separated query_set"""
 
-        finall_list = []
-        for _ in range(0, self.second_part):
-
-            finall_list.append(
+        return [
                 (self._first_gen(), self._second_gen())
-            )
+                for _ in range(0, self.second_part)
+            ]
+        
 
-        return finall_list
-
-    def get_list(self, model):
+    def get_list(self, model) -> object:
         """Does all the methods to return the finall list"""
 
         self._create_separated_query_set(model)
@@ -152,7 +199,8 @@ class SplitedQuerySet:
         return self._get_finall_list()
 
 
-def get_all_made_orders():
+def get_all_made_orders() -> int:
+    """Return the number of all existing records"""
 
-    all_records = Record.objects.filter(status=True)
-    return len(all_records)
+    return Record.objects.filter(status=True).count()
+    

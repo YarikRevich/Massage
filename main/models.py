@@ -17,6 +17,8 @@ class ModificatedUser(models.Model):
         blank=True, verbose_name="Номер телефона", unique=True)
     number_of_user = models.IntegerField(
         verbose_name="Номер пользователя", default=0)
+    made_records = models.BooleanField(
+        verbose_name="Делал ли записи", default=False)
 
     def __str__(self):
         return "{}".format(str(self.number_of_user))
@@ -26,6 +28,8 @@ class ModificatedUser(models.Model):
 
     class Meta:
         db_table = "moduser"
+        verbose_name = "Дополнительная информация"
+        verbose_name_plural = "Дополнительная информация"
 
 
 class Service(models.Model):
@@ -34,7 +38,7 @@ class Service(models.Model):
     name = models.CharField(
         max_length=200, verbose_name="Название услуги")
     description = models.CharField(
-        max_length=400, verbose_name="Описание")
+        max_length=400, verbose_name="Описание", default="-")
     price = models.IntegerField(
         verbose_name="Стоимость услуги")
     currency = models.CharField(
@@ -52,7 +56,6 @@ class Service(models.Model):
     class Meta:
 
         db_table = "services"
-
         verbose_name_plural = "Услуги"
         verbose_name = "Услуга"
 
@@ -60,13 +63,13 @@ class Service(models.Model):
 class Record(models.Model):
     """This model is for adding user's record to the db"""
 
-    author = models.OneToOneField(
+    author = models.ForeignKey(
         User, to_field="username", on_delete=models.CASCADE)
     name = models.CharField(
         max_length=30, verbose_name="Название услуги")
     description = models.CharField(
         max_length=200, verbose_name="Дополнительная информация")
-    phone = models.OneToOneField(
+    phone = models.ForeignKey(
         ModificatedUser, to_field="number", on_delete=models.CASCADE)
     time = models.DateTimeField(
         auto_now_add=True, verbose_name="Время оформление записи")
@@ -81,6 +84,7 @@ class Record(models.Model):
     def __repr__(self):
         return self.__str__()
 
+
     class Meta:
 
         db_table = "records"
@@ -89,13 +93,14 @@ class Record(models.Model):
 
 
 class Review(models.Model):
+    """This model was made to save user's review"""
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE)
     review = models.CharField(
-        max_length=400, verbose_name="review")
+        max_length=400, verbose_name="Отзыв")
     mark = models.IntegerField(
-        verbose_name="mark")
+        verbose_name="Оценка")
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -103,6 +108,10 @@ class Review(models.Model):
 
     def __repr__(self):
         return self.__str__()
+
+    def get_absolute_url(self):
+        return reverse("Reviews", kwargs={"page": 1})
+    
 
     class Meta:
 

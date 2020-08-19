@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "main",
+    "crispy_forms",
+    "django_filters",
 
 ]
 
@@ -71,7 +73,11 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.context_middlewares.add_models',
             ],
+            "libraries":{
+                "filterandtag":"main.filterandtag.filters"
+            }
         },
     },
 ]
@@ -133,6 +139,20 @@ USE_L10N = True
 
 USE_TZ = True
 
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS":
+        "main.pagination.PaginationWithMax",
+    "PAGE_SIZE": 2,
+    "DEFAULT_AUTHENTIFICATION_CLASSES":
+        ("rest_framework.authentification.BasicAuthentification",
+        "rest_framework.authentification.SessionAuthentification"),
+    "DEFAULT_THROTTLE_CLASSES":(
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle"
+    ),
+
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -153,3 +173,5 @@ STATICFILES_DIRS = [
 LOGIN_URL = "/"
 
 LOGIN_REDIRECT_URL = "/"
+
+

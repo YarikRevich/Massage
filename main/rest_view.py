@@ -1,46 +1,29 @@
+from rest_framework.reverse import reverse
 from main.models import Record
+from rest_framework.response import Response
 from main.serializers import RecordSerialize
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.pagination import LimitOffsetPagination
+from rest_framework import filters
+from django_filters import NumberFilter, DateTimeFilter, AllValuesFilter
+from django_filters import rest_framework as filters
 
 
+class RecordMetaClass(ModelViewSet):
 
-class RecordAllGetter(generics.ListAPIView):
+    """Can do such actions
+    - Show all the records
+    - Show equal records
+    - Create/Update records
+
+    This class can be used obly by Admin user
+    """
+
+    permission_classes = (IsAdminUser,)
     queryset = Record.objects.all()
     serializer_class = RecordSerialize
-
-
-
-class RecordGetter(generics.RetrieveAPIView):
-    queryset = Record.objects.all()
-    serializer_class = RecordSerialize
-
-
-class RecordSetter(generics.UpdateAPIView):
-
-    queryset = Record.objects.all()
-    serializer_class = RecordSerialize
-
-# @api_view(["GET"])
-# def get_record(request,st,pk):
-#     if request.method == "GET":
-#         if st:
-#             records = Record.objects.filter(pk=self.kwargs["pk"])
-#             records_serializer = RecordSerialize(records, many=True)
-#             return Response(records_serializer.data)
-#         records = Record.objects.filter(seen=False)
-#         records_serializer = RecordSerialize(records, many=True)
-#         return Response(records_serializer.data)  
-
-# class PutRecord(View):
-#     """This class releases put method to update model data"""
-
-#     def put(self, request, *args, **kwargs) -> JsonResponse:
-#         """Updates data and returns JsonResponse with a confirming about updated data"""
-
-#         data = JSONParser().parse(request)
-#         model = Record.objects.get(pk=self.kwargs["pk"])
-#         serializer = RecordSerialize(model, data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, safe=False)
-#         return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST, safe=False)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ("seen","status")
