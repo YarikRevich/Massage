@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+.articles {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid #000000;
+    min-height: 100vh;
+    width: 50em;
+    max-width: 100%;
+    background-color: #fafcfb;
+    box-shadow: 0px 20px 10px 20px rgb(0, 0, 0, 0.1);
+}
+
+.regestration {
+    width: 43em;
+    height: 35em;
+    max-width: 95%;
+    background-color: #e9ecef;
+    border-radius: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.reg-parent {
+    width: 40em;
+    height: 30em;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.social-reg {
+    width: 20em;
+    height: 30em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#reg-form {
+    max-width: 100%;
+}
+
+.facebook {
+    width: 11.6em;
+    height: 2.8em;
+    margin-bottom: 2em;
+    border-radius: 4px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.decorative-line {
+    width: 2px;
+    height: 28em;
+    max-width: 100%;
+    background-color: #adadad;
+}
+
+.simple-reg {
+    width: 20em;
+    height: 30em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.reg-submit {
+    width: 40em;
+    height: 6em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-form {
+    width: 25em;
+    height: 41em;
+    display: flex;
+    max-width: 93%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #84ab91;
+    border: 1px dashed #000000;
+    border-radius: 1%;
+    text-align: left;
+}
+
+.list-group {
+    width: 38em;
+}
+
+.user-info {
+    max-width: 96%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:530px) {
+    .reg-parent {
+        width: 40em;
+        height: 30em;
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .facebook {
+        width: 11.6em;
+        height: 2.8em;
+        margin-bottom: 1em;
+        margin-top: 1em;
+        border-radius: 4px;
+        max-width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+    }
+}

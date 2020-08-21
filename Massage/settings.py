@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     "main",
     "crispy_forms",
     "django_filters",
+    "social_django"
+    
+    
 
 ]
 
@@ -73,6 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                 'main.context_middlewares.add_models',
             ],
             "libraries":{
@@ -161,17 +166,65 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "Massage/static/")
 
+MEDIA_ROOT = os.path.join(STATIC_ROOT, "media/")
+
 
 STATICFILES_DIRS = [
     ("css", os.path.join(STATIC_ROOT, "css/")),
     ("js", os.path.join(STATIC_ROOT, "js/")),
     ("favicon", os.path.join(STATIC_ROOT, "favicon/")),
     ("scrollup", os.path.join(STATIC_ROOT, "scrollup/")),
-    ("review", os.path.join(STATIC_ROOT, "review/"))
+    ("review", os.path.join(STATIC_ROOT, "review/")),
+    ("service_photo", os.path.join(MEDIA_ROOT, "serviceimage/"))
 ]
 
 LOGIN_URL = "/"
-
 LOGIN_REDIRECT_URL = "/"
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.yahoo.YahooOpenId',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "679848365006-gg9qq101pnibpan4uovsehp7g3io0i9r.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "muZEglriskwlOWsp50b7aMAC"
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = "411250786517398"
+SOCIAL_AUTH_FACEBOOK_SECRET = "73e65ffe0b2f2cb034ab2771da00ac82"
+
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_AX_ATTRS = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_AX_SCHEMA_ATTRS = [
+    ('phonenumber', 'phonenumber')
+]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_SCOPE = True
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/userinfo.profile',
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/user.phonenumbers.read',
+]
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+)
 

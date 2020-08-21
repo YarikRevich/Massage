@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
+from django.conf.urls import url
 from django.shortcuts import redirect
 
 
@@ -25,4 +26,5 @@ urlpatterns = i18n_patterns(
     path("grappelli/", include("grappelli.urls")),
     path('admin/', admin.site.urls),
     path("home/", include("main.urls")),
+    url('', include('social_django.urls', namespace='social'))
 )

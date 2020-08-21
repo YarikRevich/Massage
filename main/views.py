@@ -8,7 +8,7 @@ from django.views.generic.edit import FormView
 from main.forms import AuthForm, RegForm, RecordForm, ReviewForm
 from main.models import Service, Review, Record
 from django.http import JsonResponse
-from main.services import get_username_by_email, check_admin, made_records,get_all_made_orders, create_user_id, get_user_id_by_username, get_first_name, get_users_records,get_last_name, get_email, get_user, get_user_phone_number, SplitedQuerySet
+from main.services import get_username_by_email, check_admin, made_records,get_all_made_orders, create_user_id, get_user_id_by_username, get_first_name, get_users_records,get_last_name, get_email, get_user, get_user_phone_number, SplitedQuerySet, get_work_date
 from django.contrib.auth import login
 from django.contrib.messages import add_message, ERROR, SUCCESS
 from main.backends import authenticate
@@ -30,6 +30,12 @@ class Info(TemplateView):
 
 	name = "Info"
 	template_name = "main/info.html"
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context["work_time_bool"],context["work_time"] = get_work_date()[0],get_work_date()[1]
+		return context
+	
 
 
 class Account(TemplateView):

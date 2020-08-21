@@ -19,19 +19,19 @@
 				{% csrf_token %}
 				<div class="textarea">
 					{{form.review}}
-				</div>
+				</div> 
 				<div class="sub-form">
 					<div class="mark-star">
-						<input id="input1" type="hidden" name="mark" value="1" ><img onclick="iconone()" style="margin-left: 1em" id="icon1" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onclick="iconone()" style="margin-left: 1em" id="icon1_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input2" type="hidden" name="mark" value="2" ><img onclick="icontwo()" id="icon2" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onclick="icontwo()" id="icon2_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input3" type="hidden" name="mark" value="3" ><img onclick="iconthree()" id="icon3" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onclick="iconthree()" id="icon3_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input4" type="hidden" name="mark" value="4" ><img onclick="iconfour()" id="icon4" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onclick="iconfour()" id="icon4_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input5" type="hidden" name="mark" value="5" ><img  onclick="iconfive()" id="icon5" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onmouseover="iconfive()" id="icon5_fail" src="{% static 'review/icon_fail.png' %}">
+						<input id="input1" type="hidden" name="mark" value="1" ><img onclick="iconone_click()" style="margin-left: 1em" id="icon1" hidden="true" src="{% static 'review/icon.png' %}">
+						<img onmouseover="iconone_over()" style="margin-left: 1em" id="icon1_fail" src="{% static 'review/icon_fail.png' %}">
+						<input id="input2" type="hidden" name="mark" value="2" ><img onclick="icontwo_click()" id="icon2" hidden="true" src="{% static 'review/icon.png' %}">
+						<img onmouseover="icontwo_over()" id="icon2_fail" src="{% static 'review/icon_fail.png' %}">
+						<input id="input3" type="hidden" name="mark" value="3" ><img onclick="iconthree_click()" id="icon3" hidden="true" src="{% static 'review/icon.png' %}">
+						<img onmouseover="iconthree_over()" id="icon3_fail" src="{% static 'review/icon_fail.png' %}">
+						<input id="input4" type="hidden" name="mark" value="4" ><img onclick="iconfour_click()" id="icon4" hidden="true" src="{% static 'review/icon.png' %}">
+						<img onmouseover="iconfour_over()" id="icon4_fail" src="{% static 'review/icon_fail.png' %}">
+						<input id="input5" type="hidden" name="mark" value="5" ><img  onclick="iconfive_click()" id="icon5" hidden="true" src="{% static 'review/icon.png' %}">
+						<img onmouseover="iconfive_over()" id="icon5_fail" src="{% static 'review/icon_fail.png' %}">
 					</div>
 					<div class="submit-button">
 						<button class="custum-button" style="border:0px;float:right;margin-right: 1em" type="submit">Опубликовать</button>

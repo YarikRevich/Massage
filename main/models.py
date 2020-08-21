@@ -39,6 +39,8 @@ class Service(models.Model):
         max_length=200, verbose_name="Название услуги")
     description = models.CharField(
         max_length=400, verbose_name="Описание", default="-")
+    photo = models.ImageField(
+        verbose_name="Фото", upload_to="serviceimage/")
     price = models.IntegerField(
         verbose_name="Стоимость услуги")
     currency = models.CharField(
@@ -50,6 +52,9 @@ class Service(models.Model):
     def __repr__(self):
         return self.__str__()
 
+    def get_absolute_url_landing(self):
+        return reverse("Services")
+    
     def get_absolute_url(self):
         return reverse("ServiceInfo", kwargs={"pk": self.pk})
 

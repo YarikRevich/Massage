@@ -21,19 +21,19 @@ class AuthForm(AuthenticationForm):
 class RegForm(forms.Form):
 
 	username = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;width:19em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;width:19em;max-width:100%;width:15em", "placeholder":"Логин"}))
 	email = forms.EmailField(widget=forms.EmailInput(
-		attrs={"class": "form-control", "style": "margin-top:1em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"E-mail"}))
 	first_name = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em","placeholder":"Ваше имя"}))
 	last_name = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Ваша фамилия"}))
 	phone = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Номер телефона"}))
 	password1 = forms.CharField(widget=forms.PasswordInput(
-		attrs={"class": "form-control", "style": "margin-top:1em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Пароль"}))
 	password2 = forms.CharField(widget=forms.PasswordInput(
-		attrs={"class": "form-control", "style": "margin-top:1em"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Подтверждение пароля"}))
 
 	def clean_username(self):
 		data = self.cleaned_data["username"]
@@ -166,7 +166,7 @@ class ReviewForm(forms.ModelForm):
 	def save(self,*args,**kwargs):
 		if kwargs["request"].COOKIES.get("*1%"):
 			user = ModificatedUser.objects.select_related("user").get(number_of_user=kwargs["request"].COOKIES["*1%"]).user
-		elif kwargs["request"].get("user"):
+		elif kwargs["request"].user:
 			user = User.objects.get(username=kwargs["request"].user.username)
 
 		new = Review.objects.create(

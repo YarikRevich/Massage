@@ -2,4 +2,5 @@ from main.models import Review, Service
 
 def add_models(request):
     review = Review()
-    return {"Review":review.get_absolute_url()}
+    service = Service()
+    return {"Review":review.get_absolute_url(),"Service":service.get_absolute_url_landing()}

@@ -11,6 +11,6 @@ test.short_description = "TEST"
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ("name","description","price",)
+    list_display = ("name","photo","description","price",)
     actions = (test,)
 

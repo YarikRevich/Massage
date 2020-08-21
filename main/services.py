@@ -4,6 +4,7 @@ from main.models import Record
 from main.models import ModificatedUser
 from typing import Union,Dict
 import random
+import datetime
 
 
 def get_username_by_email(**credentials: Dict[str,object]) -> Union[str,None]:
@@ -123,6 +124,48 @@ def made_records(**kwargs) -> Union[bool,None]:
             return None
     else:
         assert False, "You passed not right data"
+
+def get_work_date() -> int:
+    """Checks whether now time is in a gap of work time"""
+
+    now = datetime.datetime.today()
+    work_time = {
+        "9:00":datetime.datetime(
+            datetime.datetime.today().year,
+            datetime.datetime.today().month,
+            datetime.datetime.today().day,
+            9,0,0,0
+        ),
+        "12:00":datetime.datetime(
+            datetime.datetime.today().year,
+            datetime.datetime.today().month,
+            datetime.datetime.today().day,
+            12,0,0,0
+        ),
+        "13:15":datetime.datetime(
+            datetime.datetime.today().year,
+            datetime.datetime.today().month,
+            datetime.datetime.today().day,
+            13,15,0,0
+        ),
+        "16:15":datetime.datetime(
+            datetime.datetime.today().year,
+            datetime.datetime.today().month,
+            datetime.datetime.today().day,
+            16,15,0,0
+        )}
+    if now < work_time["12:00"] and now > work_time["9:00"]:
+        left_time = work_time["12:00"] - now
+        return (True, left_time.strftime("%H:%M"))
+    elif now < work_time["16:15"] and now > work_time["13:15"]:
+        left_time = work_time["16:15"] - now
+        return (True,left_time.strftime("%H:%M"))
+    time_stamps = [(work_time[key] - now,key) for key in work_time.keys()]
+    min_elem = min(time_stamps)
+    return (False,work_time[min_elem[1]].strftime("%H:%M"))
+        
+    
+
 
 
 class SplitedQuerySet:

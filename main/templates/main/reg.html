@@ -7,33 +7,40 @@
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/reg2.css' %}">
+<link rel="stylesheet" href="{% static 'css/reg9.css' %}">
 {% endblock link %}
 
 {% block content %}
 <div class="articles">
     <div class="regestration">
-        <div style="font-family: 'Source Sans Pro', sans-serif;margin-bottom:2em;font-size:1.2em">Регестрация</div>
-        <div class="user-form">
-            <form style="display:flex;align-items:center;flex-direction:column" method="POST" action="{% url "Reg" %}">
-                {% csrf_token %}
-                <div>Логин:</div>
-                {{form.username}}
-                <div>E-mail:</div>
-                {{form.email}}
-                <div>Имя:</div>
-                {{form.first_name}}
-                <div>Фамилия:</div>
-                {{form.last_name}}
-                <div>Номер телефона:</div>
-                {{form.phone}}
-                <div>Пароль:</div>
-                {{form.password1}}
-                <div>Подтверждение пароля:</div>
-                {{form.password2}}
-                <button style="height:2.5em;margin-top:1em;border:0px;color:#ffffff;background-color:#323e35" type="submit" id="navbutton" class="btn btn-outline-success">Зарегестрироватся!</button>
-            </form>
+        <div class="reg-parent">
+            <div class="social-reg">
+                <div class="facebook"><a href="{% url 'social:begin' 'facebook' %}"><img style="width:3em;height:3em;max-width:100%" src="{% static 'favicon/facebook.png' %}"></a></div>
+                <a href="{% url "social:begin" "google-oauth2" %}"><img style="width:12em;height:3em;max-width:100%" src="{% static 'favicon/google.png' %}"></a>
+            </div>
+            <div class="decorative-line"></div>
+            <div class="simple-reg">
+                <form id="reg-form">
+                    {% csrf_token %}
+                    {{form.username}}
+                    {{form.email}}
+                    {{form.first_name}}
+                    {{form.last_name}}
+                    {{form.phone}}
+                    {{form.password1}}
+                    {{form.password2}}
+                </form>
+            </div>
+        </div>
+        <div class="reg-submit">
+            <div class="main-button">
+                <button type="submit" form="reg-form" class="custum-button" style="border:0">Зарегестрироваться</buttom>
+            </div>
         </div>
     </div>    
 </div>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v8.0" nonce="zlbrkiY4"></script>
+
 {% endblock content %}
