@@ -1,5 +1,7 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+
+{% load filterandtag %}
 {% block title %}
 Услуги
 {% endblock title %}
@@ -26,12 +28,10 @@
             {% for service1,service2 in services %}
             <div class="list-service">
                 <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="{% static 'media/'|add_picture:service1.photo %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{service1.name}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the
-                            card's content.</p>
+                        <p class="card-text">{{service1.description}}</p>
                         <div class="custum-button-div">
                             <a href="{{ service1.get_absolute_url }}" class="custum-button">Детальнее</a>
                         </div>
@@ -39,12 +39,10 @@
                 </div>
                 {% if service2 is not None %}
                 <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="{% static 'media/'|add_picture:service2.photo %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{service2}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the
-                            card's content.</p>
+                        <p class="card-text">{{service1.description}}</p>
                        <div class="custum-button-div">
                             <a href="{{ service2.get_absolute_url }}" class="custum-button">Детальнее</a>
                         </div>

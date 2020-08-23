@@ -14,7 +14,7 @@ class ModificatedUser(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE)
     number = phone_field.PhoneField(
-        blank=True, verbose_name="Номер телефона", unique=True)
+        blank=True, verbose_name="Номер телефона", unique=True, null=True)
     number_of_user = models.IntegerField(
         verbose_name="Номер пользователя", default=0)
     made_records = models.BooleanField(
@@ -68,14 +68,14 @@ class Service(models.Model):
 class Record(models.Model):
     """This model is for adding user's record to the db"""
 
-    author = models.ForeignKey(
-        User, to_field="username", on_delete=models.CASCADE)
+    author = models.CharField(
+        verbose_name="Автор заказа", max_length=20)
     name = models.CharField(
         max_length=30, verbose_name="Название услуги")
     description = models.CharField(
-        max_length=200, verbose_name="Дополнительная информация")
-    phone = models.ForeignKey(
-        ModificatedUser, to_field="number", on_delete=models.CASCADE)
+        max_length=200, verbose_name="Дополнительная информация", blank=True)
+    phone = models.CharField(
+        verbose_name="Номер клиента", max_length=30, blank=True)
     time = models.DateTimeField(
         auto_now_add=True, verbose_name="Время оформление записи")
     status = models.BooleanField(

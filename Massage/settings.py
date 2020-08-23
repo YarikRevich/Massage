@@ -78,7 +78,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
-                'main.context_middlewares.add_models',
+                'main.context_middlewares.add_service_record_urls',
             ],
             "libraries":{
                 "filterandtag":"main.filterandtag.filters"
@@ -175,7 +175,7 @@ STATICFILES_DIRS = [
     ("favicon", os.path.join(STATIC_ROOT, "favicon/")),
     ("scrollup", os.path.join(STATIC_ROOT, "scrollup/")),
     ("review", os.path.join(STATIC_ROOT, "review/")),
-    ("service_photo", os.path.join(MEDIA_ROOT, "serviceimage/"))
+    ("media", MEDIA_ROOT)
 ]
 
 LOGIN_URL = "/"

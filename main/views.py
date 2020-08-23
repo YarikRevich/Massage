@@ -8,10 +8,23 @@ from django.views.generic.edit import FormView
 from main.forms import AuthForm, RegForm, RecordForm, ReviewForm
 from main.models import Service, Review, Record
 from django.http import JsonResponse
-from main.services import get_username_by_email, check_admin, made_records,get_all_made_orders, create_user_id, get_user_id_by_username, get_first_name, get_users_records,get_last_name, get_email, get_user, get_user_phone_number, SplitedQuerySet, get_work_date
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib.messages import add_message, ERROR, SUCCESS
-from main.backends import authenticate
+from main.services import (get_username_by_email,
+						check_admin,
+						made_records,
+						get_all_made_orders,
+						create_user_id,
+						get_user_id_by_username,
+						get_first_name,
+						get_users_records,
+						get_last_name,
+						get_email,
+						get_user,
+						get_user_phone_number,
+						get_work_date,
+						get_all_reviews,
+						SplitedQuerySet)
 
 
 class Landing(TemplateView):
@@ -21,8 +34,9 @@ class Landing(TemplateView):
 	template_name = "main/landingpage.html"
 
 	def get_context_data(self, **kwargs) -> dict:
-		contenxt = super().get_context_data(**kwargs)
-		contenxt["order_count"] = get_all_made_orders()
+		context = super().get_context_data(**kwargs)
+		context["order_count"] = get_all_made_orders()
+		return context
 
 
 class Info(TemplateView):
@@ -61,7 +75,7 @@ class Account(TemplateView):
 
 			return self.render_to_response(context=context)
 
-		elif request.COOKIES.get("*1%"):
+		if request.COOKIES.get("*1%"):
 
 			context = {
 				"form": None,
@@ -91,18 +105,16 @@ class Account(TemplateView):
 		user = authenticate(username=username,
 							password=request.POST["password"])
 		
-
 		# Checks whether user is admin to permanent authentification
 		if check_admin(username):
-			login(request, user)
+			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 			return redirect("Account")
 
 		# Checks whether user pressed ratio button and login him
 		
 		if request.POST.get("check"):
 			if user:
-				
-				login(request, user)
+				login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 				return redirect("Account")
 			return redirect("Account")
 
@@ -162,59 +174,41 @@ class ServiceInfo(DetailView):
 	context_object_name = "service"
 	model = Service
 
+
 	def get_context_data(self, **kwargs) -> dict:
 		context = super().get_context_data(**kwargs)
-		if self.request.COOKIES.get("*1%") or self.request.user.username:
-			context["authed"] = True
-			context["form"] = RecordForm(self.request.GET)
-			return context
-		context["authed"] = False
 		context["form"] = RecordForm(self.request.GET)
+
+		try:
+			context["authed"] = self.request.COOKIES["*1%"]
+		except KeyError:
+			try:
+				context["authed"] = self.request.user.username
+			except KeyError:
+				context["authed"] = False
+
+		try:
+			context["has_number"] = get_user_phone_number(cookie=self.request.COOKIES["*1%"])
+		except KeyError:
+			context["has_number"] = get_user_phone_number(request=self.request)
 		return context
+
 
 	def post(self, request, *args, **kwargs) -> object:
 		"""Saves form data to the db"""
-		
+
 		form = RecordForm(request.POST)
 		if form.is_valid():
-			if self.request.user.username:
-				if form.check(request=self.request):
-
-					form.save(service_name=request.POST["service_name"])
-
-					add_message(self.request, SUCCESS,
-								"Вы успешно были записаны")
-
-					return super().get(request=request)
-
-				add_message(self.request, ERROR,
-							"Произошла ошибка")
-
+			if form.check(request):
+				form.save(service_name=request.POST["service_name"])
+				add_message(self.request, SUCCESS,
+							"Вы успешно были записаны")
 				return super().get(request=request)
-			elif self.request.COOKIES.get("*1%"):
-
-				if form.check(cookie_request=self.request.COOKIES.get("*1%")):
-					form.save(service_name=request.POST["service_name"])
-
-					add_message(self.request, SUCCESS,
-								"Вы успешно были записаны")
-
-					return super().get(request=request)
-
-				add_message(self.request, ERROR,
-							"Вы уже записаны на приём")
-
-				return super().get(request=request)
-			else:
-
-				add_message(self.request, ERROR,
-							"Пройзошла ошибка,попробуйте снова")
-
-				return super().get(request=request)
-
+			add_message(self.request, ERROR,
+						"Произошла ошибка")
+			return super().get(request=request)
 		add_message(self.request, ERROR,
-					"Пройзошла ошибка,попробуйте снова")
-
+					form.errors["phone"].as_ul)
 		return super().get(request=request)
 
 
@@ -230,7 +224,7 @@ class ReviewPage(FormView, ListView):
 
 	def get_context_data(self, **kwargs) -> dict:
 		context = super().get_context_data(**kwargs)
-		context["reviews"] = Review.objects.all()
+		context["reviews"] = get_all_reviews()
 		context["user_is_author"] = get_user(request=self.request)
 		return context
 
@@ -245,7 +239,7 @@ class DeleteReviewClass(DeleteView):
 	"""Deletes review"""
 
 	name="DeleteReviews"
-	queryset = Review.objects.all()
+	queryset = get_all_reviews()
 	success_url = reverse_lazy("Reviews", kwargs={"page":1})
 
 	def get(self,request,*args, **kwargs):
@@ -256,7 +250,7 @@ class DeleteRecordClass(DeleteView):
 	"""Deletes record"""
 
 	name = "DeleteRecord"
-	queryset = Record.objects.all()
+	queryset = get_all_reviews()
 	success_url = reverse_lazy("Account")
 
 	def get(self,request,*args, **kwargs):

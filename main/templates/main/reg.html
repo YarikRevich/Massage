@@ -20,7 +20,7 @@
             </div>
             <div class="decorative-line"></div>
             <div class="simple-reg">
-                <form id="reg-form">
+                <form id="reg-form" method="POST">
                     {% csrf_token %}
                     {{form.username}}
                     {{form.email}}

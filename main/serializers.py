@@ -8,8 +8,6 @@ class RecordSerialize(serializers.ModelSerializer):
 
     """
 
-    author = serializers.ReadOnlyField(source="author.username")
-    
 
     class Meta:
         model = Record
@@ -26,15 +24,19 @@ class RecordSerialize(serializers.ModelSerializer):
             )
         
     
-    name = serializers.CharField(required=False)
-    description = serializers.CharField(required=False)
-    phone = serializers.CharField(max_length=100,read_only=True)
+    author = serializers.CharField(read_only=True)
+    phone = serializers.CharField(read_only=True)
 
-    # def update(self,instanse,data):
-    #     instanse.author = instanse.author
-    #     instanse.name = data.get("name",instanse.name)
-    #     instanse.phone = instanse.phone
-    #     instanse.status = data.get("status",instanse.status)
-    #     instanse.seen = data.get("seen",instanse.seen)
-    #     instanse.save()
-    #     return instanse
+
+class ServiceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Service
+        fields = (
+            "id",
+            "name",
+            "photo",
+            "description",
+            "price",
+            "currency",
+        )

@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 
 
-def logged_check(func) -> "func or an 'Account' page":
+def logged_check(func) -> object:
     """
     Checks whether user is logged in or not 
     and then redirects him to the auth page
@@ -20,17 +20,3 @@ def logged_check(func) -> "func or an 'Account' page":
     
     return _wrapper
 
-
-def rest_api_method_check(func) -> "func or HttpResponse":
-    """
-    This func checks wether HTTP method is in 'methods' list.
-    If it does it returns func but if doesn't HttpResponse with error message
-    """
-
-    @functools.wraps(func)
-    def _wrapper(request,st=None,pk=None,*args, **kwargs):
-        methods = ["get","post","put"]
-        if request.method.lower() in methods:
-            return func(request,pk=pk,st=st)
-        return HttpResponse(f"This HTTP.method is not correct,(chosen HTTP.method is {request.method})")
-    return _wrapper

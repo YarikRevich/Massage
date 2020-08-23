@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from main.models import Record
-from main.models import ModificatedUser
+from main.models import Record, ModificatedUser, Review
+
 from typing import Union,Dict
 import random
 import datetime
@@ -16,7 +16,7 @@ def get_username_by_email(**credentials: Dict[str,object]) -> Union[str,None]:
     except ObjectDoesNotExist:
         return None
 
-def create_user_id(username: str) -> int:
+def create_user_id() -> int:
     """Returns a random special user_id to check whether user is authentificated"""
 
     number = ["1", "2", "3", "4", "5", "6", "7", "8"]
@@ -24,7 +24,7 @@ def create_user_id(username: str) -> int:
     user_id = "".join(number)
     all_user_ids = [elem.number_of_user for elem in ModificatedUser.objects.all()]
     
-    return int(user_id) if user_id not in all_user_ids else create_user_id(username=username)
+    return int(user_id) if user_id not in all_user_ids else create_user_id()
 
 def check_admin(username: str) -> bool:
     """Check whether user is admin"""
@@ -35,12 +35,13 @@ def check_admin(username: str) -> bool:
 def get_users_records(**kwargs: dict) -> object:
     """Returns user's records"""
     
-    if kwargs.get("request"):
+    try:
         user = User.objects.get(username=kwargs["request"].user.username)
-        return Record.objects.filter(author=user)
-    elif kwargs.get("cookies"):
+        return Record.objects.filter(author=user.first_name)
+    except KeyError:
         user = ModificatedUser.objects.select_related("user").get(number_of_user=kwargs["cookies"]).user
-        return Record.objects.filter(author=user)
+        return Record.objects.filter(author=user.first_name)
+
 
 def get_user_id_by_username(username: str) -> Union[object, None]:
     """Returns a user_id to save it to cookies"""
@@ -96,15 +97,17 @@ def get_user_phone_number(**kwargs: Dict[object,int]) -> str or None:
     if kwargs.get("request"):
         user = User.objects.get(username=kwargs["request"].user.username)
         try:
-            phone_number = ModificatedUser.objects.get(user=user).number
-            return encode_phone_number(phone_number)
+            if phone_number := ModificatedUser.objects.get(user=user).number:
+                return encode_phone_number(phone_number)
+            return None
         except ObjectDoesNotExist:
             return None
     username = get_user(cookie=kwargs["cookie"])
     try:
         user = User.objects.get(username=username)
-        phone_number = ModificatedUser.objects.get(user=user).number
-        return encode_phone_number(phone_number)
+        if phone_number := ModificatedUser.objects.get(user=user).number:
+            return encode_phone_number(phone_number)
+        return None
     except ObjectDoesNotExist:
         return None
 
@@ -155,15 +158,17 @@ def get_work_date() -> int:
             16,15,0,0
         )}
     if now < work_time["12:00"] and now > work_time["9:00"]:
-        left_time = work_time["12:00"] - now
-        return (True, left_time.strftime("%H:%M"))
+        return (True, work_time["12:00"].strftime("%H:%M"))
     elif now < work_time["16:15"] and now > work_time["13:15"]:
-        left_time = work_time["16:15"] - now
-        return (True,left_time.strftime("%H:%M"))
+        return (True, work_time["16:15"].strftime("%H:%M"))
     time_stamps = [(work_time[key] - now,key) for key in work_time.keys()]
     min_elem = min(time_stamps)
     return (False,work_time[min_elem[1]].strftime("%H:%M"))
         
+    
+def get_all_reviews() -> list:
+
+    return Review.mro()
     
 
 
