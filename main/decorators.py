@@ -1,22 +1,20 @@
-import functools
+from django.contrib.auth.models import User
+from main.models import ModificatedUser
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.contrib.messages import add_message, ERROR
 
 
-def logged_check(func) -> object:
-    """
-    Checks whether user is logged in or not 
-    and then redirects him to the auth page
-    
-    """
+def is_authenticated(func):
 
-    @functools.wraps(func)
-    def _wrapper(request,*args, **kwargs):
+    def wrapper(form_object, request, *args, **kwargs) -> object:
+        """Checks whether user is athenticated.
+        If it does, returns the func, but if not 
+        returns the ERROR message
+        """
         if request.user.is_authenticated:
-            return func(request)
-        if request.COOKIES.get("*1%",None):
-            return func(request)
-        return redirect("Account")
-    
-    return _wrapper
+            return func(form_object, request, *args, **kwargs)
+        add_message(request, ERROR, "Вы не авторизованы")
+        return redirect("Reviews", page=1)
 
+    return wrapper

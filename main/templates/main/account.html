@@ -4,44 +4,63 @@
 Учётная запись
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account23.css"%}">
+<link rel="stylesheet" href="{% static "css/account29.css"%}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
     <div class="everything">
-        <div class="user">
+        <div class="main-info">
             {% if form is not None %}
-            <span style="margin-bottom:1.5em;max-width:95%;font-size:18px;text-align:center">Пройдите авторизацию!</span>
-            <form class="user-form" method="POST">
-                {% csrf_token %}
-                <div style="align-self:center;width:17em;float:left;max-width:95%">E-mail:</div>
-                {{form.username}}
-                <div style="align-self:center;width:17em;float:left;max-width:95%">Пароль:</div>
-                {{form.password}}
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" name="check" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Вход по умолчанию</label>
+            <div class="auth-part">
+                <div class="need-auth-text">
+                    <div class="info-text auth-text">Для продолжения роботы требуеться пройти авторизацию</div>
                 </div>
-                <div style="display:flex;justify-content:center;align-items:center">
-                    <button style="height:2.5em;margin-top:1em;border:0px;color:#ffffff" type="submit" class="custum-button">Ввойти</button>
+                <div class="user-auth-form-parent">
+                    <form class="user-auth-form" method="POST">
+                        {% csrf_token %}
+                        {{form.username}}
+                        {{form.password}}
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="check" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Вход по умолчанию</label>
+                        </div>
+                        <div style="display:flex;justify-content:center;align-items:center">
+                            <button style="height:2.5em;margin-top:1em;border:0px;color:#ffffff" type="submit" class="orange-button">Ввойти</button>
+                        </div>
+                        <div class="auth-social-media">
+                            <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
+                            <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
+                        </div>
+                        <div class="tips">                
+                            <div>Забыли пароль?|</div>
+                            <div><a href="{% url "Reg" %}" style="text-decoration:none;color:#000000;max-width:95%">Зарегестрироваться!</a></div>
+                        </div>
+                    </form>
                 </div>
-                <div style="margin-top:.4em;max-width:95%"><a href="{% url "Reg" %}" style="text-decoration:none;color:#000000;max-width:95%">Зарегестрироваться!</a></div>
-            </form>
-            {% else %}
-            <div class="user-info">
-                <div style="font-family: 'Source Sans Pro', sans-serif;font-size:1.3em;margin-bottom:1em;">Карточка пользователя</div>
-                <ul class="list-group" style="max-width:100%">
-                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Email:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{email}}</div></li>
-                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Логин:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{user}}</div></li>
-                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Имя:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{first_name}}</div></li>
-                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Фамилия:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{last_name}}</div></li>
-                    <li style="height:4em;max-width:100%;display:flex;flex-direction:row;justify-content:center;align-items:center" class="list-group-item"><div style="width:10em;font-size:1em;max-width:95%;border-right: 1px solid #000000">Номер:</div><div style="width:15em;margin-left:2em;max-width:90%;float:right">{{phone}}</div></li>
-                
-                </ul>
             </div>
+            {% else %}
+            
+            <div class="info-block">
+                <div class="info-text">
+                    <span>Карточка клиента</span>
+                </div>
+            </div>
+            <div class="about-block">
+                {% for name,data in user_data %}
+                    <div class="about">
+                        <div class="about-title">
+                            <span>{{name}}</span>
+                        </div>
+                        <div class="about-text">
+                            <span>{{data}}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
             {% endif %}
         </div>    
-        <div class="info" style="margin-bottom:2em">
+        <div class="info">
             <div class="devided-line"></div>
             <div class="record-area-title">История записей</div>
             <div class="record-area-line-parent">
@@ -54,39 +73,43 @@
                             <div class="card-header">
                                 <div class="name_of_service">Услуга: {{record.name}}</div>
                             </div>
-                            <div style="font-size:.8em" class="card-body">
+                            <div class="card-body">
                                 <p class="card-text">{{record.description}}</p>
                                 <div class="status-bar-line"></div>
                                 {% if record.seen %}
-                                    <p style="font-family: 'Alata', sans-serif">Статус заявки: <span style="font-weight:bold">Просмотрено</span></p>
+                                    <p>Статус заявки: <span class="record-text">Просмотрено</span></p>
                                 {% else %}
-                                    <p style="font-family: 'Alata', sans-serif">Статус заявки: <span style="font-weight:bold">Отослано</span></p>
+                                    <p>Статус заявки: <span class="record-text">Отослано</span></p>
                                 {% endif %}
                                 
                                 {% if record.status %}
-                                    <p style="font-family: 'Alata', sans-serif">Статус выполнения: <span style="font-weight:bold">Завершено</span></p>
-                                    <button type="button" class="rec-button-disabled"><span title="Вы не можете удалить запись так как сеанс уже был">Удалить запись</span></button>
+                                    <p>Статус выполнения: <span class="record-text">Завершено</span></p>
+                                    <div class="button-div">
+                                        <button type="button" class="rec-button-disabled"><span title="Вы не можете удалить запись так как сеанс уже был">Удалить запись</span></button>
+                                    </div>
                                 {% else %}
-                                    <p style="font-family: 'Alata', sans-serif">Статус выполнения: <span style="font-weight:bold">Неизвестно</span></p>
-                                    <a href="{% url 'DeleteRecord' pk=record.pk %}"><button type="button" class="rec-button">Удалить запись</button></a>
+                                    <p>Статус выполнения: <span class="record-text">Неизвестно</span></p>
+                                    <div class="button-div">
+                                        <a href="{% url 'DeleteRecord' pk=record.pk %}"><button type="button" class="red-button">Удалить запись</button></a>
+                                    </div>
                                 {% endif %}
                             </div>
                         </div>
                     {% empty %}
                     {% if made_records and made_records is not None %}
                     <div class="empty-message-area">
-                        <h2>Ваш архив пуст</h2>
+                        <h2 class="big-text">Ваш архив пуст</h2>
                     </div>
                     {% else %}
                     <div class="empty-message-area">
-                        <h2>У вас пока не было записей</h2>
-                        <a class="custum-button" href="{% url 'Services' %}">Записаться впервые!</a>
+                        <h2 class="big-text">У вас пока не было записей</h2>
+                        <a class="orange-button" href="{% url 'Services' %}">Записаться впервые!</a>
                     </div>
                     {% endif %}
                     {% endfor %}
                 {% else %}
                     <div class="empty-message-area">
-                        <h2>Вы не авторизованы!</h2>
+                        <h2 class="big-text">Вы не авторизованы!</h2>
                     </div>
                 {% endif %}
             </div>

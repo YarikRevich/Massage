@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
 .articles {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
     border: 1px solid #000000;
-    min-height: 100vh;
     width: 50em;
     max-width: 100%;
     background-color: #fafcfb;
@@ -14,7 +14,7 @@
 
 .regestration {
     width: 43em;
-    height: 35em;
+    height: 39em;
     max-width: 95%;
     background-color: #e9ecef;
     border-radius: 1%;
@@ -22,6 +22,17 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+.info-text-parent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.advanced-reg-title {
+    width: 17em;
 }
 
 .reg-parent {
@@ -44,6 +55,36 @@
     align-items: center;
 }
 
+.social-reg-title {
+    flex: 0;
+    margin-top: 2.5em;
+    font-size: 17.5px;
+    font-family: 'Alata', sans-serif;
+}
+
+.social-reg-panel {
+    flex: 9;
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-link {
+    text-decoration: none;
+    color: #039be5;
+    font-weight: 600;
+    font-family: 'Alata', sans-serif;
+}
+
+.social-link:hover {
+    text-decoration: none;
+    color: #039be5;
+    font-weight: 600;
+    font-family: 'Alata', sans-serif;
+}
+
 #reg-form {
     max-width: 100%;
 }
@@ -59,6 +100,13 @@
     justify-content: center;
     align-items: center;
     background-color: #ffffff;
+}
+
+.facebook-logo {
+    width: 3em;
+    height: 3em;
+    margin-left: .7em;
+    max-width: 100%;
 }
 
 .decorative-line {
@@ -80,7 +128,7 @@
 
 .reg-submit {
     width: 40em;
-    height: 6em;
+    height: 4em;
     max-width: 100%;
     display: flex;
     flex-direction: column;

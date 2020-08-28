@@ -8,7 +8,7 @@
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/review27.css' %}">
+<link rel="stylesheet" href="{% static 'css/review29.css' %}">
 {% endblock link %}
 
 {% block content %}
@@ -20,26 +20,29 @@
 				<div class="textarea">
 					{{form.review}}
 				</div> 
-				<div class="sub-form">
+				<div class="sub-form"> 
 					<div class="mark-star">
-						<input id="input1" type="hidden" name="mark" value="1" ><img onclick="iconone_click()" style="margin-left: 1em" id="icon1" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onmouseover="iconone_over()" style="margin-left: 1em" id="icon1_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input2" type="hidden" name="mark" value="2" ><img onclick="icontwo_click()" id="icon2" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onmouseover="icontwo_over()" id="icon2_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input3" type="hidden" name="mark" value="3" ><img onclick="iconthree_click()" id="icon3" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onmouseover="iconthree_over()" id="icon3_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input4" type="hidden" name="mark" value="4" ><img onclick="iconfour_click()" id="icon4" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onmouseover="iconfour_over()" id="icon4_fail" src="{% static 'review/icon_fail.png' %}">
-						<input id="input5" type="hidden" name="mark" value="5" ><img  onclick="iconfive_click()" id="icon5" hidden="true" src="{% static 'review/icon.png' %}">
-						<img onmouseover="iconfive_over()" id="icon5_fail" src="{% static 'review/icon_fail.png' %}">
+						<div class="all-marks-photo">
+							<input id="input1" type="hidden" name="mark" value="1" ><img onclick="iconone_click()" id="icon1" hidden="true" src="{% static 'review/icon.png' %}">
+							<img onmouseover="iconone_over()" id="icon1_fail" src="{% static 'review/icon_fail.png' %}">
+							<input id="input2" type="hidden" name="mark" value="2" ><img onclick="icontwo_click()" id="icon2" hidden="true" src="{% static 'review/icon.png' %}">
+							<img onmouseover="icontwo_over()" id="icon2_fail" src="{% static 'review/icon_fail.png' %}">
+							<input id="input3" type="hidden" name="mark" value="3" ><img onclick="iconthree_click()" id="icon3" hidden="true" src="{% static 'review/icon.png' %}">
+							<img onmouseover="iconthree_over()" id="icon3_fail" src="{% static 'review/icon_fail.png' %}">
+							<input id="input4" type="hidden" name="mark" value="4" ><img onclick="iconfour_click()" id="icon4" hidden="true" src="{% static 'review/icon.png' %}">
+							<img onmouseover="iconfour_over()" id="icon4_fail" src="{% static 'review/icon_fail.png' %}">
+							<input id="input5" type="hidden" name="mark" value="5" ><img  onclick="iconfive_click()" id="icon5" hidden="true" src="{% static 'review/icon.png' %}">
+							<img onmouseover="iconfive_over()" id="icon5_fail" src="{% static 'review/icon_fail.png' %}">
+						</div>
 					</div>
 					<div class="submit-button">
-						<button class="custum-button" style="border:0px;float:right;margin-right: 1em" type="submit">Опубликовать</button>
+						<div>
+							<button class="orange-button orange-button-margin" type="submit">Опубликовать</button>
+						</div>
 					</div>
 				</div>
 			</form>
 		</div>
-		<div class="line" ></div>
 		<div class="reviews">	
 			{% for review in page_obj %}
 				<div class="user-review">
@@ -52,19 +55,19 @@
 								{% if review.mark >= 4%}
 									<img style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-good.png' %}">
 									<div class="drop-down">
-										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="rec-button" style="font-size:.7em;margin-bottom:.5em">Удалить отзыв</button></a>
+										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="red-button delete-review">Удалить отзыв</button></a>
 									</div>
 								{% elif review.mark == 3%}
 								
 									<img style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-normal.png' %}">
 									<div class="drop-down">
-										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="rec-button" style="font-size:.7em;margin-bottom:.5em">Удалить отзыв</button></a>
+										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="red-button delete-review">Удалить отзыв</button></a>
 									</div>
 								{% else %}
 								
 									<img style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icons-bad.png' %}">
 									<div class="drop-down">
-										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="rec-button" style="font-size:.7em;margin-bottom:.5em">Удалить отзыв</button></a>
+										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="red-button delete-review">Удалить отзыв</button></a>
 									</div>
 								{% endif %}
 								</div>
@@ -81,13 +84,13 @@
 						</div>
 					</div>
 					<div class="author-parent">
-						<div class="author-line"></div>
+						
 					</div>
 					<div class="review-text-parent">
 						<div class="review-text">Отзыв: {{review.review}}</div>
 					</div>
 					<div class="review-parent">
-						<div class="review-line"></div>
+	
 						<div class="mark-review">Оценка роботы/обслуживания: {{review.mark}}</div>
 					</div>
 					

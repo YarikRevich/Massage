@@ -9,6 +9,8 @@ from django.db.models import F
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from main.services import create_user_id
+from main.decorators import is_authenticated
+
 
 class AuthForm(AuthenticationForm):
 
@@ -16,9 +18,9 @@ class AuthForm(AuthenticationForm):
 		super().__init__(*args, **kwargs)
 
 	username = forms.CharField(label="", widget=forms.EmailInput(
-		attrs={"class": "form-control", "style": "width:17em;max-width:95%;align-self:center"}))
+		attrs={"class": "form-control", "style": "width:17em;margin-top:1em;max-width:95%;align-self:center","placeholder":"Ваш E-mail"}))
 	password = forms.CharField(label="", widget=forms.PasswordInput(
-		attrs={"class": "form-control", "style": "width:17em;max-width:95%;;align-self:center"}))
+		attrs={"class": "form-control", "style": "width:17em;margin-top:1em;max-width:95%;;align-self:center","placeholder":"Пароль"}))
 
 
 class RegForm(forms.Form):
@@ -40,12 +42,14 @@ class RegForm(forms.Form):
 
 	def clean_username(self):
 		data = self.cleaned_data["username"]
-
+		if User.objects.filter(username=data).exists():
+			raise ValidationError("Пользователь с таким логином уже существует")
 		return data
 
 	def clean_email(self):
 		data = self.cleaned_data["email"]
-
+		if User.objects.filter(email=data).exists():
+			raise ValidationError("Пользователь с таким E-mail уже существует")
 		return data
 
 	def clean_first_name(self):
@@ -108,47 +112,42 @@ class RecordForm(forms.ModelForm):
 			"phone": "Введите номер"}
 		widgets = {
 			"description": forms.Textarea(attrs={"class": "form-control", "style": "height:10em;resize:none", "placeholder": "Введите текст"}),
-			"phone": forms.Textarea(attrs={"class": "form-control", "style": "height:4em;resize:none", "placeholder": "Пример: +380хххххххх"})
+			"phone": forms.TextInput(attrs={"class": "form-control", "style": "height:4em;resize:none", "placeholder": "Пример: +380хххххххх"})
 		}
+
 
 	def clean_phone(self):
 
 		data = self.cleaned_data["phone"]
-		if data and not data.startswith("+"):
-			raise ValidationError("It seems you haven't started your number with '+'")
-		return data
+		if data:
+			if not data.startswith("+"):
+				raise ValidationError("Кажеться что Вы написать номер без '+' в начале")	
+			return data
+		raise ValidationError("Кажеться, что Вы не написали номер телефона")
 		
 	
-
 	def check(self, request):
 	
 		self.request = request
 		try:
-			username = User.objects.get(username=self.request.user.username)
-			if ModificatedUser.objects.filter(user=username) or self.request.POST.get("phone"):
-				if Record.objects.filter(author=username, status=False, seen=False):
-					return False
-				return True   
-			return False
+			user = ModificatedUser.objects.select_related("user").get(number_of_user=self.request.COOKIES["*1%"]).user
+		except (ObjectDoesNotExist, KeyError):
+			try:
+				user = User.objects.get(username=self.request.user.username)
+			except:
+				return False
 
-		except ObjectDoesNotExist:
-			
-			if user_id := ModificatedUser.objects.filter(number_of_user=self.request.COOKIES["*1%"]):
-				if Record.objects.filter(author=user_id.user.username,status=False):
-					return False
-				return True
-			return False
-			
+		if ModificatedUser.objects.filter(user=user) or self.request.POST.get("phone"):
+			return False if Record.objects.filter(author=user.first_name, status=False, seen=False) else True  
+		return False
+
 		
 	def save(self, *args, **kwargs) -> object:
 
-
 		try:
 			author = User.objects.get(username=self.request.user.username)
-			
 			try:
 				ModificatedUser.objects.filter(user=author).update(made_records=True if F("made_records") is not True else False)
-			
 			except IntegrityError:
 				ModificatedUser.objects.create(
 					user = author,
@@ -160,8 +159,8 @@ class RecordForm(forms.ModelForm):
 			author = ModificatedUser.objects.select_related("user").get(number_of_user=self.request.COOKIES["*1%"]).user
 			ModificatedUser.objects.filter(number_of_user=self.request.COOKIES["*1%"]).update(made_records=True if F("made_records") is not True else False)
 		try:
-			if more_info := ModificatedUser.objects.get(user=author).number:
-				phone = more_info
+			if user_phone := ModificatedUser.objects.get(user=author).number:
+				phone = user_phone
 			else:
 				phone = self.cleaned_data["phone"]		
 		except ObjectDoesNotExist:
@@ -187,12 +186,14 @@ class ReviewForm(forms.ModelForm):
 			"review": forms.Textarea(attrs={"class": "form-control","style":"height:8em;width:41.3em;margin-top:1.5em;max-width:100%;resize:none","placeholder":"Введите Ваш отзыв"}),
 		}
 
-	def save(self,*args,**kwargs):
-
+	@is_authenticated
+	def save(self,request,*args,**kwargs):
+		
+		
 		try:
-			user = ModificatedUser.objects.select_related("user").get(number_of_user=kwargs["request"].COOKIES["*1%"]).user
-		except KeyError:
-			user = User.objects.get(username=kwargs["request"].user.username)
+			user = ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user
+		except (ObjectDoesNotExist, KeyError):
+			user = User.objects.get(username=request.user.username)
 
 		new = Review.objects.create(
 			author=user,

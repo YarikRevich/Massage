@@ -18,13 +18,16 @@ from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls import url
 from django.shortcuts import redirect
+from main.views import set_language
 
 
 urlpatterns = i18n_patterns(
-    path("api/", include("main.rest_urls")),
-    path("", lambda redirecter: redirect("/ru/home")),
-    path("grappelli/", include("grappelli.urls")),
+    url('', include('social_django.urls', namespace='social')),
+    path('', lambda redirecter: redirect("Landing")),
+    path('api/', include("main.rest_urls")),
     path('admin/', admin.site.urls),
-    path("home/", include("main.urls")),
-    url('', include('social_django.urls', namespace='social'))
+    path('home/', include("main.urls")),
+    path('grappelli/', include("grappelli.urls")),
+    path('set_language/<str:language_code>', set_language, name="Language"),
+
 )

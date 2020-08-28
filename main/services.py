@@ -1,18 +1,18 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from main.models import Record, ModificatedUser, Review
+from main.models import Record, ModificatedUser, Review, Service
 
 from typing import Union,Dict
 import random
 import datetime
+import pytz
 
 
-def get_username_by_email(**credentials: Dict[str,object]) -> Union[str,None]:
+def get_username_by_email(email) -> Union[str,None]:
     """Returns user's username got by email"""
     
     try:
-        user = User.objects.get(email=credentials["email"])    
-        return user.username
+        return User.objects.get(email=email).username
     except ObjectDoesNotExist:
         return None
 
@@ -32,15 +32,14 @@ def check_admin(username: str) -> bool:
     user = User.objects.get(username=username)
     return True if user.is_staff else False
 
-def get_users_records(**kwargs: dict) -> object:
+def get_users_records(request) -> object:
     """Returns user's records"""
     
     try:
-        user = User.objects.get(username=kwargs["request"].user.username)
-        return Record.objects.filter(author=user.first_name)
-    except KeyError:
-        user = ModificatedUser.objects.select_related("user").get(number_of_user=kwargs["cookies"]).user
-        return Record.objects.filter(author=user.first_name)
+        user = ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user
+    except (ObjectDoesNotExist, KeyError):
+        user = User.objects.get(username=request.user.username)
+    return Record.objects.filter(author=user.first_name)
 
 
 def get_user_id_by_username(username: str) -> Union[object, None]:
@@ -53,80 +52,77 @@ def get_user_id_by_username(username: str) -> Union[object, None]:
     except ObjectDoesNotExist:
         return None
     
-def get_email(cookie: int) -> str:
+def get_email(request: object) -> str:
     """Returns user's email"""
 
-    user_id = ModificatedUser.objects.get(number_of_user=cookie)
-    return user_id.user.email
+    try:
+        return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.email
+    except KeyError:
+        return request.user.email
 
-def get_last_name(cookie: int) -> str:
+def get_last_name(request: object) -> str:
     """Returns user's last_name"""
+    
+    try:
+        return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.last_name
+    except KeyError:
+        return request.user.last_name
 
-    user_id = ModificatedUser.objects.get(number_of_user=cookie)
-    return user_id.user.last_name
-
-def get_user(**kwargs) -> str:
+def get_user(request) -> str:
     """Returns user's username"""
+    
+    try:
+        return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.username
+    except KeyError:
+        return request.user.username
+    
 
-    if kwargs.get("cookie"):
-        return ModificatedUser.objects.get(number_of_user=kwargs["cookie"]).user.username
-    elif kwargs.get("request"):
-        if kwargs["request"].COOKIES.get("*1%"):
-            return ModificatedUser.objects.get(number_of_user=kwargs["request"].COOKIES["*1%"]).user.username
-        else:
-            if username := kwargs["request"].user.username:
-                return username
-            return None
-
-def get_first_name(cookie: int) -> str:
+def get_first_name(request: object) -> str:
     """Retuns user's first_name"""
 
-    user_id = ModificatedUser.objects.get(number_of_user=cookie)
-    return user_id.user.first_name
+    try:
+        return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.first_name
+    except KeyError:
+        return request.user.first_name
 
-
-def encode_phone_number(number: Union[int, str]) -> str:
+def encode_phone_number(number: Union[int, str, None]) -> str:
     """Returns already encoded user's number"""
 
-    encoded_number = [digit if len(number) - index <= 4 else "*" for index,digit in enumerate(str(number))]
-    return "".join(encoded_number)
+    if number:
+        encoded_number = [digit if len(number) - index <= 4 else "*" for index,digit in enumerate(str(number))]
+        return "".join(encoded_number)
+    return None
 
-def get_user_phone_number(**kwargs: Dict[object,int]) -> str or None:
+def get_user_phone_number(request) -> str or None:
     """Returns response from the 'encoded_phone_number' func"""
 
-    if kwargs.get("request"):
-        user = User.objects.get(username=kwargs["request"].user.username)
+    try:
+        user = User.objects.get(username=get_user(request))
+    except (ObjectDoesNotExist, KeyError):
         try:
-            if phone_number := ModificatedUser.objects.get(user=user).number:
-                return encode_phone_number(phone_number)
-            return None
+            user = User.objects.get(username=request.user.username)
         except ObjectDoesNotExist:
             return None
-    username = get_user(cookie=kwargs["cookie"])
     try:
-        user = User.objects.get(username=username)
-        if phone_number := ModificatedUser.objects.get(user=user).number:
-            return encode_phone_number(phone_number)
-        return None
+        phone_number = ModificatedUser.objects.get(user=user).number
+        return encode_phone_number(phone_number)
     except ObjectDoesNotExist:
         return None
 
-def made_records(**kwargs) -> Union[bool,None]:
+
+def made_records(request) -> Union[bool,None]:
     """Checks whether user has already made any records"""
 
-    if kwargs.get("request"):
-        user = User.objects.get(username=kwargs["request"].user.username)
+    
+    try:
+        return ModificatedUser.objects.get(number_of_user=request.COOKIES["*1%"]).made_records
+    except KeyError:
+        user = User.objects.get(username=request.user.username)
         try:
             return ModificatedUser.objects.get(user=user).made_records
         except ObjectDoesNotExist:
             return None
-    elif kwargs.get("cookies"):
-        try:
-            return ModificatedUser.objects.get(number_of_user=kwargs["cookies"]).made_records
-        except ObjectDoesNotExist:
-            return None
-    else:
-        assert False, "You passed not right data"
+
 
 def get_work_date() -> int:
     """Checks whether now time is in a gap of work time"""
@@ -165,13 +161,60 @@ def get_work_date() -> int:
     min_elem = min(time_stamps)
     return (False,work_time[min_elem[1]].strftime("%H:%M"))
         
+
+def get_first_service() -> object:
+    """Returns the first service"""
+
+    return Service.objects.first()
+
+
+def get_newest_services() -> list:
+    """Returns all the services except the first one"""
+
+    today = datetime.datetime.now()
+    range_date = datetime.datetime(today.year, today.month, today.day-7, 0, 0, 0, tzinfo=pytz.UTC)
+    return Service.objects.filter(made_time__gte=range_date, pk__gt=Service.objects.first().pk)
     
-def get_all_reviews() -> list:
 
-    return Review.mro()
     
+def get_all_reviews() -> object:
+    """Returns all the reviews"""
+
+    return Review.objects.all()
+    
+def get_all_records() -> object:
+    """Returns all the records"""
+    
+    return Record.objects.all()
 
 
+def get_user_data(request):
+    """Returns all the data about regestrated user"""
+
+    try:
+        data_list = [
+            ("Email", get_email(request)),
+            ("Логин", get_user(request)),
+            ("Имя", get_first_name(request)),
+            ("Фамилия", get_last_name(request)),
+            ("Номер телефона", get_user_phone_number(request))
+        ]
+    except KeyError:
+        data_list = [
+            ("Email", request.user.email),
+            ("Логин", request.user.username),
+            ("Имя", request.user.first_name),
+            ("Фамилия", request.user.last_name),
+            ("Номер телефона", get_user_phone_number(request=request))
+        ]
+		
+    return data_list
+
+
+def get_all_made_orders() -> int:
+    """Return the number of all existing records"""
+
+    return Record.objects.filter(status=True).count()
 
 class SplitedQuerySet:
 
@@ -247,8 +290,3 @@ class SplitedQuerySet:
         return self._get_finall_list()
 
 
-def get_all_made_orders() -> int:
-    """Return the number of all existing records"""
-
-    return Record.objects.filter(status=True).count()
-    

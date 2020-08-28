@@ -1,40 +1,116 @@
 {% extends 'layout/base.html' %}
 {% load static %}
-{% block link%} 
-<link rel="stylesheet" href="{% static "css/landing7.css"%}">
+{% load filterandtag %}
+{% block link%}
+<link rel="stylesheet" href="{% static 'css/landing19.css' %}"> 
 {% endblock link %}
 {% block title %}
-Домашняя страница
-{% endblock %}
+ Домашняя страница
+{% endblock %} 
 {% block content %}
-<div style="max-width:95%" class="articles"> 
-    <div class="container">
-    <div class="row" style="justify-content:center;align-items:center">
-    <div style="max-width:100%" id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-        <div style="width:43em;max-width:100%" class="carousel-inner">
-        <div style="width:43em;max-width:100%;border-radius:10px" class="carousel-item active" data-interval="10000">
-            <img style="max-width:100%;border-radius:10px" src="https://imgclf.112.ua/original/2018/03/29/338039.jpeg?timestamp=1522312166" class="d-block w-100 images" alt="...">
+<div class="articles">
+
+    <!-- The part of the main landing -->
+
+    <div class="main-landing">
+
+        <!-- The part of slider -->
+        <div class="row">
+            <div id="carouselExampleInterval" class="carousel slide slider" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-interval="10000">
+                        <img class="slider-image" width="900em" height="430em" src="https://imgclf.112.ua/original/2018/03/29/338039.jpeg?timestamp=1522312166" class="d-block w-100 images" alt="...">
+                    </div>
+                    <div class="carousel-item" data-interval="10000">
+                        <img class="slider-image" width="900em" height="430em" src="https://msk.ramsaydiagnostics.ru/blog/wp-content/uploads/2019/12/cover-not-afraid-doctors.png" class="d-block w-100 images" alt="...">
+                    </div>
+                    <div class="carousel-item" data-interval="10000">
+                        <img class="slider-image" width="900em" height="430em" src="https://img.gazeta.ru/files3/571/10396571/shutterstock_92474629-pic905-895x505-2290.jpg" class="d-block w-100 images" alt="...">
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Назад</span>
+                </a>
+                <a style="left:85%" class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Далее</span>
+                </a>
+            </div>
         </div>
-        <div class="carousel-item" style="border-radius:10px" data-interval="10000">
-            <img style="max-width:100%;border-radius:10px" src="https://msk.ramsaydiagnostics.ru/blog/wp-content/uploads/2019/12/cover-not-afraid-doctors.png" class="d-block w-100 images" alt="...">
+
+        <!-- The part of some information about doctor -->
+        <div class="info">
+            <div class="text-title">
+                <div class="info-text advanced-info">Вас приветствует массажный салон Emassage!</div>
+            </div>
+            <div class="main-info-about-doctor">
+                {{info_about_doctor}}
+                {% lorem 1%}
+            </div>
         </div>
-        <div class="carousel-item" style="border-radius:10px" data-interval="10000">
-            <img style="max-width:100%;border-radius:10px" src="https://img.gazeta.ru/files3/571/10396571/shutterstock_92474629-pic905-895x505-2290.jpg" class="d-block w-100 images" alt="...">
-        </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Назад</span>
-        </a>
-        <a style="left:85%" class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Далее</span>
-        </a>
     </div>
 
-    <div style="max-width:95%;margin-top:3.5em" class="info">
+    <!-- Updates part -->
+    <div class="new-updates">
+        <div class="main-update-parts">
+
+            <!-- The part of updates description-->
+            <div class="updates-description">
+                <div class="updates-title"><div class="info-text new-updates-title">&#10071;Новые услуги уже доступны!</div></div>
+                <div class="updates-aknowleadgment">Список самых нових услуг на {{todays_data}}:</div>
+                {% if newest_services|length and first_service|length == 1 %}
+                    <div class="updates-announsment">За последнюю неделю мы добавили {{newest_services|length|add:1}} услугу!</div>
+                {% elif newest_services|length and first_service|length <= 5 %}
+                    <div class="updates-announsment">За последнюю неделю мы добавили {{newest_services|length|add:1}} услуги!</div>
+                {% else %}
+                    <div class="updates-announsment">За последнюю неделю мы добавили {{newest_services|length|add:1}} услуг!</div>
+                {% endif %}
+                <div class="updates-list">
+                    <div class="updates-border">
+                    {% for service in newest_services %}
+                        <a class="new-service-link" href="{% url 'ServiceInfo' pk=service.pk %}"><span class="new-service">+{{service.name}}</span></a>
+                    {% endfor %}
+                    <a class="new-service-link" href="{% url 'ServiceInfo' pk=first_service.pk %}"><span class="new-service">+{{first_service.name}}</span></a>
+                    </div>
+                </div>
+                <div class="ads-text"><span><a href="{% url 'Services' %}" class="new-service-link">Заходи, и запишись!</a></span></div>
+            </div>
+
+            <!-- The part of the updates slider-->
+            <div class="updates-slider">
+                <div id="carouselExampleControls" class="carousel slide update-slider" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active update-carousel-item">
+                            <img class="d-block w-100 main-image" src="{% static 'media/'|add_picture:first_service.photo %}" alt="First slide">
+                            <div class="new-service-announsment">
+                                <div class="text-about-service">Хочешь на {{first_service.name}}? Тогда нажимай на кнопку ниже</div>
+                                <a href="{% url 'ServiceInfo' pk=first_service.pk %}"><button class="orange-button image-button">Детальнее</button></a>
+                            </div>
+                        </div>
+                        {% for service in newest_services %}
+                        <div class="carousel-item update-carousel-item">
+                            <img class="d-block w-100 main-image" src="{% static 'media/'|add_picture:service.photo %}" alt="First slide">
+                            <div class="new-service-announsment">
+                                <div class="text-about-service">Хочешь на {{service.name}}? Тогда нажимай на кнопку ниже</div>
+                                <a href="{% url 'ServiceInfo' pk=service.pk %}"><button class="orange-button image-button">Детальнее</button></a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-    </div>
+
+
 </div>
 {% endblock content %}

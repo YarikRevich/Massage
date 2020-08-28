@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from main.views import ServiceInfo
-from main.backends import authenticate
+
 from main.models import Service
 
 class ServiceInfoViewTest(TestCase):
@@ -36,21 +36,3 @@ class ServiceInfoViewTest(TestCase):
 
         resp = self.client.get(self.service.get_absolute_url())
         self.assertTemplateUsed(resp, "main/serviceinfo.html")
-
-class AuthTest(TestCase):
-    """Test for the ckecking of the custom made authenticate backend"""
-
-    @classmethod
-    def setUpTestData(cls):
-        """Creates new User entry with such credentials as 'yarik' and 'yarik1234'"""
-
-        new_user = User.objects.create(username="yarik",password="yarik1234")
-        new_user.save()
-
-    def test_authentification(self):
-        """Uses previously made user's credentials to authenticate previously made user
-           and checks whether the gotten response is True
-        """
-
-        user = authenticate(username="yarik",password="yarik1234")
-        self.assertTrue(user)

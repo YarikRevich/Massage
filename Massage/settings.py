@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     "main",
     "crispy_forms",
     "django_filters",
-    "social_django"
+    "social_django",
+    "django_nose"
     
     
 
@@ -61,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'main.middleware.PathLog',
 ]
 
 ROOT_URLCONF = 'Massage.urls'
@@ -125,15 +129,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
+
+
+LOGIN_URL = "/"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+
 LANGUAGE_CODE = 'ru'
 
 LANGUAGES = (
-    ("ru", "Russian"),
-    ("de", "Deutch"),
-)
-
-LOCALE_PATHS = (
-    "locale", os.path.join(BASE_DIR, "locale"),
+    ('ru', _('Russian')),
+    ('de', _('German')),
 )
 
 TIME_ZONE = 'Europe/Kiev'
@@ -144,19 +151,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS":
-        "main.pagination.PaginationWithMax",
-    "PAGE_SIZE": 2,
-    "DEFAULT_AUTHENTIFICATION_CLASSES":
-        ("rest_framework.authentification.BasicAuthentification",
-        "rest_framework.authentification.SessionAuthentification"),
-    "DEFAULT_THROTTLE_CLASSES":(
-        "rest_framework.throttling.AnonRateThrottle",
-        "rest_framework.throttling.UserRateThrottle"
-    ),
-
-}
 
 
 # Static files (CSS, JavaScript, Images)
@@ -178,8 +172,6 @@ STATICFILES_DIRS = [
     ("media", MEDIA_ROOT)
 ]
 
-LOGIN_URL = "/"
-LOGIN_REDIRECT_URL = "/"
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
@@ -228,3 +220,29 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.user.user_details',
 )
 
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS":
+        "main.pagination.PaginationWithMax",
+    "PAGE_SIZE": 2,
+    "DEFAULT_AUTHENTIFICATION_CLASSES":
+        ("rest_framework.authentification.BasicAuthentification",
+        "rest_framework.authentification.SessionAuthentification"),
+    "DEFAULT_THROTTLE_CLASSES":(
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle"
+    ),
+
+}
+
+
+
+TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
+
+
+NOSE_ARGS = [
+    "--with-coverage",
+    "--cover-erase",
+    "--cover-inclusive",
+    "--cover-package=games"
+]

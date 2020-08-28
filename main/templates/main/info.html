@@ -4,43 +4,64 @@
 Контакты
 {% endblock title%}
 {% block link %}
-<link rel="stylesheet" href="{% static "css/info7.css" %}">
+<link rel="stylesheet" href="{% static "css/info12.css" %}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
     <div class="main-info">
-        <div class="info-text">Информация</div>
-        <div class="contact-info">
-            <div class="contact-info-child">
-            <div class="doctor">
-                <img title="Доктор" class="doctor-image" src="{% static 'favicon/doctor.png' %}">
-                <div class="doctor-text"><span>Елена</span></div>
+        <div class="info-block">
+            <div class="info-text"><span>Информация</span></div>
+        </div>
+        <div class="about-block">
+            <div class="about">
+                <div class="about-title">
+                    <span>Массажист</span>
+                </div>
+                <div class="about-text">
+                    <span>Елена</span>
+                </div>
             </div>
-            <div class="decotive-devidive-line"></div>
-            <div class="phone-number">
-                <div><img title="Номер телефона" class="phone-image" src="{% static 'favicon/phone.png' %}"></div>
-                <div class="phone-text"><span><a href="tel:+1-303-499-7111" style="color:#000000">+41-76-319-81-80</a></span></div>
+            <div class="about">
+                <div class="about-title">
+                    <span>Телефон</span>
+                </div>
+                <div class="about-text">
+                    <span><a href="tel:+1-303-499-7111" style="color:#000000">+41-76-319-81-80</a></span>
+                </div>
             </div>
-            <div class="decotive-devidive-line"></div>
-            <div class="work-time">
-                <img title="Время роботи" class="work-image" src="{% static 'favicon/clock.png' %}">
+            <div class="about">
+                <div class="about-title">
+                    <span>Время роботи</span>
+                </div>
+                <div class="about-text">
                 {% if  work_time_bool %}
-                    <div class="work-text"><span style="color:green">Открыто,закрывается в {{work_time}}</span></div>
+                    <span style="color:green">Открыто,закрывается в {{work_time}}</span>
                 {% else %}
-                    <div class="work-text"><span style="color:red">Закрыто,открываеться в {{work_time}}</span></div>
+                    <span style="color:red">Закрыто,открываеться в {{work_time}}</span>
                 {% endif %}
+                    <div class="dropdown-arrow">
+                        <img src="https://img.icons8.com/carbon-copy/30/000000/double-down.png"/>
+                        <div class="dropdown-work-time">
+                            <div class="work-time-detail">
+                                <div class="time"><span class="time-sub">9:00 - 12:00</span></div>
+                                <div class="time"><span>13:15 - 16:15</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
             </div>
-            <div class="decotive-devidive-line"></div>
-            <div class="social-media">
-                <img title="Соц.сети" class="social-image" src="{% static 'favicon/internet.png' %}">
-                <div class="social-text"><span>тест</span></div>
-            </div>
-            <div class="decotive-devidive-line"></div>
+            <div class="about">
+                <div class="about-title">
+                    <span>Соц.сети</span>
+                </div>
+                <div class="about-text">
+                    <span>Test</span>
+                </div>
             </div>
         </div>
     </div>
-    <span style="font-family: 'Source Sans Pro', sans-serif;font-size:1.3em">Наше местоположение</span>
     <div class="location">
+        <div class="location-title">Наше местоположение</div>
         <iframe style="width:33em;height:20em;max-width:95%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1906.649646851782!2d8.278204792523175!3d47.48192979765461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47906b5f74de9829%3A0xc6cc6ffe06fe86fa!2sFluhmattstrasse%2024%2C%205400%20Baden%2C%20Switzerland!5e0!3m2!1sen!2sua!4v1598018006061!5m2!1sen!2sua"frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
     </div>
 </div>

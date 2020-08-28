@@ -7,16 +7,28 @@
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/reg9.css' %}">
+<link rel="stylesheet" href="{% static 'css/reg11.css' %}">
 {% endblock link %}
 
 {% block content %}
 <div class="articles">
     <div class="regestration">
+        <div class="info-text-parent">
+            <div class="info-text advanced-reg-title">Регестрация</div>
+        </div>
+        
         <div class="reg-parent">
             <div class="social-reg">
-                <div class="facebook"><a href="{% url 'social:begin' 'facebook' %}"><img style="width:3em;height:3em;max-width:100%" src="{% static 'favicon/facebook.png' %}"></a></div>
-                <a href="{% url "social:begin" "google-oauth2" %}"><img style="width:12em;height:3em;max-width:100%" src="{% static 'favicon/google.png' %}"></a>
+                <div class="social-reg-title">Регестрация через социальные сети</div>
+                <div class="social-reg-panel">
+                    <a class="social-link" href="{% url 'social:begin' 'facebook' %}">
+                        <div class="facebook">
+                            <div>Log in with</div>
+                            <img class="facebook-logo" src="{% static 'favicon/facebook.png' %}">
+                        </div>
+                    </a>
+                    <a href="{% url "social:begin" "google-oauth2" %}"><img style="width:12em;height:3em;max-width:100%" src="{% static 'favicon/google.png' %}"></a>
+                </div>
             </div>
             <div class="decorative-line"></div>
             <div class="simple-reg">
@@ -34,7 +46,7 @@
         </div>
         <div class="reg-submit">
             <div class="main-button">
-                <button type="submit" form="reg-form" class="custum-button" style="border:0">Зарегестрироваться</buttom>
+                <button type="submit" form="reg-form" class="orange-button" style="border:0">Зарегестрироваться</buttom>
             </div>
         </div>
     </div>    

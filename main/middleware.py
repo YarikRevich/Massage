@@ -1,10 +1,25 @@
-class Test:
 
-    def __init__(self,get_response):
 
-        self._get_response = get_response
+class PathLog:
+    """Creates a que with two elements: a previous path and an actual one"""
+
+    paths_que:list = []
+
+    def __init__(self, get_request: object):
+        self._get_request = get_request
+
+    def __call__(self ,request: object):
+
+        def _append_new_path() -> None:
+            self.paths_que.append(request.get_full_path())
+            if len(self.paths_que) >= 3:
+                del self.paths_que[0]
+
+        _append_new_path()
+
+        try:
+            request.session["previous_path"] = self.paths_que[0].split("/",2)[2]
+        except IndexError:
+            pass
         
-    def __call__(self,request):
-
-        response = self._get_response(request)
-        return response
+        return self._get_request(request)

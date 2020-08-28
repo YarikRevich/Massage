@@ -1,8 +1,7 @@
-
 from django.conf.urls import url
 from django.urls import path, include
-from main.decorators import logged_check
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import LogoutView
 from .views import (Landing,
                 Info,
                 Account,
@@ -11,7 +10,8 @@ from .views import (Landing,
                 ServiceInfo,
                 ReviewPage,
                 DeleteReviewClass,
-                DeleteRecordClass)
+                DeleteRecordClass,
+                mailinglist_subscribing)
 
 
 urlpatterns = [
@@ -21,7 +21,9 @@ urlpatterns = [
     path("services/info/<int:pk>", ServiceInfo.as_view(), name = ServiceInfo.name),
     path("services/", ServiceList.as_view(), name = ServiceList.name),
     path("info/", Info.as_view(), name = Info.name),
+    path("mailinglist-subscribing", mailinglist_subscribing, name="Mailinglist-subscribing"),
     path("account/", Account.as_view(), name = Account.name),
     path("account/regestration", Regestration.as_view(), name = Regestration.name),
+    path("account/logout", LogoutView.as_view(), name="Logout"),
     path("account/delete-record/<int:pk>", DeleteRecordClass.as_view(), name = DeleteRecordClass.name)
 ]

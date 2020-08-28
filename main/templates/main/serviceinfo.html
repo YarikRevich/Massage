@@ -1,11 +1,12 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load filterandtag %}
 {% block title %}
 Услуга | {{service.name}}
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/serviceinfo13.css' %}">
+<link rel="stylesheet" href="{% static 'css/serviceinfo16.css' %}">
 {% endblock link %}
 
 {% block content %}
@@ -13,30 +14,17 @@
 <div class="articles">
     <div class="about">
         
-        {% for message in messages %}
-            <div id="window" style="width: 30em;height: 12em; max-width: 100%;display: flex;flex-direction: column;background-color: #fac59d"class="toast">
-                <div class="toast-header" style="max-width: 100%;background-color:#fab682">
-                
-                <span style="width:28.5em;max-width: 100%" ><button onclick="close_window()" style="float:right;"  type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">&times;</button></span>
-                
-                </div>
-                <div style="height:2em;font-size: 1.3em; max-width: 100%;margin-top:.6em;text-align: center;align-items: center" class="toast-body">
-                    <span style="color:#000000">{{message}}</span>
-                </div>
-            </div>
-        {% empty %}
-        {% endfor %}
-        
         <div class="service-image">
+            <img style="max-width:100%; border-radius:10px" width="720em" height="425em" src="{% static 'media/'|add_picture:service.photo %}">
         </div> 
         <div class="service-info">
         <div class="desc">
         <div class="service-desc">
         </div>
         {% if authed %}
-        <div class="recording-button"><button type="button" class="rec-button" data-toggle="modal" data-target="#exampleModal">Записаться</button></div>
+            <div class="recording-button"><button type="button"  class="red-button" data-toggle="modal" data-target="#exampleModal">Записаться</button></div>
         {% else %}
-        <div class="recording-button"><button type="button" class="rec-button"><a style="color:#ffffff;text-decoration:none" href="{% url "Account" %}">Записаться</a></button></div>
+            <div class="recording-button"><button type="button" class="red-button"><a style="color:#ffffff;text-decoration:none" href="{% url "Account" %}">Записаться</a></button></div>
         {% endif %}
         <div style="max-width:100%" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div style="max-width: 100%;display:flex;justify-content: center;align-items:center" class="modal-dialog">
@@ -44,22 +32,25 @@
                     <div style="max-width: 100%" class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Запись на приём</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" class="cross">&times;</span>
+                        <span aria-hidden="true"  class="cross">&times;</span>
                         </button>
                     </div>
                     <div style="max-width: 100%" class="modal-body">
-                        <form method="POST">
+                        <form  method="POST">
                             {% csrf_token %}
                             {% if has_number %}
                                 {{form.label}}
                                 {{form.description}}    
                             {% else %}
-                                {{form}}
+                                {{form.description.label}}
+                                {{form.description}}
+                                {{form.phone.label}}
+                                {{form.phone}}
                             {% endif %}
                             <input type="hidden" name="service_name" value="{{service.name}}">
                             <div id="buttons" class="modal-footer">
-                                <button type="button" class="rec-button" style="width:7em;margin-right:.4em" data-dismiss="modal">Отмена</button>
-                                <button type="submit" class="control-button" style="width:7em">Готово!</button>
+                                <button  type="button" class="red-button" style="width:7em;margin-right:.4em" data-dismiss="modal">Отмена</button>
+                                <button type="submit" class="green-button" style="width:7em">Готово!</button>
                             </div>
                         </form>
                     </div>

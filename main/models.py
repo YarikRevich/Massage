@@ -45,6 +45,8 @@ class Service(models.Model):
         verbose_name="Стоимость услуги")
     currency = models.CharField(
         max_length=10, verbose_name="Валюта")
+    made_time = models.DateTimeField(
+        verbose_name="Время создания услуги", auto_now_add=True)
 
     def __str__(self):
         return self.name
