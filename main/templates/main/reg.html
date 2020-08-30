@@ -1,9 +1,9 @@
 {% extends 'layout/base.html' %}
 
 {% load static %}
-
+{% load i18n %}
 {% block title %}
-Регестрация
+{% trans 'Регестрация'%}
 {% endblock title %}
 
 {% block link %}
@@ -14,12 +14,12 @@
 <div class="articles">
     <div class="regestration">
         <div class="info-text-parent">
-            <div class="info-text advanced-reg-title">Регестрация</div>
+            <div class="info-text advanced-reg-title">{% trans 'Регестрация'%}</div>
         </div>
         
         <div class="reg-parent">
             <div class="social-reg">
-                <div class="social-reg-title">Регестрация через социальные сети</div>
+                <div class="social-reg-title">{% trans 'Регестрация через социальные сети'%}</div>
                 <div class="social-reg-panel">
                     <a class="social-link" href="{% url 'social:begin' 'facebook' %}">
                         <div class="facebook">
@@ -46,7 +46,7 @@
         </div>
         <div class="reg-submit">
             <div class="main-button">
-                <button type="submit" form="reg-form" class="orange-button" style="border:0">Зарегестрироваться</buttom>
+                <button type="submit" form="reg-form" class="orange-button" style="border:0">{% trans 'Зарегестрироваться'%}</buttom>
             </div>
         </div>
     </div>    

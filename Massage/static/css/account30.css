@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+
+/* The block of the main part */
+
+.everything {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 95%;
+}
+
+
+/* The part of the user authentication table 
+--------------------------------------------
+*/
+
+.auth-part {
+    width: 100%;
+    min-height: 29em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.need-auth-text {
+    flex: 1;
+    max-width: 98%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-text {
+    width: 30em;
+    min-height: 2.5em;
+    height: 100%;
+    word-break: break-word;
+    text-align: center;
+}
+
+@media screen and (max-width:389px) {
+    .auth-text {
+        max-width: 95%;
+        font-size: 17px;
+    }
+}
+
+.user-auth-form-parent {
+    flex: 3;
+    max-width: 96%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-auth-form {
+    width: 25em;
+    height: 18em;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #e9ecef;
+    border: 1px solid #cacccc;
+    border-radius: 1%;
+    text-align: left;
+}
+
+.auth-social-media {
+    margin-top: .7em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.tips {
+    margin-top: .3em;
+    margin-bottom: 1em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:350px) {
+    .tips {
+        font-size: 14px;
+        flex-direction: column !important;
+    }
+}
+
+.login-button-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.login-button {
+    height: 2.5em;
+    margin-top: 1em;
+    border: 0px;
+    color: #ffffff
+}
+
+.regestration-link {
+    text-decoration: none;
+    color: #000000;
+    max-width: 95%
+}
+
+.regestration-link:hover {
+    color: #000000;
+}
+
+
+/* The part of the user's inforamtion
+---------------------------------------
+*/
+
+@media screen and (max-width:600px) {
+    .about {
+        width: 34em;
+        max-width: 95%;
+        height: 4.2em;
+        background-color: #ffffff;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .about-title {
+        flex: 3;
+        width: 8em;
+        max-width: 100%;
+        height: 3em;
+        font-size: 1.13em;
+        border: 0;
+        border-bottom-style: solid;
+        border-bottom-color: #abadb0;
+        border-bottom-width: .115em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .about-text {
+        flex: 3;
+        width: 17em;
+        max-width: 100%;
+        height: 3.3em;
+        font-size: 1.13em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+
+/* The block of the inforamtion about records 
+----------------------------------------------
+*/
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-top: 2.4em;
+    margin-bottom: 2em;
+    max-width: 95%;
+    width: 40em;
+    height: 23em;
+    border-radius: 1%;
+}
+
+.devided-line {
+    background-color: #adadad;
+    height: 2px;
+}
+
+.record-area-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.3em;
+    text-align: center;
+    margin-bottom: .8em;
+    margin-top: 2.3em
+}
+
+.record-area-line-parent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.record-area-line {
+    height: 2px;
+    background-color: #adadad;
+    width: 8em;
+}
+
+.cards {
+    max-width: 95%;
+    margin-left: .5em;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    min-height: 19em;
+    width: 43em;
+}
+
+
+/* The part of the records 
+-----------------------------
+*/
+
+.card {
+    width: 30em;
+    max-width: 95%;
+    max-height: 100%;
+    font-size: 20px;
+    margin-top: 1em;
+}
+
+.name_of_service {
+    height: 1.3em;
+    text-align: left;
+    font-family: 'Alata', sans-serif;
+}
+
+.card-body {
+    font-size: .8em !important;
+}
+
+.record-text {
+    font-family: 'Alata', sans-serif;
+    font-weight: 600;
+}
+
+.button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.rec-button-disabled {
+    width: 11em;
+    height: 2.5em;
+    color: #ffffff;
+    background-color: #b8b2b2;
+    border: 0px;
+    border-radius: 18px;
+    box-shadow: 0 3px 0px 3px #857f7f;
+    transition: all .3s;
+}
+
+.rec-button-disabled:hover {
+    box-shadow: 0 1px 0px 1px #857f7f;
+    outline: none;
+}
+
+.rec-button-disabled:focus {
+    outline: none;
+}
+
+.rec-button-disabled:visited {
+    outline: none;
+}
+
+
+/* The part of the notifications user's state
+---------------------------------------------
+*/
+
+.empty-message-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5em;
+}
+
+@media screen and (max-width:350px) {
+    .big-text {
+        font-size: 21px;
+    }
+}

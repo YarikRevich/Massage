@@ -1,0 +1,714 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+/* A part for the head part styles */
+
+
+/* A part for the landing button */
+
+.landing-button {
+    float: left;
+    background-color: rgb(0, 0, 0, 0.7);
+    height: 3.5em;
+    max-width: 100%
+}
+
+
+/* A part for the reviews, services, info buttons */
+
+.reviews-services-info-buttons {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(0, 0, 0, 0.7);
+    height: 3.5em
+}
+
+
+/* A part for the flags of countries */
+
+.flags {
+    flex: 8;
+    min-width: 7em;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+
+@media screen and (max-width:749px) {
+    .flags {
+        min-width: 6em;
+    }
+}
+
+@media screen and (max-width:640px) {
+    .flags {
+        min-width: 5.4em;
+    }
+}
+
+@media screen and (max-width:604px) {
+    .flags {
+        flex: 10;
+        min-width: 5em;
+    }
+}
+
+
+/* A part for the account button */
+
+.account {
+    background-color: rgb(0, 0, 0, 0.7);
+    height: 3.5em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.account-icon:hover .account-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.account-dropdown-menu {
+    z-index: 2000;
+    display: none;
+    position: absolute;
+    right: 1em;
+    min-width: 11.5em;
+    min-height: 4.5em;
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0, .6);
+}
+
+.account-dropdown-menu-detailed {
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: .9em;
+}
+
+.account-dropdown-menu-margin {
+    margin-top: .8em;
+    margin-bottom: 1.5em;
+}
+
+.account-image {
+    flex: 1;
+    float: right;
+    border-radius: 10px;
+    height: 3em;
+    margin-top: .25em
+}
+
+
+/* A part for the main part styles*/
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.articles {
+    border: 1px solid #000000;
+    width: 50em;
+    max-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafcfb;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .3), -23px 0 20px -23px rgba(0, 0, 0, .8), 23px 0 20px -23px rgba(0, 0, 0, .8), 0 0 40px rgba(0, 0, 0, .1) inset;
+}
+
+
+/* A part of the notification icon */
+
+.hidder {
+    display: block;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, .4);
+}
+
+.toast {
+    z-index: 1200;
+    position: fixed;
+    margin-top: -24em;
+    width: 30em !important;
+    min-height: 10em !important;
+    max-width: 100% !important;
+    border-radius: 30px !important;
+    box-shadow: 0 5px 0px 1px #018203 !important;
+    color: #ffffff !important;
+    word-break: break-word;
+    display: flex !important;
+    flex-direction: column !important;
+    background-color: #11ba13 !important;
+}
+
+.toast-header {
+    max-width: 100% !important;
+    background-color: #11ba13 !important;
+}
+
+.error-notification-title {
+    width: 17em
+}
+
+.head-line {
+    width: 19em !important;
+    max-width: 100% !important;
+}
+
+.toast-body {
+    font-size: 1.3em !important;
+    max-width: 100% !important;
+    margin-top: .6em !important;
+    text-align: center !important;
+    align-items: center !important;
+}
+
+.close-button {
+    float: right !important;
+}
+
+.close {
+    transition: transform .2s ease-in-out;
+}
+
+.close:hover {
+    transform: rotateZ(90deg);
+    outline: none;
+}
+
+.close:visited {
+    outline: none;
+}
+
+.close:focus {
+    outline: none;
+}
+
+#buttons {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast {
+    opacity: 1 !important;
+}
+
+
+/* A part for the footer styles */
+
+.footer {
+    background-color: #323e35;
+    max-width: 100%;
+    height: 10em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-height:945px) {
+    .footer {
+        height: 12em
+    }
+}
+
+.sub-footer {
+    height: 100%;
+    width: 36em;
+    max-width: 95%;
+    max-height: 100%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.creator-info {
+    flex: 1;
+    text-align: center;
+    color: #ffffff;
+    max-width: 100%;
+    height: 86%;
+    border-right-style: solid;
+    border-right-color: #cfcfcf;
+    border-right-width: .05em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.contacts-with-creator {
+    flex: 1;
+    text-align: center;
+    color: #ffffff;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mailing-list {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.mailing-list-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+@media screen and (max-width:533px) {
+    .mailing-list-form {
+        height: 6em;
+        flex-direction: column;
+        justify-content: start;
+        align-items: flex-start;
+    }
+    .footer {
+        height: 12em;
+    }
+    .form-input {
+        margin-top: 1.5em !important;
+    }
+    .mailinglist-submit-button {
+        margin-top: .4em !important;
+    }
+}
+
+@media screen and (max-width:419px) {
+    .footer {
+        height: 23em;
+    }
+    .sub-footer {
+        flex-direction: column;
+    }
+    .creator-info {
+        border: 0;
+        border-bottom-style: solid;
+        border-bottom-color: #cfcfcf;
+        border-bottom-width: .05em;
+    }
+}
+
+.mailinglist-submit-button {
+    border: 0;
+    margin-left: .5em;
+    margin-top: -.3em;
+    font-size: .88em;
+}
+
+.form-input {
+    margin-left: .4em;
+    width: 11em !important;
+}
+
+.comminication {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.github {
+    border-radius: 30px;
+    background-color: #000000;
+}
+
+.footer-buttons {
+    align-self: flex-start;
+}
+
+.button-margin-left {
+    margin-left: .5em;
+    margin-bottom: -.4em;
+}
+
+.footer-link {
+    color: #ffffff;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+}
+
+
+/* A start of common parts of css code for the other pages */
+
+
+/* A part for the info tables for such pages as Info and Account */
+
+.main-info {
+    width: 43em;
+    max-width: 95%;
+    min-height: 29em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    box-shadow: 0 6px 1px 3px #abadb0;
+}
+
+.info-text {
+    max-width: 100%;
+    height: 2.5em;
+    width: 10em;
+    font-size: 1.2em;
+    background-color: #ff6d00;
+    box-shadow: 0 4px 0px .5px #c45604;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px 20px 20px 20px;
+}
+
+.info-block {
+    margin-top: .5em;
+    height: 3.5em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-block {
+    height: 25em;
+    width: 43em;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.about {
+    width: 34em;
+    max-width: 95%;
+    height: 3.3em;
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-title {
+    flex: 1;
+    width: 8em;
+    max-width: 100%;
+    height: 2em;
+    font-size: 1.13em;
+    border-right-style: solid;
+    border-right-color: #abadb0;
+    border-right-width: .115em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-text {
+    flex: 3;
+    width: 10em;
+    max-width: 100%;
+    height: 3.3em;
+    font-size: 1.13em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Styles for the buttons which each page contains */
+
+.orange-button {
+    background-color: #ff6d00;
+    color: #ffffff;
+    text-align: center;
+    min-width: 8em;
+    min-height: 2em;
+    padding: .5em;
+    border-radius: 10px;
+    box-shadow: 0px 8px 0 -.5px #c45604;
+    transition: all .2s ease;
+}
+
+.orange-button:hover {
+    border-radius: 7px;
+    box-shadow: 0px 0px 0 -.5px #c45604;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.orange-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.green-button {
+    height: 2.5em;
+    margin-top: .5em;
+    border: 0px;
+    color: #ffffff;
+    background-color: #11ba13;
+    width: 10em;
+    box-shadow: 0 2px .3px 3px #048f06;
+    border-radius: 20px;
+    transition: all .3s;
+}
+
+.green-button:hover {
+    background-color: #11ba13;
+    box-shadow: 0 1px .3px 1px #018203;
+}
+
+.green-button:focus {
+    outline: none;
+}
+
+.green-button:checked {
+    outline: none;
+}
+
+.green-button:visited {
+    outline: none;
+}
+
+.red-button {
+    min-width: 11em;
+    height: 2.5em;
+    color: #ffffff;
+    background-color: #de2a2a;
+    border: 0px;
+    border-radius: 18px;
+    box-shadow: 0 3px 0px 3px #b50909;
+    transition: all .3s;
+}
+
+.red-button:hover {
+    box-shadow: 0 1px 0px 1px #b50909;
+    outline: none;
+}
+
+.red-button:focus {
+    outline: none;
+}
+
+.red-button:visited {
+    outline: none;
+}
+
+.emassage {
+    text-shadow: 0px 0px 20px white;
+    font-size: 2em;
+    font-family: 'Lobster', cursive;
+    transition: all 10s;
+    animation: massage-pulse 2s infinite;
+}
+
+@media screen and (max-width: 670px) {
+    .emassage {
+        font-size: 1.5em;
+    }
+}
+
+.emassage:hover {
+    animation: none;
+    color: #ffffff;
+    text-shadow: 0px 0px 0px #ffffff;
+}
+
+@keyframes massage-pulse {
+    0% {
+        color: #ffffff;
+        text-shadow: 0px 0px 20px white;
+    }
+    50% {
+        color: #0cf046;
+        text-shadow: 0px 0px 40px #0cf046;
+    }
+    100% {
+        color: #ffffff;
+        text-shadow: 0px 0px 20px white;
+    }
+}
+
+
+/* The part for the animated scrollup button */
+
+@media screen and (min-width:1600px) {
+    .scrollup {
+        position: fixed;
+        top: 87%;
+        right: 93.5%;
+        margin: auto
+    }
+}
+
+@media screen and (min-width:1400px) and (max-width:1600px) {
+    .scrollup {
+        position: fixed;
+        top: 87%;
+        right: 91%;
+        margin: auto
+    }
+}
+
+@media screen and (min-width:1300px) and (max-width:1400px) {
+    .scrollup {
+        position: fixed;
+        top: 87%;
+        right: 90%;
+        margin: auto
+    }
+}
+
+@media screen and (min-width:1100px) and (max-width:1300px) {
+    .scrollup {
+        position: fixed;
+        top: 87%;
+        right: 88%;
+        margin: auto
+    }
+}
+
+@media screen and (min-width:950px) and (max-width:1100px) {
+    .scrollup {
+        position: fixed;
+        top: 87%;
+        right: 90%;
+        margin: auto
+    }
+}
+
+@media screen and (min-width:800px) and (max-width:950px) {
+    .scrollup {
+        position: fixed;
+        top: 87%;
+        right: 87%;
+        margin: auto
+    }
+}
+
+@media screen and (max-width:800px) {
+    .scrollup {
+        display: none;
+    }
+}
+
+.scrollup {
+    border-radius: 50px;
+    animation: scrollup 2s infinite;
+}
+
+@-webkit-keyframes scrollup {
+    0% {
+        -webkit-box-shadow: 0 0 0 0 #000000;
+    }
+    70% {
+        -webkit-box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
+    }
+    100% {
+        -webkit-box-shadow: 0 0 0 0 #000000;
+    }
+}
+
+@keyframes scrollup {
+    0% {
+        -moz-box-shadow: 0 0 0 0 #cf5d06;
+        box-shadow: 0 0 0 0 #cf5d06;
+    }
+    70% {
+        -moz-box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
+        box-shadow: 0 0 0 30px rgba(204, 169, 44, 0);
+    }
+    100% {
+        -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+        box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+    }
+}
+
+
+/* The part for the animated cross button which ServiceInfo page contains */
+
+.cross-image:hover {
+    animation: cross .35s 1;
+}
+
+@keyframes cross {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    70% {
+        transform: rotateZ(30deg);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+
+
+/* The part for the modificated styles */
+
+.form-control:focus {
+    border-color: #c25706 !important;
+    box-shadow: 0 0 6px 1.5px #ff6d00 !important;
+}
+
+
+/* The part of common modifications */
+
+.a-modification {
+    text-decoration: none;
+    color: #ffffff
+}
+
+.a-modification:hover {
+    text-decoration: none;
+    color: #ffffff
+}

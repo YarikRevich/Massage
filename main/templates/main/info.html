@@ -1,29 +1,30 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title%}
-Контакты
+{% trans 'Контакты'%}
 {% endblock title%}
 {% block link %}
-<link rel="stylesheet" href="{% static "css/info12.css" %}">
+<link rel="stylesheet" href="{% static "css/info14.css" %}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
     <div class="main-info">
         <div class="info-block">
-            <div class="info-text"><span>Информация</span></div>
+            <div class="info-text"><span>{% trans 'Информация'%}</span></div>
         </div>
         <div class="about-block">
             <div class="about">
                 <div class="about-title">
-                    <span>Массажист</span>
+                    <span>{% trans 'Массажист'%}</span>
                 </div>
                 <div class="about-text">
-                    <span>Елена</span>
+                    <span>{% trans 'Елена'%}</span>
                 </div>
             </div>
             <div class="about">
                 <div class="about-title">
-                    <span>Телефон</span>
+                    <span>{% trans 'Телефон'%}</span>
                 </div>
                 <div class="about-text">
                     <span><a href="tel:+1-303-499-7111" style="color:#000000">+41-76-319-81-80</a></span>
@@ -31,13 +32,13 @@
             </div>
             <div class="about">
                 <div class="about-title">
-                    <span>Время роботи</span>
+                    <span>{% trans 'Время роботи'%}</span>
                 </div>
                 <div class="about-text">
                 {% if  work_time_bool %}
-                    <span style="color:green">Открыто,закрывается в {{work_time}}</span>
+                    <span style="color:green">{% trans 'Открыто,закрывается в'%} {{work_time}}</span>
                 {% else %}
-                    <span style="color:red">Закрыто,открываеться в {{work_time}}</span>
+                    <span class="work-time-text" style="color:red">{% trans 'Закрыто,открываеться в'%} {{work_time}}</span>
                 {% endif %}
                     <div class="dropdown-arrow">
                         <img src="https://img.icons8.com/carbon-copy/30/000000/double-down.png"/>
@@ -52,7 +53,7 @@
             </div>
             <div class="about">
                 <div class="about-title">
-                    <span>Соц.сети</span>
+                    <span>{% trans 'Соц.сети'%}</span>
                 </div>
                 <div class="about-text">
                     <span>Test</span>
@@ -61,7 +62,7 @@
         </div>
     </div>
     <div class="location">
-        <div class="location-title">Наше местоположение</div>
+        <div class="location-title">{% trans 'Наше местоположение'%}</div>
         <iframe style="width:33em;height:20em;max-width:95%" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1906.649646851782!2d8.278204792523175!3d47.48192979765461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47906b5f74de9829%3A0xc6cc6ffe06fe86fa!2sFluhmattstrasse%2024%2C%205400%20Baden%2C%20Switzerland!5e0!3m2!1sen!2sua!4v1598018006061!5m2!1sen!2sua"frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
     </div>
 </div>

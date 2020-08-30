@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -12,7 +13,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages import add_message, ERROR, SUCCESS
 from django.utils.translation import activate
-import datetime
 from main.services import (get_username_by_email,
 						check_admin,
 						made_records,
@@ -31,6 +31,10 @@ from main.services import (get_username_by_email,
 						get_user_data,
 						get_newest_services,
 						get_first_service,
+						get_service_info,
+						get_info_about_doctor,
+						get_all_visit_images,
+						get_first_visit_image,
 						SplitedQuerySet)
 
 
@@ -45,7 +49,11 @@ class Landing(TemplateView):
 		context["order_count"] = get_all_made_orders()
 		context["first_service"] = get_first_service()
 		context["newest_services"] = get_newest_services()
+		context["language_code"] = self.request.LANGUAGE_CODE
 		context["todays_data"] = datetime.datetime.today().strftime("%Y-%m-%d")
+		context["info_about_doctor"] = get_info_about_doctor(self.request)
+		context["visit_images"] = get_all_visit_images()
+		context["first_visit_image"] = get_first_visit_image()
 		return context
 
 
@@ -158,6 +166,13 @@ class ServiceList(ListView):
 		return queryset
 
 	
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context["language_code"] = self.request.LANGUAGE_CODE
+		return context
+	
+
+	
 
 
 class ServiceInfo(DetailView, FormView):
@@ -177,7 +192,6 @@ class ServiceInfo(DetailView, FormView):
 
 	def get_context_data(self, **kwargs) -> dict:
 		context = super().get_context_data(**kwargs)
-		
 		try:
 			context["authed"] = self.request.COOKIES["*1%"]
 		except KeyError:
@@ -186,7 +200,10 @@ class ServiceInfo(DetailView, FormView):
 			except KeyError:
 				context["authed"] = False
 		context["has_number"] = get_user_phone_number(self.request)
+		context["service_info"] = get_service_info(self.kwargs["pk"])
+		context["language_code"] = self.request.LANGUAGE_CODE
 		return context
+
 
 	def post(self, request, *args, **kwargs):
 		self.object = self.get_object()

@@ -1,7 +1,7 @@
 from rest_framework.reverse import reverse
-from main.models import Record, Service
+from main.models import Record, Service, DoctorInfo
 from rest_framework.response import Response
-from main.serializers import RecordSerialize, ServiceSerializer
+from main.serializers import RecordSerialize, ServiceSerializer, DoctorInfoSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -19,6 +19,7 @@ class RecordMetaClass(ModelViewSet):
     - Show all the records
     - Show equal records
     - Create/Update records
+    in Record model
 
     This class can be used obly by Admin user
     """
@@ -30,10 +31,33 @@ class RecordMetaClass(ModelViewSet):
     filter_fields = ("seen","status")
 
 class ServiceMetaClass(ModelViewSet):
+    """Can do such actions
+    - Show all the records
+    - Show equal records
+    - Create/Update records
+    in Service model
+
+    This class can be used obly by Admin user
+    """
 
     permission_classes = (IsAdminUser,)
     serializer_class = ServiceSerializer
     queryset = Service.objects.all()
+
+
+class DoctorInfoMetaClass(ModelViewSet):
+    """Can do such actions
+    - Show all the records
+    - Show equal records
+    - Create/Update records
+    in DoctorInfo model
+
+    This class can be used obly by Admin user
+    """
+
+    serializer_class = DoctorInfoSerializer
+    queryset = DoctorInfo.objects.all()
+    permission_classes = (IsAdminUser, )
 
 
     

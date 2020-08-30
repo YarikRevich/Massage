@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="{% static "favicon/icons.png"%}">
     <title>{%block title%}{% endblock title%}</title>
-    <link rel="stylesheet" href="{% static 'css/base40.css' %}"> {% block link%}
+    <link rel="stylesheet" href="{% static 'css/base43.css' %}"> {% block link%}
     <link rel="stylesheet" href="{% static 'css/landing2.css' %}">{% endblock link %}
     <script src="{% static 'js/scrollup_and_close_message1.js' %}"></script>
     <script src="{% static 'js/review_mark.js' %}"></script>
@@ -74,9 +74,9 @@
         <div id="window" class="toast">
             <div class="toast-header">
                 {% if 'error' in message.tags  %}
-                    <span class="error-notification-title">Уведомление об ошибке</span><span class="head-line"><button onclick="close_window()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">&times;</button></span>
+                    <span class="error-notification-title">{% trans 'Уведомление об ошибке' %}</span><span class="head-line"><button onclick="close_window()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">&times;</button></span>
                 {% else %}
-                    <span class="error-notification-title">Уведомление</span><span class="head-line"><button onclick="close_window()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">&times;</button></span>
+                    <span class="error-notification-title">{% trans 'Уведомление' %}</span><span class="head-line"><button onclick="close_window()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">&times;</button></span>
                 {% endif %}
             </div>
             <div class="toast-body">

@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from main.services import create_user_id
 from main.decorators import is_authenticated
+from django.utils.translation import gettext as _
 
 
 class AuthForm(AuthenticationForm):
@@ -18,38 +19,38 @@ class AuthForm(AuthenticationForm):
 		super().__init__(*args, **kwargs)
 
 	username = forms.CharField(label="", widget=forms.EmailInput(
-		attrs={"class": "form-control", "style": "width:17em;margin-top:1em;max-width:95%;align-self:center","placeholder":"Ваш E-mail"}))
+		attrs={"class": "form-control", "style": "width:17em;margin-top:1em;max-width:95%;align-self:center","placeholder":_("Ваш E-mail")}))
 	password = forms.CharField(label="", widget=forms.PasswordInput(
-		attrs={"class": "form-control", "style": "width:17em;margin-top:1em;max-width:95%;;align-self:center","placeholder":"Пароль"}))
+		attrs={"class": "form-control", "style": "width:17em;margin-top:1em;max-width:95%;;align-self:center","placeholder":_("Пароль")}))
 
 
 class RegForm(forms.Form):
 
 	username = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;width:19em;max-width:100%;width:15em", "placeholder":"Логин"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;width:19em;max-width:100%;width:15em", "placeholder":_("Логин")}))
 	email = forms.EmailField(widget=forms.EmailInput(
 		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"E-mail"}))
 	first_name = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em","placeholder":"Ваше имя"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em","placeholder":_("Ваше имя")}))
 	last_name = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Ваша фамилия"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":_("Ваша фамилия")}))
 	phone = forms.CharField(widget=forms.TextInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Номер телефона"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":_("Номер телефона")}))
 	password1 = forms.CharField(widget=forms.PasswordInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Пароль"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":_("Пароль")}))
 	password2 = forms.CharField(widget=forms.PasswordInput(
-		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":"Подтверждение пароля"}))
+		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":_("Подтверждение пароля")}))
 
 	def clean_username(self):
 		data = self.cleaned_data["username"]
 		if User.objects.filter(username=data).exists():
-			raise ValidationError("Пользователь с таким логином уже существует")
+			raise ValidationError(_("Пользователь с таким логином уже существует"))
 		return data
 
 	def clean_email(self):
 		data = self.cleaned_data["email"]
 		if User.objects.filter(email=data).exists():
-			raise ValidationError("Пользователь с таким E-mail уже существует")
+			raise ValidationError(_("Пользователь с таким E-mail уже существует"))
 		return data
 
 	def clean_first_name(self):
@@ -78,7 +79,7 @@ class RegForm(forms.Form):
 
 			return data
 
-		raise ValidationError("Вашы пороли не совподают")
+		raise ValidationError(_("Вашы пороли не совподают"))
 
 
 	def save(self):
@@ -108,11 +109,11 @@ class RecordForm(forms.ModelForm):
 		model = Record
 		fields = ("description","phone")
 		labels = {
-			"description": "Введите дополнительную информацию для врача",
-			"phone": "Введите номер"}
+			"description": _("Введите дополнительную информацию для врача"),
+			"phone": _("Введите номер")}
 		widgets = {
-			"description": forms.Textarea(attrs={"class": "form-control", "style": "height:10em;resize:none", "placeholder": "Введите текст"}),
-			"phone": forms.TextInput(attrs={"class": "form-control", "style": "height:4em;resize:none", "placeholder": "Пример: +380хххххххх"})
+			"description": forms.Textarea(attrs={"class": "form-control", "style": "height:10em;resize:none", "placeholder": _("Введите текст")}),
+			"phone": forms.TextInput(attrs={"class": "form-control", "style": "height:4em;resize:none", "placeholder": _("Пример: +380хххххххх")})
 		}
 
 
@@ -121,9 +122,9 @@ class RecordForm(forms.ModelForm):
 		data = self.cleaned_data["phone"]
 		if data:
 			if not data.startswith("+"):
-				raise ValidationError("Кажеться что Вы написать номер без '+' в начале")	
+				raise ValidationError(_("Кажеться что Вы написали номер без '+' в начале"))	
 			return data
-		raise ValidationError("Кажеться, что Вы не написали номер телефона")
+		raise ValidationError(_("Кажеться, что Вы не написали номер телефона"))
 		
 	
 	def check(self, request):
@@ -183,7 +184,7 @@ class ReviewForm(forms.ModelForm):
 		model = Review
 		fields = ("review", "mark")
 		widgets = {
-			"review": forms.Textarea(attrs={"class": "form-control","style":"height:8em;width:41.3em;margin-top:1.5em;max-width:100%;resize:none","placeholder":"Введите Ваш отзыв"}),
+			"review": forms.Textarea(attrs={"class": "form-control","style":"height:8em;width:41.3em;margin-top:1.5em;max-width:100%;resize:none","placeholder":_("Введите Ваш отзыв")}),
 		}
 
 	@is_authenticated

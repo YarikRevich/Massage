@@ -4,6 +4,38 @@ import phone_field
 from django.shortcuts import reverse, redirect
 
 
+class DoctorInfo(models.Model):
+    """In this one you can set all the doctor's data"""
+
+
+    about_text = models.TextField(
+        verbose_name="Про доктора", max_length=1000)
+    about_text_de = models.TextField(
+        verbose_name="Про доктора на немецком", max_length=1000, null=True, blank=True)
+    work_time_1 = models.CharField(
+        verbose_name="Время роботы 1", max_length=18)
+    work_time_2 = models.CharField(
+        verbose_name="Время роботы 2", max_length=18)
+    
+
+    class Meta:
+        db_table = "about_doctor"
+        verbose_name = "Информация про доктора"
+
+
+class VisitImage(models.Model):
+    """This model saves different visit images for landing"""
+
+    visit_image = models.ImageField(upload_to="visitimages/", null=True, verbose_name="Лендинг изображения")
+
+
+    class Meta:
+        db_table = "visitimg"
+        verbose_name = "Лендинг изображение"
+        verbose_name_plural = "Лендинг изображения"
+
+
+
 class ModificatedUser(models.Model):
     """
     In this model you can extand a native User model
@@ -37,8 +69,12 @@ class Service(models.Model):
 
     name = models.CharField(
         max_length=200, verbose_name="Название услуги")
-    description = models.CharField(
+    name_de = models.CharField(
+        max_length=200, verbose_name="Название услуги на немецом")
+    description = models.TextField(
         max_length=400, verbose_name="Описание", default="-")
+    description_de = models.TextField(
+        max_length=400, verbose_name="Описание на немецком", default="-")
     photo = models.ImageField(
         verbose_name="Фото", upload_to="serviceimage/")
     price = models.IntegerField(

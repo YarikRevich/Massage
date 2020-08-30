@@ -1,19 +1,24 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}
-Учётная запись
+{% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account29.css"%}">
+<link rel="stylesheet" href="{% static "css/account30.css"%}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
+
+    <!-- The main part of the account page-->
     <div class="everything">
         <div class="main-info">
+
+            <!-- The part of the authentication-->
             {% if form is not None %}
             <div class="auth-part">
                 <div class="need-auth-text">
-                    <div class="info-text auth-text">Для продолжения роботы требуеться пройти авторизацию</div>
+                    <div class="info-text auth-text">{% trans 'Для продолжения роботы требуеться пройти авторизацию'%}</div>
                 </div>
                 <div class="user-auth-form-parent">
                     <form class="user-auth-form" method="POST">
@@ -22,27 +27,28 @@
                         {{form.password}}
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" name="check" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Вход по умолчанию</label>
+                            <label class="custom-control-label" for="customCheck1">{% trans 'Вход по умолчанию'%}</label>
                         </div>
-                        <div style="display:flex;justify-content:center;align-items:center">
-                            <button style="height:2.5em;margin-top:1em;border:0px;color:#ffffff" type="submit" class="orange-button">Ввойти</button>
+                        <div class="login-button-parent">
+                            <button type="submit" class="orange-button login-button">{% trans 'Войти'%}</button>
                         </div>
                         <div class="auth-social-media">
                             <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
                             <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
                         </div>
                         <div class="tips">                
-                            <div>Забыли пароль?|</div>
-                            <div><a href="{% url "Reg" %}" style="text-decoration:none;color:#000000;max-width:95%">Зарегестрироваться!</a></div>
+                            <div>{% trans 'Забыли пароль?|'%}</div>
+                            <div><a href="{% url "Reg" %}" class="regestration-link">{% trans 'Зарегистрироваться!'%}</a></div>
                         </div>
                     </form>
                 </div>
             </div>
             {% else %}
             
+            <!-- The part of the user's information -->
             <div class="info-block">
                 <div class="info-text">
-                    <span>Карточка клиента</span>
+                    <span>{% trans 'Карточка клиента'%}</span>
                 </div>
             </div>
             <div class="about-block">
@@ -57,59 +63,69 @@
                     </div>
                 {% endfor %}
             </div>
-            
             {% endif %}
         </div>    
+
+        <!-- The part of some information about made records -->
         <div class="info">
             <div class="devided-line"></div>
-            <div class="record-area-title">История записей</div>
+            <div class="record-area-title">{% trans 'История записей'%}</div>
             <div class="record-area-line-parent">
                 <div class="record-area-line"></div>
             </div>
+
             <div class="cards">
                 {% if form is None%}
                     {% for record in records %}
+
+                        <!-- The part of the record cards -->
                         <div class="card">
                             <div class="card-header">
-                                <div class="name_of_service">Услуга: {{record.name}}</div>
+                                <div class="name_of_service">{% trans 'Услуга:'%}{{record.name}}</div>
                             </div>
                             <div class="card-body">
                                 <p class="card-text">{{record.description}}</p>
                                 <div class="status-bar-line"></div>
                                 {% if record.seen %}
-                                    <p>Статус заявки: <span class="record-text">Просмотрено</span></p>
+                                    <p>{% trans 'Статус заявки:'%}<span class="record-text">{% trans 'Просмотрено'%}</span></p>
                                 {% else %}
-                                    <p>Статус заявки: <span class="record-text">Отослано</span></p>
+                                    <p>{% trans 'Статус заявки:'%}<span class="record-text">{% trans 'Отослано'%}</span></p>
                                 {% endif %}
-                                
-                                {% if record.status %}
-                                    <p>Статус выполнения: <span class="record-text">Завершено</span></p>
+                                        
+                                 {% if record.status %}
+                                    <p>{% trans 'Статус выполнения:'%}<span class="record-text">{% trans 'Завершено'%}</span></p>
                                     <div class="button-div">
-                                        <button type="button" class="rec-button-disabled"><span title="Вы не можете удалить запись так как сеанс уже был">Удалить запись</span></button>
+                                        <button type="button" class="rec-button-disabled"><span title={% trans "Вы не можете удалить запись так как сеанс уже был"%}>{% trans 'Удалить запись'%}</span></button>
                                     </div>
                                 {% else %}
-                                    <p>Статус выполнения: <span class="record-text">Неизвестно</span></p>
+                                    <p>С{% trans 'Статус выполнения:'%}<span class="record-text">{% trans 'Неизвестно'%}</span></p>
                                     <div class="button-div">
-                                        <a href="{% url 'DeleteRecord' pk=record.pk %}"><button type="button" class="red-button">Удалить запись</button></a>
+                                        <a href="{% url 'DeleteRecord' pk=record.pk %}"><button type="button" class="red-button">{% trans 'Удалить запись'%}</button></a>
                                     </div>
                                 {% endif %}
                             </div>
                         </div>
                     {% empty %}
                     {% if made_records and made_records is not None %}
+
+                    <!-- A part of the message which is stated when user deleted all the made but not finished records -->
                     <div class="empty-message-area">
-                        <h2 class="big-text">Ваш архив пуст</h2>
+                        <h2 class="big-text">{% trans 'Ваш архив пуст'%}</h2>
                     </div>
                     {% else %}
+
+                    <!-- A part of the message which is stated when user has never made any records -->
                     <div class="empty-message-area">
-                        <h2 class="big-text">У вас пока не было записей</h2>
-                        <a class="orange-button" href="{% url 'Services' %}">Записаться впервые!</a>
+                        <h2 class="big-text">{% trans 'У вас пока не было записей'%}</h2>
+                        <a class="orange-button" href="{% url 'Services' %}">{% trans 'Записаться впервые!'%}</a>
                     </div>
                     {% endif %}
                     {% endfor %}
                 {% else %}
+
+                    <!-- A part of the message which is stated when user is not authed -->
                     <div class="empty-message-area">
-                        <h2 class="big-text">Вы не авторизованы!</h2>
+                        <h2 class="big-text">{% trans 'Вы не авторизованы!'%}</h2>
                     </div>
                 {% endif %}
             </div>

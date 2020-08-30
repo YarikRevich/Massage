@@ -1,6 +1,7 @@
 from main.models import Review, Service
 
 def add_service_record_urls(request):
+    """Adds some context to all the pages"""
 
     review = Review()
     service = Service()

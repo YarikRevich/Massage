@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-25 18:13+0300\n"
+"POT-Creation-Date: 2020-08-30 12:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/layout/base.html:30
+#: forms.py:22
+msgid "Ваш E-mail"
+msgstr "Ihr E-mail"
+
+#: forms.py:24 forms.py:40
+msgid "Пароль"
+msgstr "Passwort"
+
+#: forms.py:30
+msgid "Логин"
+msgstr "Login"
+
+#: forms.py:34
+msgid "Ваше имя"
+msgstr "Ihr Name"
+
+#: forms.py:36
+msgid "Ваша фамилия"
+msgstr "Ihr Familienname"
+
+#: forms.py:38
+msgid "Номер телефона"
+msgstr "Telefonnummer"
+
+#: forms.py:42
+msgid "Подтверждение пароля"
+msgstr "Passwort Bestätigung"
+
+#: forms.py:47
+msgid "Пользователь с таким логином уже существует"
+msgstr "Benutzer mit diesem Login existiert bereits"
+
+#: forms.py:53
+msgid "Пользователь с таким E-mail уже существует"
+msgstr "Benutzer mit diesem E-mail existiert bereits"
+
+#: forms.py:82
+msgid "Вашы пороли не совподают"
+msgstr "Ihre Passwörter stimmen nicht überein"
+
+#: forms.py:112
+msgid "Введите дополнительную информацию для врача"
+msgstr "Geben Sie zusätzliche Informationen für den Arzt ein"
+
+#: forms.py:113
+msgid "Введите номер"
+msgstr "Gib deine Telefonnummer ein"
+
+#: forms.py:115
+msgid "Введите текст"
+msgstr "Text eingeben"
+
+#: forms.py:116
+msgid "Пример: +380хххххххх"
+msgstr "Beispiel: +49хххххххх"
+
+#: forms.py:125
+msgid "Кажеться что Вы написали номер без '+' в начале"
+msgstr "Es scheint, dass Sie die Telefonnummer am Anfang ohne das '+' geschrieben haben"
+
+#: forms.py:127
+msgid "Кажеться, что Вы не написали номер телефона"
+msgstr "Es scheint, dass Sie Ihre Telefonnummer nicht geschrieben haben"
+
+#: forms.py:187
+msgid "Введите Ваш отзыв"
+msgstr "Geben Sie Ihre Bewertung ein"
+
+#: templates/layout/base.html:30 templates/layout/base.html:109
 msgid "Отзывы"
 msgstr "Gutachten"
 
-#: templates/layout/base.html:33
+#: templates/layout/base.html:33 templates/layout/base.html:110
 msgid "Услуги"
 msgstr "Dienst"
 
-#: templates/layout/base.html:36
+#: templates/layout/base.html:36 templates/layout/base.html:111
+#: templates/main/info.html:5
 msgid "Контакты"
 msgstr "Kontakte"
 
@@ -37,3 +106,319 @@ msgstr "Kundenkarte"
 #: templates/layout/base.html:52
 msgid "Выйти из аккаунта"
 msgstr "Ausloggen"
+
+#: templates/layout/base.html:77
+msgid "Уведомление об ошибке"
+msgstr "Fehlerbenachrichtigung"
+
+#: templates/layout/base.html:79
+msgid "Уведомление"
+msgstr "Benachrichtigung"
+
+#: templates/layout/base.html:107
+msgid "Плоблемы?Обращайтесь!"
+msgstr "Probleme?Kontaktiere uns!"
+
+#: templates/layout/base.html:108
+msgid "Главная"
+msgstr "Zuhause"
+
+#: templates/layout/base.html:116
+msgid "Ваш почтовый ящик"
+msgstr "Ihre Mailbox"
+
+#: templates/layout/base.html:117
+msgid "Подписаться"
+msgstr "Jetzt abonnieren"
+
+#: templates/layout/base.html:123
+msgid "GitHub создателя"
+msgstr "GitHub"
+
+#: templates/main/account.html:5
+msgid "Учётная запись"
+msgstr "Konto"
+
+#: templates/main/account.html:21
+msgid "Для продолжения роботы требуеться пройти авторизацию"
+msgstr "Um weiterarbeiten zu können, müssen Sie die Autorisierung durchlaufen"
+
+#: templates/main/account.html:30
+msgid "Вход по умолчанию"
+msgstr "Standard Login"
+
+#: templates/main/account.html:33
+msgid "Войти"
+msgstr "Betreten"
+
+#: templates/main/account.html:40
+msgid "Забыли пароль?|"
+msgstr "Passwort vergessen?"
+
+#: templates/main/account.html:41
+msgid "Зарегистрироваться!"
+msgstr "Jetzt registrieren!"
+
+#: templates/main/account.html:51
+#, fuzzy
+#| msgid "Карта клиента"
+msgid "Карточка клиента"
+msgstr "Kundenkarte"
+
+#: templates/main/account.html:72
+msgid "История записей"
+msgstr "Geschichte"
+
+#: templates/main/account.html:84
+#, fuzzy
+#| msgid "Услуги"
+msgid "Услуга:"
+msgstr "Dienst"
+
+#: templates/main/account.html:90 templates/main/account.html:92
+msgid "Статус заявки:"
+msgstr "Bewerbungsstatus:"
+
+#: templates/main/account.html:90
+msgid "Просмотрено"
+msgstr "Gesehen"
+
+#: templates/main/account.html:92
+msgid "Отослано"
+msgstr "Geschickt"
+
+#: templates/main/account.html:96 templates/main/account.html:101
+msgid "Статус выполнения:"
+msgstr "Ausführungsstatus"
+
+#: templates/main/account.html:96
+msgid "Завершено"
+msgstr "Abgeschlossen"
+
+#: templates/main/account.html:98
+msgid "Вы не можете удалить запись так как сеанс уже был"
+msgstr ""
+
+#: templates/main/account.html:98 templates/main/account.html:103
+msgid "Удалить запись"
+msgstr ""
+
+#: templates/main/account.html:101
+msgid "Неизвестно"
+msgstr ""
+
+#: templates/main/account.html:113
+msgid "Ваш архив пуст"
+msgstr ""
+
+#: templates/main/account.html:119
+msgid "У вас пока не было записей"
+msgstr ""
+
+#: templates/main/account.html:120
+msgid "Записаться впервые!"
+msgstr ""
+
+#: templates/main/account.html:128
+msgid "Вы не авторизованы!"
+msgstr ""
+
+#: templates/main/info.html:14
+msgid "Информация"
+msgstr ""
+
+#: templates/main/info.html:19
+msgid "Массажист"
+msgstr ""
+
+#: templates/main/info.html:22
+msgid "Елена"
+msgstr ""
+
+#: templates/main/info.html:27
+msgid "Телефон"
+msgstr ""
+
+#: templates/main/info.html:35
+msgid "Время роботи"
+msgstr ""
+
+#: templates/main/info.html:39
+msgid "Открыто,закрывается в"
+msgstr ""
+
+#: templates/main/info.html:41
+msgid "Закрыто,открываеться в"
+msgstr ""
+
+#: templates/main/info.html:56
+msgid "Соц.сети"
+msgstr ""
+
+#: templates/main/info.html:65
+msgid "Наше местоположение"
+msgstr ""
+
+#: templates/main/landingpage.html:9
+msgid "Домашняя страница"
+msgstr ""
+
+#: templates/main/landingpage.html:46
+msgid "Вас приветствует массажный салон Emassage!"
+msgstr ""
+
+#: templates/main/landingpage.html:60
+msgid "Новые услуги уже доступны!"
+msgstr ""
+
+#: templates/main/landingpage.html:61
+msgid "Список самых нових услуг на"
+msgstr ""
+
+#: templates/main/landingpage.html:63 templates/main/landingpage.html:65
+#: templates/main/landingpage.html:67
+msgid "За последнюю неделю мы добавили"
+msgstr ""
+
+#: templates/main/landingpage.html:63
+#, fuzzy
+#| msgid "Услуги"
+msgid "услугу!"
+msgstr "Dienst"
+
+#: templates/main/landingpage.html:65 templates/main/landingpage.html:67
+#, fuzzy
+#| msgid "Услуги"
+msgid "услуг!"
+msgstr "Dienst"
+
+#: templates/main/landingpage.html:85
+msgid "Заходи, и запишись!"
+msgstr ""
+
+#: templates/main/landingpage.html:95 templates/main/landingpage.html:103
+msgid "Хочешь на"
+msgstr ""
+
+#: templates/main/landingpage.html:95 templates/main/landingpage.html:103
+msgid "Тогда нажимай на кнопку ниже"
+msgstr ""
+
+#: templates/main/landingpage.html:96 templates/main/landingpage.html:104
+#: templates/main/services.html:39 templates/main/services.html:55
+msgid "Детальнее"
+msgstr ""
+
+#: templates/main/reg.html:6 templates/main/reg.html:17
+msgid "Регестрация"
+msgstr ""
+
+#: templates/main/reg.html:22
+msgid "Регестрация через социальные сети"
+msgstr ""
+
+#: templates/main/reg.html:49
+msgid "Зарегестрироваться"
+msgstr ""
+
+#: templates/main/review.html:7
+msgid "Озтывы"
+msgstr ""
+
+#: templates/main/review.html:40
+msgid "Опубликовать"
+msgstr ""
+
+#: templates/main/review.html:50
+msgid "Автор отзыва:"
+msgstr ""
+
+#: templates/main/review.html:58 templates/main/review.html:64
+#: templates/main/review.html:70
+msgid "Удалить отзыв"
+msgstr ""
+
+#: templates/main/review.html:76 templates/main/review.html:78
+#: templates/main/review.html:80
+msgid "Вы не автор отзыва или не авторизированы"
+msgstr ""
+
+#: templates/main/review.html:90
+#, fuzzy
+#| msgid "Отзывы"
+msgid "Отзыв:"
+msgstr "Gutachten"
+
+#: templates/main/review.html:94
+msgid "Оценка роботы/обслуживания:"
+msgstr ""
+
+#: templates/main/review.html:106
+msgid "Назад"
+msgstr "zurück"
+
+#: templates/main/review.html:120
+msgid "Далее"
+msgstr "weiter"
+
+#: templates/main/serviceinfo.html:6
+#, fuzzy
+#| msgid "Услуги"
+msgid "Услуга"
+msgstr "Dienst"
+
+#: templates/main/serviceinfo.html:50
+msgid "Стоимость услуги: "
+msgstr "Servicekosten: "
+
+#: templates/main/serviceinfo.html:57 templates/main/serviceinfo.html:59
+msgid "Записаться"
+msgstr "Anmelden"
+
+#: templates/main/serviceinfo.html:65
+msgid "Запись на приём"
+msgstr "Geplanter Termin"
+
+#: templates/main/serviceinfo.html:86
+msgid "Отмена"
+msgstr "Absagung"
+
+#: templates/main/serviceinfo.html:87
+msgid "Готово!"
+msgstr "Getan!"
+
+#: templates/main/services.html:17
+msgid "Привет!"
+msgstr "Hallo!"
+
+#: templates/main/services.html:18
+msgid ""
+"Если Вы впервые в нашем массажном салоне,то Вам надо пройти регестрацию. "
+"Пройдя регестрацию Вы сможете: "
+msgstr ""
+
+#: templates/main/services.html:18
+msgid "1. Записаться на услугу."
+msgstr "1. Melden Sie sich für den Service an."
+
+#: templates/main/services.html:18
+msgid "2. Оставлять отзывы."
+msgstr "2. Bewertungen hinterlassen."
+
+#: templates/main/services.html:18
+msgid "3. Подписаться на рассылку."
+msgstr "3. Abonnieren Sie den Newsletter."
+
+#: templates/main/services.html:20
+msgid ""
+"Ну что,заинтересовало?! Перейти к регестрации Вы можете, нажав на кнопку ниже"
+msgstr ""
+
+#: templates/main/services.html:22
+msgid "Перейти к регистрации"
+msgstr "Zur Registrierung gehen"
+
+#, fuzzy
+#~| msgid "Услуги"
+#~ msgid "услуги!"
+#~ msgstr "Dienst"

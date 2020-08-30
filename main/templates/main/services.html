@@ -1,27 +1,25 @@
 {% extends 'layout/base.html' %}
 {% load static %}
-
+{% load i18n %}
 {% load filterandtag %}
 {% block title %}
 Услуги
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/services5.css' %}">
+<link rel="stylesheet" href="{% static 'css/services6.css' %}">
 {% endblock link %}
 
 {% block content %}
 <div class="articles" style="max-width:100%">
     <div class="serv">
         <div style="max-width:95%;width:40em;min-height:26em;padding:1em;max-width:100%" class="jumbotron">
-            <h1 class="display-4" style="text-align:center">Привет, мир!</h1>
-            <p class="lead" style="margin-bottom:2em">Это простой пример блока с компонентом в стиле jumbotron для
-                привлечения дополнительного
-                внимания к содержанию или информации.</p>
+            <h1 class="display-4" style="text-align:center">{% trans 'Привет!'%}</h1>
+            <p class="lead" style="margin-bottom:2em">{% trans 'Если Вы впервые в нашем массажном салоне,то Вам надо пройти регестрацию. Пройдя регестрацию Вы сможете: '%}<br/><br/> {% trans '1. Записаться на услугу.' %} <br/> {% trans '2. Оставлять отзывы.' %} <br/>{% trans '3. Подписаться на рассылку.'%}</p>
             <hr class="my-4">
-            <p>Использются служебные классы для типографики и расстояния содержимого в контейнере большего размера.</p>
+            <p>{% trans 'Ну что,заинтересовало?! Перейти к регестрации Вы можете, нажав на кнопку ниже'%}</p>
             <p class="lead">
-                <a class="orange-button" href="#" role="button">Learn more</a>
+                <a class="orange-button" href="{% url 'Reg' %}" role="button">{% trans 'Перейти к регистрации' %}</a>
             </p>
         </div>
         <div class="services">
@@ -30,10 +28,15 @@
                 <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
                     <img src="{% static 'media/'|add_picture:service1.photo %}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{service1.name}}</h5>
-                        <p class="card-text">{{service1.description}}</p>
+                        {% if language_code == "ru" %}
+                            <h5 class="card-title">{{service1.name}}</h5>
+                            <p class="card-text">{{service1.description}}</p>
+                        {% else %}
+                            <h5 class="card-title">{{service1.name_de}}</h5>
+                            <p class="card-text">{{service1.description_de}}</p>
+                        {% endif %}
                         <div class="custum-button-div">
-                            <a href="{{ service1.get_absolute_url }}" class="orange-button">Детальнее</a>
+                            <a href="{{ service1.get_absolute_url }}" class="orange-button bigger-button">{% trans 'Детальнее' %}</a>
                         </div>
                     </div>
                 </div>
@@ -41,10 +44,15 @@
                 <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
                     <img src="{% static 'media/'|add_picture:service2.photo %}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{service2}}</h5>
-                        <p class="card-text">{{service1.description}}</p>
+                        {% if language_code == "ru" %}
+                            <h5 class="card-title">{{service2.name}}</h5>
+                            <p class="card-text">{{service2.description}}</p>
+                        {% else %}
+                            <h5 class="card-title">{{service2.name_de}}</h5>
+                            <p class="card-text">{{service2.description_de}}</p>
+                        {% endif %}
                        <div class="custum-button-div">
-                            <a href="{{ service2.get_absolute_url }}" class="orange-button">Детальнее</a>
+                            <a href="{{ service2.get_absolute_url }}" class="orange-button bigger-button">{% trans 'Детальнее' %}</a>
                         </div>
                     </div>
                 </div>
