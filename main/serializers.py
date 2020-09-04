@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Record, Service, DoctorInfo
+from main.models import Record, Service, DoctorInfo, VisitImage
 from phone_field import PhoneField
 
 class RecordSerialize(serializers.ModelSerializer):
@@ -51,3 +51,14 @@ class DoctorInfoSerializer(serializers.ModelSerializer):
             "about_text",
             "about_text_de"
         )
+
+
+class VisitImageSerializer(serializers.ModelSerializer):
+    """Serializes visit images from VisitImage model"""
+
+    class Meta:
+        model = VisitImage
+        fields = (
+            "id",
+            "visit_image"
+        )  

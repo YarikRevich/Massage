@@ -1,3 +1,4 @@
+from binascii import Error
 
 
 class PathLog:
@@ -19,7 +20,7 @@ class PathLog:
 
         try:
             request.session["previous_path"] = self.paths_que[0].split("/",2)[2]
-        except IndexError:
+        except (IndexError, Error):
             pass
         
         return self._get_request(request)

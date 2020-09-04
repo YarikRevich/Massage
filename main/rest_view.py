@@ -1,7 +1,7 @@
 from rest_framework.reverse import reverse
-from main.models import Record, Service, DoctorInfo
+from main.models import Record, Service, DoctorInfo, VisitImage
 from rest_framework.response import Response
-from main.serializers import RecordSerialize, ServiceSerializer, DoctorInfoSerializer
+from main.serializers import RecordSerialize, ServiceSerializer, DoctorInfoSerializer, VisitImageSerializer
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -29,6 +29,7 @@ class RecordMetaClass(ModelViewSet):
     serializer_class = RecordSerialize
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ("seen","status")
+
 
 class ServiceMetaClass(ModelViewSet):
     """Can do such actions
@@ -60,4 +61,17 @@ class DoctorInfoMetaClass(ModelViewSet):
     permission_classes = (IsAdminUser, )
 
 
+class VisitImageMetaClass(ModelViewSet):
+    """Can do such actions
+    - Show all the visitimages
+    - Show equal visitimages
+    - Create/Update visitimages
+    in DoctorInfo model
+
+    This class can be used obly by Admin user
+    """
+
+    serializer_class = VisitImageSerializer
+    queryset = VisitImage.objects.all()
+    permission_classes = (IsAdminUser,)
     

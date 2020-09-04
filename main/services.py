@@ -172,7 +172,24 @@ def get_newest_services() -> list:
 	"""Returns all the services except the first one"""
 
 	today = datetime.datetime.now()
-	range_date = datetime.datetime(today.year, today.month, today.day-7, 0, 0, 0, tzinfo=pytz.UTC)
+	try:
+		range_date = datetime.datetime(today.year, today.month, today.day-7, 0, 0, 0, tzinfo=pytz.UTC)
+	except ValueError:
+		days_in_month = {
+			1:31,
+			2:28 if today.year % 4 != 0 else 29,
+			3:31,
+			4:30,
+			5:31,
+			6:30,
+			7:31,
+			8:31,
+			9:30,
+			10:31,
+			11:30,
+			12:31
+		}
+		range_date = datetime.datetime(today.year, today.month-1, days_in_month[today.month-1]-7, 0, 0, 0, tzinfo=pytz.UTC)
 	return Service.objects.filter(made_time__gte=range_date, pk__gt=Service.objects.first().pk)
 
 def get_service_info(pk) -> object:
@@ -217,11 +234,15 @@ def get_first_visit_image() -> object:
 	"""Returns the first visit image"""
 
 	return VisitImage.objects.first()
+	
 
 def get_all_visit_images() -> object:
 	"""Returns all the visit images except the first one"""
 
-	return VisitImage.objects.filter(pk__gt=VisitImage.objects.first().pk)
+	try:
+		return VisitImage.objects.filter(pk__gt=VisitImage.objects.first().pk)
+	except AttributeError:
+		return None
 	
 
 

@@ -27,7 +27,10 @@ SECRET_KEY = '*en6h2tuffww*_^vhdyu*($m02cb622t$mu++-j!7lt5*^=f%^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+if DEBUG:
+	ALLOWED_HOSTS = ["*"]
+else:
+	ALLOWED_HOSTS = ["emassage.name", "www.emassage.name"]
 
 
 # Application definition
@@ -43,10 +46,10 @@ INSTALLED_APPS = [
     "phone_field",
     "rest_framework",
     "corsheaders",
-    "main",
+    "main.apps.MainConfig",
     "crispy_forms",
     "django_filters",
-    "social_django",
+    "main.apps.SocialConfig",
     "django_nose"
     
     
@@ -222,9 +225,6 @@ SOCIAL_AUTH_PIPELINE = (
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_PAGINATION_CLASS":
-        "main.pagination.PaginationWithMax",
-    "PAGE_SIZE": 2,
     "DEFAULT_AUTHENTIFICATION_CLASSES":
         ("rest_framework.authentification.BasicAuthentification",
         "rest_framework.authentification.SessionAuthentification"),

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import phone_field
 from django.shortcuts import reverse, redirect
+from django.core.validators import MaxValueValidator
 
 
 class DoctorInfo(models.Model):
@@ -33,7 +34,6 @@ class VisitImage(models.Model):
         db_table = "visitimg"
         verbose_name = "Лендинг изображение"
         verbose_name_plural = "Лендинг изображения"
-
 
 
 class ModificatedUser(models.Model):
@@ -96,6 +96,7 @@ class Service(models.Model):
     def get_absolute_url(self):
         return reverse("ServiceInfo", kwargs={"pk": self.pk})
 
+
     class Meta:
 
         db_table = "services"
@@ -143,7 +144,7 @@ class Review(models.Model):
     review = models.CharField(
         max_length=400, verbose_name="Отзыв")
     mark = models.IntegerField(
-        verbose_name="Оценка")
+        verbose_name="Оценка", validators=[MaxValueValidator(5)])
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
