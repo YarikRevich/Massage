@@ -1,3 +1,5 @@
+/* Main part */
+
 .serv {
     display: flex;
     flex-direction: column;
@@ -7,6 +9,41 @@
     max-width: 100%;
     min-height: 100vh;
 }
+
+
+/* Jumbotron */
+
+.jumbotron {
+    max-width: 95% !important;
+    width: 40em !important;
+    min-height: 26em !important;
+    padding: 1em !important;
+}
+
+.display-4 {
+    text-align: center
+}
+
+.jumb-desc {
+    margin-bottom: 2em
+}
+
+.redirect-to-registrate {
+    font-size: 1.3em !important;
+}
+
+@media screen and (max-width:512px) {
+    .redirect-to-registrate {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2em !important
+    }
+}
+
+
+/* All the services */
 
 .services {
     display: flex;
@@ -38,10 +75,23 @@
     }
 }
 
+
+/* Cards of services */
+
 .card {
     max-width: 95%;
+    width: 18rem;
+    margin-top: 2em;
+    margin-bottom: 2em
 }
 
 .bigger-button {
     font-size: 1.2em
+}
+
+.custum-button-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

@@ -184,7 +184,7 @@ class ReviewForm(forms.ModelForm):
 		model = Review
 		fields = ("review", "mark")
 		widgets = {
-			"review": forms.Textarea(attrs={"class": "form-control","style":"height:8em;width:41.3em;margin-top:1.5em;max-width:100%;resize:none","placeholder":_("Введите Ваш отзыв")}),
+			"review": forms.Textarea(attrs={"class": "form-control","style":"height:8em;width:41.3em;margin-top:1.5em;max-width:97.5%;resize:none","placeholder":_("Введите Ваш отзыв")}),
 		}
 
 	@is_authenticated

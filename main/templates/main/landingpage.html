@@ -19,7 +19,7 @@
         <div class="row">
             <div id="carouselExampleInterval" class="carousel slide slider" data-ride="carousel">
                 <div class="carousel-inner">
-                    {% if visit_images %}
+                    {% if visit_images or first_visit_image %}
                     <div class="carousel-item active" data-interval="10000">
                         <img class="slider-image" width="900em" height="430em" src={% static 'media/'|add_picture:first_visit_image.visit_image%} class="d-block w-100 images" alt="...">
                     </div>

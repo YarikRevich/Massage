@@ -3,29 +3,34 @@
 {% load i18n %}
 {% load filterandtag %}
 {% block title %}
-Услуги
+{% trans 'Услуги'%}
 {% endblock title %}
-
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/services6.css' %}">
+<link rel="stylesheet" href="{% static 'css/services9.css' %}">
 {% endblock link %}
 
 {% block content %}
-<div class="articles" style="max-width:100%">
+<div class="articles">
     <div class="serv">
-        <div style="max-width:95%;width:40em;min-height:26em;padding:1em;max-width:100%" class="jumbotron">
-            <h1 class="display-4" style="text-align:center">{% trans 'Привет!'%}</h1>
-            <p class="lead" style="margin-bottom:2em">{% trans 'Если Вы впервые в нашем массажном салоне,то Вам надо пройти регестрацию. Пройдя регестрацию Вы сможете: '%}<br/><br/> {% trans '1. Записаться на услугу.' %} <br/> {% trans '2. Оставлять отзывы.' %} <br/>{% trans '3. Подписаться на рассылку.'%}</p>
+
+        <!-- Jumbotron -->
+        <div class="jumbotron">
+            <h1 class="display-4">{% trans 'Привет!'%}</h1>
+            <p class="lead jumb-desc">{% trans 'Если Вы впервые в нашем массажном салоне,то Вам надо пройти регестрацию. Пройдя регестрацию Вы сможете: '%}<br/><br/> {% trans '1. Записаться на услугу.' %} <br/> {% trans '2. Оставлять отзывы.' %} <br/>{% trans '3. Подписаться на рассылку.'%}</p>
             <hr class="my-4">
             <p>{% trans 'Ну что,заинтересовало?! Перейти к регестрации Вы можете, нажав на кнопку ниже'%}</p>
-            <p class="lead">
+            <p class="lead redirect-to-registrate">
                 <a class="orange-button" href="{% url 'Reg' %}" role="button">{% trans 'Перейти к регистрации' %}</a>
             </p>
         </div>
+
+        <!-- All the services -->
         <div class="services">
             {% for service1,service2 in services %}
             <div class="list-service">
-                <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
+
+                <!-- The first part of services -->
+                <div class="card">
                     <img src="{% static 'media/'|add_picture:service1.photo %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         {% if language_code == "ru" %}
@@ -41,7 +46,9 @@
                     </div>
                 </div>
                 {% if service2 is not None %}
-                <div class="card" style="width: 18rem;margin-top:2em;margin-bottom:2em">
+
+                <!-- The second part of services -->
+                <div class="card">
                     <img src="{% static 'media/'|add_picture:service2.photo %}" class="card-img-top" alt="...">
                     <div class="card-body">
                         {% if language_code == "ru" %}
@@ -58,7 +65,6 @@
                 </div>
                 {% else %}
                 {% endif %}
-                
             </div>
             {% endfor %}
         </div>

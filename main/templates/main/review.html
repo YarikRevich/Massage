@@ -8,12 +8,14 @@
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/review30.css' %}">
+<link rel="stylesheet" href="{% static 'css/review32.css' %}">
 {% endblock link %}
 
 {% block content %}
 <div class="articles">
 	<div class="serv">
+
+		<!-- A part of review form -->
 		<div class="review-form">
 			<form method="POST">
 				{% csrf_token %}
@@ -43,54 +45,54 @@
 				</div>
 			</form>
 		</div>
+
+		<!-- A part of the list of all reviews -->
 		<div class="reviews">	
 			{% for review in page_obj %}
 				<div class="user-review">
 					<div class="title">
 						<div class="author">{% trans 'Автор отзыва:'%} {{review.author}}</div>
 						<div class="plus-image">
-							
+
+							<!-- The part of the review mark image when user is authed -->
 							{% if review.author|transform == user_is_author|transform %}
 								<div class="drop">
 								{% if review.mark >= 4%}
-									<img style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-good.png' %}">
+									<img class="review-image" src="{% static 'favicon/icon-good.png' %}">
 									<div class="drop-down">
 										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="red-button delete-review">{% trans 'Удалить отзыв'%}</button></a>
 									</div>
 								{% elif review.mark == 3%}
 								
-									<img style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-normal.png' %}">
+									<img class="review-image" src="{% static 'favicon/icon-normal.png' %}">
 									<div class="drop-down">
 										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="red-button delete-review">{% trans 'Удалить отзыв'%}</button></a>
 									</div>
 								{% else %}
 								
-									<img style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icons-bad.png' %}">
+									<img class="review-image" src="{% static 'favicon/icons-bad.png' %}">
 									<div class="drop-down">
 										<a href="{% url 'DeleteReviews' pk=review.pk %}"><button type="button" class="red-button delete-review">{% trans 'Удалить отзыв'%}</button></a>
 									</div>
 								{% endif %}
 								</div>
+
+							<!-- The part of the review mark image when user is not authed -->
 							{% else %}
 								{% if review.mark >= 4%}
-									<img title={% trans "Вы не автор отзыва или не авторизированы"%} style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-good.png' %}">
+									<img title="{% trans 'Вы не автор отзыва или не авторизированы' %}" class="review-image" src="{% static 'favicon/icon-good.png' %}">
 								{% elif review.mark == 3 %}
-									<img title={% trans "Вы не автор отзыва или не авторизированы"%} style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-good.png' %}">
+									<img title="{% trans 'Вы не автор отзыва или не авторизированы' %}" class="review-image" src="{% static 'favicon/icon-normal.png' %}">
 								{% else %}
-									<img title={% trans "Вы не автор отзыва или не авторизированы"%} style="width:1.5em;height:1.5em;margin-top:.4em" src="{% static 'favicon/icon-good.png' %}">
+									<img title="{% trans 'Вы не автор отзыва или не авторизированы' %}" class="review-image" src="{% static 'favicon/icons-bad.png' %}">
 								{% endif %}
 							{% endif %}
-							
 						</div>
-					</div>
-					<div class="author-parent">
-						
 					</div>
 					<div class="review-text-parent">
 						<div class="review-text">{% trans 'Отзыв:'%} {{review.review}}</div>
 					</div>
 					<div class="review-parent">
-	
 						<div class="mark-review">{% trans 'Оценка роботы/обслуживания:'%} {{review.mark}}</div>
 					</div>
 					
@@ -99,6 +101,8 @@
 				</div>
 			{% endfor %}
 		</div>
+
+		<!-- A part of pagination -->
 		<div class="pagination-wrapper">
 			{% if page_obj.has_previous %}
 				<div class="previous">

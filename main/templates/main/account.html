@@ -52,15 +52,17 @@
                 </div>
             </div>
             <div class="about-block">
-                {% for name,data in user_data %}
+                {% for name_of_title,data in user_data %}
+                    {% if data != None %}
                     <div class="about">
                         <div class="about-title">
-                            <span>{{name}}</span>
+                            <span>{{name_of_title}}</span>
                         </div>
                         <div class="about-text">
                             <span>{{data}}</span>
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
             {% endif %}

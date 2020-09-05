@@ -6,12 +6,35 @@
 
 /* A part for the head part styles */
 
+.header {
+    background-color: #617874 !important;
+    min-height: 4.5em !important;
+}
+
+.row-params {
+    margin: 0 !important;
+    height: 4.1em !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:575px) {
+    .row-params {
+        margin: 0 !important;
+        height: 100% !important;
+        flex-direction: row !important;
+        justify-content: initial !important;
+        align-items: initial !important;
+    }
+}
+
 
 /* A part for the landing button */
 
 .landing-button {
     float: left;
-    background-color: rgb(0, 0, 0, 0.7);
     height: 3.5em;
     max-width: 100%
 }
@@ -22,7 +45,6 @@
 .reviews-services-info-buttons {
     display: flex;
     justify-content: center;
-    background-color: rgb(0, 0, 0, 0.7);
     height: 3.5em
 }
 
@@ -61,7 +83,6 @@
 /* A part for the account button */
 
 .account {
-    background-color: rgb(0, 0, 0, 0.7);
     height: 3.5em;
     max-width: 100%;
     display: flex;
@@ -117,6 +138,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url("https://images.wallpaperscraft.ru/image/romashka_listia_minimalizm_123533_3840x2400.jpg");
+    background-position: center;
 }
 
 .articles {
@@ -223,7 +246,7 @@
 /* A part for the footer styles */
 
 .footer {
-    background-color: #323e35;
+    background-color: #799490;
     max-width: 100%;
     height: 10em;
     display: flex;

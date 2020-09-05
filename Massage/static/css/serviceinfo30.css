@@ -240,10 +240,10 @@
 /* The part of the record-form */
 
 .red-button {
-    width: 7em !important;
+    min-width: 9.5em !important;
     margin-right: .4em !important;
 }
 
 .green-button {
-    width: 7em !important;
+    width: 10em !important;
 }
