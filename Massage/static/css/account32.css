@@ -104,7 +104,6 @@
 }
 
 .login-button {
-    height: 2.5em;
     margin-top: 1em;
     border: 0px;
     color: #ffffff
@@ -290,6 +289,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     margin-top: 5em;
 }
 

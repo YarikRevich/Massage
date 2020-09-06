@@ -5,7 +5,7 @@
 {% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account30.css"%}">
+<link rel="stylesheet" href="{% static "css/account32.css"%}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
@@ -18,11 +18,14 @@
             {% if form is not None %}
             <div class="auth-part">
                 <div class="need-auth-text">
-                    <div class="info-text auth-text">{% trans 'Для продолжения роботы требуеться пройти авторизацию'%}</div>
+                    {% block name_of_action %}
+                        <div class="info-text auth-text">{% trans 'Для продолжения роботы требуеться пройти авторизацию'%}</div>
+                    {% endblock name_of_action %}
                 </div>
                 <div class="user-auth-form-parent">
                     <form class="user-auth-form" method="POST">
                         {% csrf_token %}
+                        {% block auth_or_reg_form %}
                         {{form.username}}
                         {{form.password}}
                         <div class="custom-control custom-checkbox">
@@ -32,14 +35,16 @@
                         <div class="login-button-parent">
                             <button type="submit" class="orange-button login-button">{% trans 'Войти'%}</button>
                         </div>
+                        
                         <div class="auth-social-media">
                             <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
                             <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
                         </div>
                         <div class="tips">                
-                            <div>{% trans 'Забыли пароль?|'%}</div>
+                            <div><a href="{% url "PasswordReset" %}" class="regestration-link">{% trans 'Забыли пароль?|'%}</a></div>
                             <div><a href="{% url "Reg" %}" class="regestration-link">{% trans 'Зарегистрироваться!'%}</a></div>
                         </div>
+                        {% endblock auth_or_reg_form %}
                     </form>
                 </div>
             </div>
@@ -127,7 +132,9 @@
 
                     <!-- A part of the message which is stated when user is not authed -->
                     <div class="empty-message-area">
-                        <h2 class="big-text">{% trans 'Вы не авторизованы!'%}</h2>
+                        {% block notification %}
+                            <h2 class="big-text">{% trans 'Вы не авторизованы!'%}</h2>
+                        {% endblock notification %}
                     </div>
                 {% endif %}
             </div>

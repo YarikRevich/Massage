@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+.user-auth-form-parent {
+    padding: 2em
+}
+
+.user-auth-form {
+    padding: 0 0 1em 0;
+    height: 100% !important;
+}
+
+.auth-text {
+    margin-top: 1em !important
+}
+
+.agreement {
+    margin-top: 1em;
+    width: 90%;
+    color: grey;
+    text-align: center;
+}
+
+.auth-social-media {
+    margin-top: 1.5em !important
+}

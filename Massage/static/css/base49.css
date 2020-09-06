@@ -7,7 +7,7 @@
 /* A part for the head part styles */
 
 .header {
-    background-color: #617874 !important;
+    background-color: #748f8a !important;
     min-height: 4.5em !important;
 }
 
@@ -177,7 +177,7 @@
     margin-top: -24em;
     width: 30em !important;
     min-height: 10em !important;
-    max-width: 100% !important;
+    max-width: 92% !important;
     border-radius: 30px !important;
     box-shadow: 0 5px 0px 1px #018203 !important;
     color: #ffffff !important;
@@ -187,13 +187,37 @@
     background-color: #11ba13 !important;
 }
 
+@media screen and (max-width:781px) {
+    .toast {
+        margin-top: -30em
+    }
+}
+
+@media screen and (max-width:575px) {
+    .toast {
+        margin-top: -45em
+    }
+}
+
 .toast-header {
     max-width: 100% !important;
     background-color: #11ba13 !important;
 }
 
 .error-notification-title {
-    width: 17em
+    width: 100%;
+}
+
+@media screen and (max-width:376px) {
+    .error-notification-title {
+        font-size: .9em
+    }
+}
+
+@media screen and (max-width:258px) {
+    .error-notification-title {
+        font-size: .7em;
+    }
 }
 
 .head-line {
@@ -207,6 +231,7 @@
     margin-top: .6em !important;
     text-align: center !important;
     align-items: center !important;
+    margin-bottom: .5em !important;
 }
 
 .close-button {
@@ -513,6 +538,35 @@
     align-items: center;
 }
 
+.orange-button-for-nav {
+    height: 2.5em;
+    margin-top: .5em;
+    border: 0px;
+    color: #ffffff;
+    background-color: #ff6d00;
+    width: 10em;
+    box-shadow: 0 2px .3px 3px #c45604;
+    border-radius: 20px;
+    transition: all .3s;
+}
+
+.orange-button-for-nav:hover {
+    background-color: #e06404;
+    box-shadow: 0 1px .3px 1px #c45604;
+}
+
+.orange-button-for-nav:focus {
+    outline: none;
+}
+
+.orange-button-for-nav:checked {
+    outline: none;
+}
+
+.orange-button-for-nav:visited {
+    outline: none;
+}
+
 .green-button {
     height: 2.5em;
     margin-top: .5em;
@@ -568,7 +622,7 @@
 
 .emassage {
     text-shadow: 0px 0px 20px white;
-    font-size: 2em;
+    font-size: 2.5em;
     font-family: 'Lobster', cursive;
     transition: all 10s;
     animation: massage-pulse 2s infinite;

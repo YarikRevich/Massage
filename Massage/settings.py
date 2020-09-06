@@ -32,6 +32,7 @@ if DEBUG:
 else:
 	ALLOWED_HOSTS = ["emassage.name", "www.emassage.name"]
 
+DOMAIN = "127.0.0.1:8000"
 
 # Application definition
 
@@ -86,6 +87,7 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'main.context_middlewares.add_service_record_urls',
+                'main.context_middlewares.is_authenticated'
             ],
             "libraries":{
                 "filterandtag":"main.filterandtag.filters"
@@ -137,6 +139,13 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST_USER = "emassagemanager@gmail.com"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = "yariksun4002"
 
 
 LANGUAGE_CODE = 'ru'

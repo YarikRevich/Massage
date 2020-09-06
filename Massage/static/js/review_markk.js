@@ -203,7 +203,7 @@ function iconthree_over() {
 //This func was made for the mouseout event
 function iconthree_out() {
 
-    for (var i = 1; i <= 6; i++) {
+    for (var i = 1; i <= 5; i++) {
         var fail_elements = document.getElementById("icon" + String(i) + "_fail");
         fail_elements.hidden = false;
         var normal_elements = document.getElementById("icon" + String(i));

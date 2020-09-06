@@ -1,4 +1,4 @@
-{% extends 'layout/base.html' %}
+{% extends 'main/account.html' %}
 
 {% load static %}
 {% load i18n %}
@@ -7,48 +7,37 @@
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/reg11.css' %}">
+<link rel="stylesheet" href="{% static 'css/reg12.css' %}">
+<link rel="stylesheet" href="{% static 'css/account32.css'%}">
 {% endblock link %}
 
-{% block content %}
-<div class="articles">
-    <div class="regestration">
-        <div class="info-text-parent">
-            <div class="info-text advanced-reg-title">{% trans 'Регестрация'%}</div>
-        </div>
-        
-        <div class="reg-parent">
-            <div class="social-reg">
-                <div class="social-reg-title">{% trans 'Регестрация через социальные сети'%}</div>
-                <div class="social-reg-panel">
-                    <a class="social-link" href="{% url 'social:begin' 'facebook' %}">
-                        <div class="facebook">
-                            <div>Log in with</div>
-                            <img class="facebook-logo" src="{% static 'favicon/facebook.png' %}">
-                        </div>
-                    </a>
-                    <a href="{% url "social:begin" "google-oauth2" %}"><img style="width:12em;height:3em;max-width:100%" src="{% static 'favicon/google.png' %}"></a>
-                </div>
-            </div>
-            <div class="decorative-line"></div>
-            <div class="simple-reg">
-                <form id="reg-form" method="POST">
-                    {% csrf_token %}
-                    {{form.username}}
-                    {{form.email}}
-                    {{form.first_name}}
-                    {{form.last_name}}
-                    {{form.phone}}
-                    {{form.password1}}
-                    {{form.password2}}
-                </form>
-            </div>
-        </div>
-        <div class="reg-submit">
-            <div class="main-button">
-                <button type="submit" form="reg-form" class="orange-button" style="border:0">{% trans 'Зарегестрироваться'%}</buttom>
-            </div>
-        </div>
-    </div>    
+<!-- A part of the name of action -->
+{% block name_of_action %}
+    <div class="info-text auth-text">{% trans 'Вы находитесь в разделе регистрации'%}</div>
+{% endblock name_of_action %}
+
+<!-- The main part of the form -->
+{% block auth_or_reg_form %}
+{{form.username}}
+{{form.email}}
+{{form.first_name}}
+{{form.last_name}}
+{{form.phone}}
+{{form.password1}}
+{{form.password2}}
+<div class="agreement">
+    <span>*Вводя все эти данные Вы соглашаетесь на дальнейшее их использование</span>
 </div>
-{% endblock content %}
+<div class="login-button-parent">
+    <button type="submit" class="orange-button login-button">{% trans 'Зарегистрироваться'%}</button>
+</div>
+<div class="auth-social-media">
+    <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
+    <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
+</div>
+{% endblock auth_or_reg_form %}
+
+<!-- A part of the empty-message -->
+{% block notification %}
+<h2 class="big-text">{% trans 'Пройдите регистрацию!'%}</h2>
+{% endblock notification %}

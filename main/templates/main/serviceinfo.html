@@ -78,7 +78,8 @@
                                     {% csrf_token %}
                                     {% if has_number %}
                                         {{form.label}}
-                                        {{form.description}}    
+                                        {{form.description}}
+                                        <input type="hidden" name="phone" value="__">  
                                     {% else %}
                                         {{form.description.label}}
                                         {{form.description}}

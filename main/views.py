@@ -1,18 +1,27 @@
 import datetime
+import Massage.settings
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView,DeleteView
-from django.views.generic.edit import FormView
-from main.forms import AuthForm, RegForm, RecordForm, ReviewForm
+from django.views.generic.edit import FormView, View
+from main.forms import AuthForm, RegForm, RecordForm, ReviewForm, PasswordResetForm
 from main.models import Service, Review, Record
 from django.http import JsonResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout
+from main.authentication_backend import authentication
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages import add_message, ERROR, SUCCESS
+from django.contrib.messages import add_message, ERROR, SUCCESS, INFO
 from django.utils.translation import activate
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.utils.html import strip_tags
 from main.services import (get_username_by_email,
 						check_admin,
 						made_records,
@@ -35,6 +44,7 @@ from main.services import (get_username_by_email,
 						get_info_about_doctor,
 						get_all_visit_images,
 						get_first_visit_image,
+						do_logout__cookie,
 						SplitedQuerySet)
 
 
@@ -93,15 +103,14 @@ class Account(TemplateView):
 
 		# Gets username from form
 		username = get_username_by_email(email=request.POST["username"])
-		
+
 		if username is None:
 			return redirect("Account")
 
 		# Gets User model instanse to other deeds
 		
-		user = authenticate(username=username,
-							password=request.POST["password"])
-		
+		user = authentication(username=username,password=request.POST["password"])
+
 		# Checks whether user is admin to permanent authentification
 		if check_admin(username):
 			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
@@ -186,11 +195,13 @@ class ServiceInfo(DetailView, FormView):
 
 
 	def get_success_url(self) -> str:
+
 		self.success_url = reverse_lazy("ServiceInfo", kwargs={"pk": self.kwargs["pk"]})
 		return self.success_url
 
 
 	def get_context_data(self, **kwargs) -> dict:
+
 		context = super().get_context_data(**kwargs)
 		try:
 			context["authed"] = self.request.COOKIES["*1%"]
@@ -206,26 +217,28 @@ class ServiceInfo(DetailView, FormView):
 
 
 	def post(self, request, *args, **kwargs):
+
 		self.object = self.get_object()
 		return super().post(request, *args, **kwargs)
-		
+
 
 	def form_valid(self, form):
 		
-		if form.is_valid():
-			if form.check(self.request):
-				form.save(service_name=self.request.POST["service_name"])
+		ckecking_result = form.check(self.request)
+		if ckecking_result[0]:
+			form.save(service_name=self.request.POST["service_name"])
 
-				add_message(self.request, SUCCESS,
-							"Вы успешно были записаны")
-				
-				return super().form_valid(form)
-			add_message(self.request, ERROR,
-						"Произошла ошибка")
-			return super().form_invalid(form)
+			add_message(self.request, SUCCESS,
+					ckecking_result[1])
+			return super().form_valid(form)
+
+		add_message(self.request, ERROR,
+					ckecking_result[1])
+		return super().form_invalid(form)
 
 
 	def form_invalid(self, form):
+
 		for error_field_name in form.errors:
 			add_message(self.request, ERROR, form.errors[error_field_name])
 		return super().form_invalid(form)
@@ -278,16 +291,71 @@ class DeleteRecordClass(DeleteView):
 		return super().post(request,*args,**kwargs)
 
 
-def set_language(request, language_code):
+class PasswordReset(View):
+
+	name = "PasswordReset"
+
+	def get(self, request, *args, **kwargs) -> object:
+
+		context = {"form": PasswordResetForm()}
+		return render(request, "main/reset_password.html", context)
+
+	def post(self, request, *args, **kwargs) -> object:
+		
+		form = PasswordResetForm(request.POST)
+		if form.is_valid():
+			email = form.cleaned_data["email"]
+			if data := User.objects.filter(email=email):
+				for user in data:
+					subject = "Востановление пароля Emassage.name"
+					template = "main/test.html"
+					context = {
+						"domain": Massage.settings.DOMAIN,
+						"protocol":"http",
+						"uid":urlsafe_base64_encode(force_bytes(user.pk)),
+						"token": default_token_generator.make_token(user),
+						"user":user,
+						"email":user.email,
+						"site_name":"Emassage.name",
+					}
+					email = render_to_string(template, context)
+					send_mail(subject, strip_tags(email), Massage.settings.EMAIL_HOST_USER, [user.email])
+				add_message(request, INFO, "Вам было отправлено письмо на почту, проверте её!")
+				return redirect("PasswordReset")
+			add_message(request, ERROR, "Пользователя с таким E-mail не существует")
+			return redirect("PasswordReset")
+		add_message(request, ERROR, "Что-то пошло не так. Попробуйте снова")
+		return redirect("PasswordReset")
+
+
+def logout_user(request: object) -> object:
+	"""Does logout mechanism"""
+
+	if do_logout__cookie(request):
+		response = redirect("Landing")
+		response.delete_cookie("*1%")
+		return response
+	logout(request)
+	return redirect("Landing")
+
+
+def set_language(request: object, language_code: str) -> object:
 	"""Sets a language of user's interface"""
 
 	activate(language_code)
 	if previous_path := request.session.get("previous_path"):
-		if previous_path == "%(code)s/set_language/%(code)s" % {"code": language_code}:
+		if previous_path == request.get_full_path():
 			return redirect("Landing")
 		return HttpResponseRedirect("/%s/%s" % (language_code, request.session["previous_path"]))
 	return redirect("Landing")
 
 
-def mailinglist_subscribing(request):
-	pass
+def mailinglist_subscribing(request: object):
+	"""Subscribes user on mailinglist"""
+
+	add_message(request, INFO, "Данная функция находиться в розработке")
+	if previous_path := request.session.get("previous_path"):
+		if previous_path == request.get_full_path():
+			return redirect("Landing")
+		return HttpResponseRedirect("/%s/%s" % (request.LANGUAGE_CODE, request.session["previous_path"]))
+	return redirect("Landing")

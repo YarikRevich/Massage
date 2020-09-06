@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.urls import path, include
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.views import LogoutView
 from .views import (Landing,
                 Info,
                 Account,
@@ -11,7 +10,9 @@ from .views import (Landing,
                 ReviewPage,
                 DeleteReviewClass,
                 DeleteRecordClass,
-                mailinglist_subscribing)
+                mailinglist_subscribing,
+                logout_user,
+                PasswordReset)
 
 
 urlpatterns = [
@@ -24,6 +25,8 @@ urlpatterns = [
     path("mailinglist-subscribing", mailinglist_subscribing, name="Mailinglist-subscribing"),
     path("account/", Account.as_view(), name = Account.name),
     path("account/regestration", Regestration.as_view(), name = Regestration.name),
-    path("account/logout", LogoutView.as_view(), name="Logout"),
-    path("account/delete-record/<int:pk>", DeleteRecordClass.as_view(), name = DeleteRecordClass.name)
+    path("account/logout", logout_user, name = "Logout"),
+    path("account/delete-record/<int:pk>", DeleteRecordClass.as_view(), name = DeleteRecordClass.name),
+    path("account/password-reset/", PasswordReset.as_view(), name = PasswordReset.name),
+    path("accounts/", include("django.contrib.auth.urls"))
 ]

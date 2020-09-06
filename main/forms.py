@@ -10,7 +10,15 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from main.services import create_user_id
 from main.decorators import is_authenticated
+from django.contrib.auth.forms import PasswordResetForm
 from django.utils.translation import gettext as _
+
+
+class PasswordResetForm(PasswordResetForm):
+
+	email = forms.CharField(
+		label="", 
+		widget=forms.EmailInput(attrs={"class":"form-control", "style": "width:20em;margin-top:1em;margin-bottom:1.2em;max-width:95%;align-self:center","placeholder":_("Ваш E-mail")}))
 
 
 class AuthForm(AuthenticationForm):
@@ -41,11 +49,13 @@ class RegForm(forms.Form):
 	password2 = forms.CharField(widget=forms.PasswordInput(
 		attrs={"class": "form-control", "style": "margin-top:1em;max-width:100%;width:15em", "placeholder":_("Подтверждение пароля")}))
 
+
 	def clean_username(self):
 		data = self.cleaned_data["username"]
 		if User.objects.filter(username=data).exists():
 			raise ValidationError(_("Пользователь с таким логином уже существует"))
 		return data
+
 
 	def clean_email(self):
 		data = self.cleaned_data["email"]
@@ -53,25 +63,30 @@ class RegForm(forms.Form):
 			raise ValidationError(_("Пользователь с таким E-mail уже существует"))
 		return data
 
+
 	def clean_first_name(self):
 		data = self.cleaned_data["first_name"]
 
 		return data
+
 
 	def clean_last_name(self):
 		data = self.cleaned_data["last_name"]
 
 		return data
 
+
 	def clean_phone(self):
 		data = self.cleaned_data["phone"]
 
 		return data
 
+
 	def clean_password1(self):
 		data = self.cleaned_data["password1"]
 
 		return data
+
 
 	def clean_password2(self):
 		data = self.cleaned_data["password2"]
@@ -120,8 +135,9 @@ class RecordForm(forms.ModelForm):
 	def clean_phone(self):
 
 		data = self.cleaned_data["phone"]
+		
 		if data:
-			if not data.startswith("+"):
+			if not data.startswith("+") and not data == "__":
 				raise ValidationError(_("Кажеться что Вы написали номер без '+' в начале"))	
 			return data
 		raise ValidationError(_("Кажеться, что Вы не написали номер телефона"))
@@ -136,11 +152,12 @@ class RecordForm(forms.ModelForm):
 			try:
 				user = User.objects.get(username=self.request.user.username)
 			except:
-				return False
+				return (False, "Пользователь с таким именем не найден")
 
 		if ModificatedUser.objects.filter(user=user) or self.request.POST.get("phone"):
-			return False if Record.objects.filter(author=user.first_name, status=False, seen=False) else True  
-		return False
+			return (False, "Вы уже сделали запись на сианс. Для того чтобы записаться нужно отменить запись на предыдущий в 'Карточке клиента'")\
+				if Record.objects.filter(author=user.first_name, status=False, seen=False) else (True, "Поздравляю! Вы были записаны")  
+		return (False, "Произошла ошибка, попробуйте снова через несколько минут")
 
 		
 	def save(self, *args, **kwargs) -> object:

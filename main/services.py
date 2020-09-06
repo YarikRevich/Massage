@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 from django.core.exceptions import ObjectDoesNotExist
 from main.models import Record, ModificatedUser, Review, Service, DoctorInfo, VisitImage
-
 from typing import Union,Dict
+
 import random
 import datetime
 import pytz
@@ -245,6 +246,15 @@ def get_all_visit_images() -> object:
 		return None
 	
 
+def do_logout__cookie(request: object) -> None:
+	"""Processes logout process"""
+
+	try:
+		user = ModificatedUser.objects.get(number_of_user=request.COOKIES["*1%"])
+	except KeyError:
+		return False
+	return True
+	
 
 def get_user_data(request):
 	"""Returns all the data about regestrated user"""
