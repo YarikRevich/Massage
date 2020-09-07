@@ -7,8 +7,9 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView,DeleteView
 from django.views.generic.edit import FormView, View
-from main.forms import AuthForm, RegForm, RecordForm, ReviewForm, PasswordResetForm
+from main.forms import AuthForm, RegForm, RecordForm, ReviewForm, PasswordResetForm, PasswordChangeForm
 from main.models import Service, Review, Record
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.http import JsonResponse
 from django.contrib.auth import login, logout
 from main.authentication_backend import authentication
@@ -19,9 +20,10 @@ from django.utils.translation import activate
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
+from django.core.mail import EmailMessage
 from main.services import (get_username_by_email,
 						check_admin,
 						made_records,
@@ -306,9 +308,10 @@ class PasswordReset(View):
 		if form.is_valid():
 			email = form.cleaned_data["email"]
 			if data := User.objects.filter(email=email):
+				print(data)
 				for user in data:
 					subject = "Востановление пароля Emassage.name"
-					template = "main/test.html"
+					template = "main/reset_password__email.html"
 					context = {
 						"domain": Massage.settings.DOMAIN,
 						"protocol":"http",
@@ -318,14 +321,22 @@ class PasswordReset(View):
 						"email":user.email,
 						"site_name":"Emassage.name",
 					}
-					email = render_to_string(template, context)
-					send_mail(subject, strip_tags(email), Massage.settings.EMAIL_HOST_USER, [user.email])
+					email = get_template(template).render(context)
+					send_mail(subject=subject, message=None, from_email=Massage.settings.EMAIL_HOST_USER, recipient_list=[user.email], html_message=email, fail_silently=True)
 				add_message(request, INFO, "Вам было отправлено письмо на почту, проверте её!")
 				return redirect("PasswordReset")
 			add_message(request, ERROR, "Пользователя с таким E-mail не существует")
 			return redirect("PasswordReset")
 		add_message(request, ERROR, "Что-то пошло не так. Попробуйте снова")
 		return redirect("PasswordReset")
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+
+	name = "PassResetConfirm"
+	template_name = "main/password_reset_confirm.html"
+	form_class = PasswordChangeForm
+	success_url = reverse_lazy("Landing")
 
 
 def logout_user(request: object) -> object:

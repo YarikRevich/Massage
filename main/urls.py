@@ -12,7 +12,8 @@ from .views import (Landing,
                 DeleteRecordClass,
                 mailinglist_subscribing,
                 logout_user,
-                PasswordReset)
+                PasswordReset,
+                PasswordResetConfirm)
 
 
 urlpatterns = [
@@ -27,6 +28,6 @@ urlpatterns = [
     path("account/regestration", Regestration.as_view(), name = Regestration.name),
     path("account/logout", logout_user, name = "Logout"),
     path("account/delete-record/<int:pk>", DeleteRecordClass.as_view(), name = DeleteRecordClass.name),
+    path("accounts/reset/<uidb64>/<token>/", PasswordResetConfirm.as_view(), name= PasswordResetConfirm.name),
     path("account/password-reset/", PasswordReset.as_view(), name = PasswordReset.name),
-    path("accounts/", include("django.contrib.auth.urls"))
 ]

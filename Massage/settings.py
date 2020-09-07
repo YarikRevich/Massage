@@ -51,10 +51,8 @@ INSTALLED_APPS = [
     "crispy_forms",
     "django_filters",
     "main.apps.SocialConfig",
-    "django_nose"
-    
-    
-
+    "django_nose",
+    "django_inlinecss"
 ]
 
 MIDDLEWARE = [

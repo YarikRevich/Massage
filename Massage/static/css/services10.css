@@ -10,6 +10,10 @@
     min-height: 100vh;
 }
 
+.toast {
+    margin-top: -73em !important
+}
+
 
 /* Jumbotron */
 

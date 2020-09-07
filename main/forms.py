@@ -10,8 +10,32 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from main.services import create_user_id
 from main.decorators import is_authenticated
-from django.contrib.auth.forms import PasswordResetForm
-from django.utils.translation import gettext as _
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from main.validators import PasswordValidator
+from django.utils.translation import gettext_lazy as _
+
+
+class PasswordChangeForm(SetPasswordForm):
+
+	
+	new_password1 = forms.CharField(label="", widget=forms.PasswordInput(attrs={"class":"form-control", "style":"width:20em", "placeholder":"Новый пароль"}))
+	new_password2 = forms.CharField(label="", widget=forms.PasswordInput(attrs={"class":"form-control", "style":"width:20em;margin-top:1em;margin-bottom:1em", "placeholder":"Подтверждение пароля"}))
+
+
+	def clean_new_password1(self):
+		password1 = self.cleaned_data["new_password1"]
+		PasswordValidator.validate(password1, self.user)
+	
+
+	def clean_new_password2(self):
+		password1 = self.cleaned_data.get("new_password1")
+		password2 = self.cleaned_data.get("new_password2")
+		if password1 and password2:
+			if password1 != password2:
+				raise forms.ValidationError(
+					_("Пароли не совпадают!")
+				)
+		return password2
 
 
 class PasswordResetForm(PasswordResetForm):

@@ -1,0 +1,49 @@
+.main-parent {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 40em;
+    height: 100vh;
+}
+
+.main-parent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-text {
+    text-align: center;
+}
+
+.url {
+    margin-top: 2.5em;
+    color: grey;
+    text-align: center;
+}
+
+.redirect-button {
+    margin-top: 2.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-button {
+    border: 0;
+}
+
+.redirect-button-href {
+    font-size: 1.5em;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.redirect-button-href:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
