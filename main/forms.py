@@ -16,18 +16,27 @@ from django.utils.translation import gettext_lazy as _
 
 
 class PasswordChangeForm(SetPasswordForm):
+	"""Form for the password changing"""
 
-	
-	new_password1 = forms.CharField(label="", widget=forms.PasswordInput(attrs={"class":"form-control", "style":"width:20em", "placeholder":"Новый пароль"}))
-	new_password2 = forms.CharField(label="", widget=forms.PasswordInput(attrs={"class":"form-control", "style":"width:20em;margin-top:1em;margin-bottom:1em", "placeholder":"Подтверждение пароля"}))
+
+	new_password1 = forms.CharField(label="", widget=forms.PasswordInput(attrs={"class":"form-control", "style":"width:20em;max-width:96%", "placeholder":"Новый пароль"}))
+	new_password2 = forms.CharField(label="", widget=forms.PasswordInput(attrs={"class":"form-control", "style":"width:20em;margin-top:1em;margin-bottom:1em;max-width:96%", "placeholder":"Подтверждение пароля"}))
 
 
 	def clean_new_password1(self):
+		"""Cleans password1"""
+
 		password1 = self.cleaned_data["new_password1"]
-		PasswordValidator.validate(password1, self.user)
+		validator = PasswordValidator(password1, self.user)
+		validated_data = validator.validate()
+		if not validated_data[0]:
+			raise ValidationError(validated_data[1])
+		return password1
 	
 
 	def clean_new_password2(self):
+		"""Cleans password2"""
+
 		password1 = self.cleaned_data.get("new_password1")
 		password2 = self.cleaned_data.get("new_password2")
 		if password1 and password2:
@@ -39,6 +48,7 @@ class PasswordChangeForm(SetPasswordForm):
 
 
 class PasswordResetForm(PasswordResetForm):
+	"""Form to pass an email for the futher pass-reset"""
 
 	email = forms.CharField(
 		label="", 
@@ -46,6 +56,7 @@ class PasswordResetForm(PasswordResetForm):
 
 
 class AuthForm(AuthenticationForm):
+	"""Form for the authentification"""
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -57,6 +68,7 @@ class AuthForm(AuthenticationForm):
 
 
 class RegForm(forms.Form):
+	"""Form for the registartions"""
 
 	username = forms.CharField(widget=forms.TextInput(
 		attrs={"class": "form-control", "style": "margin-top:1em;width:19em;max-width:100%;width:15em", "placeholder":_("Логин")}))
@@ -75,6 +87,8 @@ class RegForm(forms.Form):
 
 
 	def clean_username(self):
+		"""Cleans username"""
+
 		data = self.cleaned_data["username"]
 		if User.objects.filter(username=data).exists():
 			raise ValidationError(_("Пользователь с таким логином уже существует"))
@@ -82,6 +96,8 @@ class RegForm(forms.Form):
 
 
 	def clean_email(self):
+		"""Cleans username"""
+
 		data = self.cleaned_data["email"]
 		if User.objects.filter(email=data).exists():
 			raise ValidationError(_("Пользователь с таким E-mail уже существует"))
@@ -89,40 +105,45 @@ class RegForm(forms.Form):
 
 
 	def clean_first_name(self):
-		data = self.cleaned_data["first_name"]
+		"""Cleans first_name"""
 
+		data = self.cleaned_data["first_name"]
 		return data
 
 
 	def clean_last_name(self):
-		data = self.cleaned_data["last_name"]
+		"""Cleans last_name"""
 
+		data = self.cleaned_data["last_name"]
 		return data
 
 
 	def clean_phone(self):
-		data = self.cleaned_data["phone"]
+		"""Cleans phone"""
 
+		data = self.cleaned_data["phone"]
 		return data
 
 
 	def clean_password1(self):
-		data = self.cleaned_data["password1"]
+		"""Cleans password1"""
 
+		data = self.cleaned_data["password1"]
 		return data
 
 
 	def clean_password2(self):
+		"""Cleans password2"""
+
 		data = self.cleaned_data["password2"]
 		if data == self.cleaned_data["password1"]:
-
 			return data
-
 		raise ValidationError(_("Вашы пороли не совподают"))
 
 
 	def save(self):
-	   
+		"""Creates a new entry"""
+		
 		user = User.objects.create(
 			username=self.cleaned_data["username"],
 			email=self.cleaned_data["email"],
@@ -142,7 +163,7 @@ class RegForm(forms.Form):
 
 
 class RecordForm(forms.ModelForm):
-
+	"""Form for the record making"""
 
 	class Meta:
 		model = Record
@@ -157,9 +178,9 @@ class RecordForm(forms.ModelForm):
 
 
 	def clean_phone(self):
+		"""Cleans phone"""
 
 		data = self.cleaned_data["phone"]
-		
 		if data:
 			if not data.startswith("+") and not data == "__":
 				raise ValidationError(_("Кажеться что Вы написали номер без '+' в начале"))	
@@ -168,7 +189,8 @@ class RecordForm(forms.ModelForm):
 		
 	
 	def check(self, request):
-	
+		"""Checks whether user has already made any records"""
+
 		self.request = request
 		try:
 			user = ModificatedUser.objects.select_related("user").get(number_of_user=self.request.COOKIES["*1%"]).user
@@ -185,6 +207,7 @@ class RecordForm(forms.ModelForm):
 
 		
 	def save(self, *args, **kwargs) -> object:
+		"""Creates a new entry"""
 
 		try:
 			author = User.objects.get(username=self.request.user.username)
@@ -216,10 +239,11 @@ class RecordForm(forms.ModelForm):
 			name=kwargs["service_name"],
 			description=self.cleaned_data["description"],
 			phone=phone)
-
 		return new_record
 
+
 class ReviewForm(forms.ModelForm):
+	"""Form for the leaving reviews"""
 
 	class Meta:
 		model = Review
@@ -228,9 +252,10 @@ class ReviewForm(forms.ModelForm):
 			"review": forms.Textarea(attrs={"class": "form-control","style":"height:8em;width:41.3em;margin-top:1.5em;max-width:97.5%;resize:none","placeholder":_("Введите Ваш отзыв")}),
 		}
 
+
 	@is_authenticated
 	def save(self,request,*args,**kwargs):
-		
+		"""Creates a new entry"""
 		
 		try:
 			user = ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user

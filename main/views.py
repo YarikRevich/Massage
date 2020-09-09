@@ -1,5 +1,6 @@
 import datetime
 import Massage.settings
+from social_django.models import UserSocialAuth
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
@@ -24,6 +25,7 @@ from django.template.loader import render_to_string, get_template
 from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.core.mail import EmailMessage
+from main.validators import LoginUserValidator
 from main.services import (get_username_by_email,
 						check_admin,
 						made_records,
@@ -105,41 +107,28 @@ class Account(TemplateView):
 
 		# Gets username from form
 		username = get_username_by_email(email=request.POST["username"])
-
-		if username is None:
-			return redirect("Account")
-
-		# Gets User model instanse to other deeds
 		
-		user = authentication(username=username,password=request.POST["password"])
-
-		# Checks whether user is admin to permanent authentification
-		if check_admin(username):
-			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-			return redirect("Account")
-
-		# Checks whether user pressed ratio button and login him
-		
-		if request.POST.get("check"):
-			if user:
-				login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+		if username:
+			validator = LoginUserValidator(username)
+			if request.POST.get("check"):
+				if validated_user := validator.validate_user__check_on(request):
+					login(request, validated_user, backend='django.contrib.auth.backends.ModelBackend')
+					add_message(request, SUCCESS, "Вы вошли в аккаунт!")
+					return redirect("Account")
+				add_message(request, ERROR,"Данные пользователя введены не правильно")
 				return redirect("Account")
-			return redirect("Account")
-
-		# Gets user id by username stated in form
-		user_id = get_user_id_by_username(username=username)
-		
-		# Validates user's id to futher authentification
-		if user_id:
-			response = redirect("Account")
-
-			# Writes some cookie to futher checking of credentials
-			response.set_cookie("*1%", user_id, expires=6000)
-			return response
-
-		# Writes error message if user is not regestrated
-		# and redirects to the Account page
-		add_message(self.request, ERROR, "Вы не зарегестрированы")
+			else:
+				if validated_user := validator.validate_user__check_off():
+					if not isinstance(validated_user, (int,str)):
+						login(request, validated_user, backend='django.contrib.auth.backends.ModelBackend')
+						add_message(request, SUCCESS, "Вы вошли в аккаунт!")
+						return redirect("Account")
+					response = redirect("Account")
+					response.set_cookie("*1%", validated_user)
+					return response
+				add_message(request, ERROR, "Данные пользователя введены не правильно")
+				return redirect("Account")
+		add_message(request, ERROR, "Вы не указали E-mail")
 		return redirect("Account")
 
 
@@ -159,7 +148,7 @@ class Regestration(FormView):
 	
 	def form_invalid(self, form):
 		for error_field_name in form.errors:
-			add_message(self.request, ERROR, form.errors[error_field_name].as_text)
+			add_message(self.request, ERROR, form.errors[error_field_name].as_text())
 		return super().form_invalid(form)
 
 
@@ -242,7 +231,7 @@ class ServiceInfo(DetailView, FormView):
 	def form_invalid(self, form):
 
 		for error_field_name in form.errors:
-			add_message(self.request, ERROR, form.errors[error_field_name])
+			add_message(self.request, ERROR, form.errors[error_field_name].as_text())
 		return super().form_invalid(form)
 
 
@@ -307,8 +296,7 @@ class PasswordReset(View):
 		form = PasswordResetForm(request.POST)
 		if form.is_valid():
 			email = form.cleaned_data["email"]
-			if data := User.objects.filter(email=email):
-				print(data)
+			if (data := User.objects.filter(email=email)) and not UserSocialAuth.objects.filter(uid=email):
 				for user in data:
 					subject = "Востановление пароля Emassage.name"
 					template = "main/reset_password__email.html"
@@ -323,9 +311,13 @@ class PasswordReset(View):
 					}
 					email = get_template(template).render(context)
 					send_mail(subject=subject, message=None, from_email=Massage.settings.EMAIL_HOST_USER, recipient_list=[user.email], html_message=email, fail_silently=True)
+				
 				add_message(request, INFO, "Вам было отправлено письмо на почту, проверте её!")
 				return redirect("PasswordReset")
-			add_message(request, ERROR, "Пользователя с таким E-mail не существует")
+			if UserSocialAuth.objects.filter(uid=email):
+				add_message(request, ERROR, "Пользователь с таким E-mail зарегестрирован через соц.сеть. Поэтому пароль не может быть изменён")
+			else:
+				add_message(request, ERROR, "Пользователя с таким E-mail не существует")
 			return redirect("PasswordReset")
 		add_message(request, ERROR, "Что-то пошло не так. Попробуйте снова")
 		return redirect("PasswordReset")
@@ -337,6 +329,13 @@ class PasswordResetConfirm(PasswordResetConfirmView):
 	template_name = "main/password_reset_confirm.html"
 	form_class = PasswordChangeForm
 	success_url = reverse_lazy("Landing")
+
+	def form_invalid(self, form):
+		try:
+			add_message(self.request, ERROR, form.errors["new_password1"].as_text())
+		except KeyError:
+			add_message(self.request, ERROR, form.errors["new_password2"].as_text())
+		return redirect("PassResetConfirm", uidb64=self.kwargs["uidb64"], token=self.kwargs["token"])
 
 
 def logout_user(request: object) -> object:

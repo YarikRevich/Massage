@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="{% static "favicon/icons.png"%}">
     <title>{%block title%}{% endblock title%}</title>
-    <link rel="stylesheet" href="{% static 'css/base49.css' %}"> {% block link%}
+    <link rel="stylesheet" href="{% static 'css/base51.css' %}"> {% block link%}
     <link rel="stylesheet" href="{% static 'css/landing2.css' %}">{% endblock link %}
     <script src="{% static 'js/scrollup_and_close_message1.js' %}"></script>
     <script src="{% static 'js/review_markk.js' %}"></script>
@@ -47,9 +47,9 @@
                             <img class="cross-image" src="https://img.icons8.com/color/50/000000/joyent--v1.png"/>
                             <div class="account-dropdown-menu">
                                 <div class="account-dropdown-menu-detailed">
-                                    <a href="{% url 'Account' %}" class="orange-button account-dropdown-menu-margin">{% trans 'Карта клиента' %}</a>
+                                    <a href="{% url 'Account' %}" class="orange-button-for-nav account-dropdown-menu-margin"><span>{% trans 'Карта клиента' %}</span></a>
                                     {% if user_is_authenticated %}
-                                        <a href="{% url 'Logout' %}"><button class="red-button account-dropdown-menu-margin">{% trans 'Выйти из аккаунта' %}</button></a>
+                                        <a href="{% url 'Logout' %}" class="account-dropdown-menu-margin"><button class="orange-button-for-nav"><span>{% trans 'Выйти из аккаунта' %}</span></button></a>
                                     {% endif %}
                                 </div>
                             </div>

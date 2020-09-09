@@ -5,7 +5,7 @@
 {% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account32.css"%}">
+<link rel="stylesheet" href="{% static "css/account37.css"%}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
@@ -33,7 +33,7 @@
                             <label class="custom-control-label" for="customCheck1">{% trans 'Вход по умолчанию'%}</label>
                         </div>
                         <div class="login-button-parent">
-                            <button type="submit" class="orange-button login-button">{% trans 'Войти'%}</button>
+                            <button type="submit" class="orange-button login-button-additional">{% trans 'Войти'%}</button>
                         </div>
                         
                         <div class="auth-social-media">
@@ -61,10 +61,19 @@
                     {% if data != None %}
                     <div class="about">
                         <div class="about-title">
-                            <span>{{name_of_title}}</span>
+                            {% if name_of_title == "Номер телефона" %}
+                                <span class="phone-area">{{name_of_title}}</span>
+                            {% else %}
+                                <span>{{name_of_title}}</span>
+                            {% endif %}
                         </div>
                         <div class="about-text">
-                            <span>{{data}}</span>
+                            
+                            {% if name_of_title == "Email" %}
+                                <span class="email-area">{{data}}</span>
+                            {% else %}
+                                <span>{{data}}</span>
+                            {% endif %}
                         </div>
                     </div>
                     {% endif %}

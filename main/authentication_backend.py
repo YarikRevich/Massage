@@ -3,10 +3,12 @@ from typing import Union
 from django.core.exceptions import ObjectDoesNotExist
 
 
-def authentication(username: str, password: str) -> Union[bool, object]:
+def authentication(username: str, password: str = None, admin: bool = False) -> Union[None, object]:
     """Checks whether user's credentials are valid"""
 
     try:
-        return User.objects.get(username=username, password=password)
+        if not admin:
+            return User.objects.get(username=username, password=password)
+        return User.objects.get(username=username)
     except ObjectDoesNotExist:
-        return False
+        return None

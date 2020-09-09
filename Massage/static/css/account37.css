@@ -40,6 +40,8 @@
     height: 100%;
     word-break: break-word;
     text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 @media screen and (max-width:389px) {
@@ -60,8 +62,8 @@
 
 .user-auth-form {
     width: 25em;
-    height: 18em;
-    max-width: 100%;
+    max-width: 95%;
+    margin-bottom: 1em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,6 +72,7 @@
     border: 1px solid #cacccc;
     border-radius: 1%;
     text-align: left;
+    padding: 2em 1em 2em 1em;
 }
 
 .auth-social-media {
@@ -78,6 +81,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.agreement {
+    margin-top: 1em;
+    width: 90%;
+    color: grey;
+    text-align: center;
 }
 
 .tips {
@@ -103,10 +113,17 @@
     align-items: center
 }
 
+.login-button-additional {
+    margin-top: 1em;
+    border: 0px;
+    color: #ffffff;
+}
+
 .login-button {
     margin-top: 1em;
     border: 0px;
-    color: #ffffff
+    color: #ffffff;
+    min-width: 100%
 }
 
 .regestration-link {
@@ -120,7 +137,7 @@
 }
 
 
-/* The part of the user's inforamtion
+/* The part of the user's information
 ---------------------------------------
 */
 
@@ -164,8 +181,44 @@
     }
 }
 
+@media screen and (max-width:277px) {
+    .email-area {
+        font-size: .9em
+    }
+    .phone-about {
+        font-size: .9em
+    }
+}
 
-/* The block of the inforamtion about records 
+@media screen and (max-width:244px) {
+    .email-area {
+        font-size: .8em
+    }
+    .phone-about {
+        font-size: .9em
+    }
+}
+
+@media screen and (max-width:230px) {
+    .email-area {
+        font-size: .7em
+    }
+    .phone-about {
+        font-size: .9em
+    }
+}
+
+@media screen and (max-width:184px) {
+    .email-area {
+        font-size: .6em
+    }
+    .phone-about {
+        font-size: .9em
+    }
+}
+
+
+/* The block of the information about records 
 ----------------------------------------------
 */
 
