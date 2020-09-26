@@ -1,2 +1,10 @@
-Dockerfile*
-**/env/**
+Dockerfile
+env/
+modify_file.py
+requirements.txt
+start_services.sh
+docker-compose.yml
+mysql_config/
+massage_site/
+apache_config/
+

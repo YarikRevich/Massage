@@ -61,4 +61,4 @@ class VisitImageSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "visit_image"
-        )  
+        )

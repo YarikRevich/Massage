@@ -92,6 +92,7 @@ class Account(TemplateView):
 	def get(self, request, *args, **kwargs) -> object:
 
 		# Checks if user is authentifiacated or has cookies user_id for the authentification
+		
 		if request.user.is_authenticated or request.COOKIES.get("*1%"):
 			context = {
 				"form": None,
@@ -171,9 +172,6 @@ class ServiceList(ListView):
 		context["language_code"] = self.request.LANGUAGE_CODE
 		return context
 	
-
-	
-
 
 class ServiceInfo(DetailView, FormView):
 	"""Shows us page with more detailed info about equal service"""

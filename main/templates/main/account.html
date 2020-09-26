@@ -97,24 +97,24 @@
                         <!-- The part of the record cards -->
                         <div class="card">
                             <div class="card-header">
-                                <div class="name_of_service">{% trans 'Услуга:'%}{{record.name}}</div>
+                                <div class="name_of_service">{% trans 'Услуга:'%} {{record.name}}</div>
                             </div>
                             <div class="card-body">
                                 <p class="card-text">{{record.description}}</p>
                                 <div class="status-bar-line"></div>
                                 {% if record.seen %}
-                                    <p>{% trans 'Статус заявки:'%}<span class="record-text">{% trans 'Просмотрено'%}</span></p>
+                                    <p>{% trans 'Статус заявки:'%} <span class="record-text">{% trans 'Просмотрено'%}</span></p>
                                 {% else %}
-                                    <p>{% trans 'Статус заявки:'%}<span class="record-text">{% trans 'Отослано'%}</span></p>
+                                    <p>{% trans 'Статус заявки:'%} <span class="record-text">{% trans 'Отослано'%}</span></p>
                                 {% endif %}
                                         
                                  {% if record.status %}
-                                    <p>{% trans 'Статус выполнения:'%}<span class="record-text">{% trans 'Завершено'%}</span></p>
+                                    <p>{% trans 'Статус выполнения:'%} <span class="record-text">{% trans 'Завершено'%}</span></p>
                                     <div class="button-div">
-                                        <button type="button" class="rec-button-disabled"><span title={% trans "Вы не можете удалить запись так как сеанс уже был"%}>{% trans 'Удалить запись'%}</span></button>
+                                        <button type="button" class="rec-button-disabled"><span title="{% trans "Вы не можете удалить запись, так как, сеанс уже был завершен" %}">{% trans 'Удалить запись'%}</span></button>
                                     </div>
                                 {% else %}
-                                    <p>С{% trans 'Статус выполнения:'%}<span class="record-text">{% trans 'Неизвестно'%}</span></p>
+                                    <p>С{% trans 'Статус выполнения:'%} <span class="record-text">{% trans 'Неизвестно'%}</span></p>
                                     <div class="button-div">
                                         <a href="{% url 'DeleteRecord' pk=record.pk %}"><button type="button" class="red-button">{% trans 'Удалить запись'%}</button></a>
                                     </div>

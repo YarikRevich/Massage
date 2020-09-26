@@ -25,14 +25,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*en6h2tuffww*_^vhdyu*($m02cb622t$mu++-j!7lt5*^=f%^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
 	ALLOWED_HOSTS = ["*"]
 else:
-	ALLOWED_HOSTS = ["emassage.name", "www.emassage.name"]
-
-DOMAIN = "127.0.0.1:8000"
+	ALLOWED_HOSTS = ["massage.cu.ua", "www.massage.cu.ua"]
+if DEBUG:
+    DOMAIN = "127.0.0.1:8000"
+else:
+    DOMAIN = "massage.cu.ua"
 
 # Application definition
 
@@ -103,9 +105,9 @@ WSGI_APPLICATION = 'Massage.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "massage",
-        "USER": "massage",
-        "PASSWORD": "massage"
+        'NAME': 'massage',
+        'USER': 'massage',
+        'PASSWORD': 'massage'
     }
 }
 

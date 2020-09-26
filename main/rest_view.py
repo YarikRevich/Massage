@@ -3,6 +3,7 @@ from main.models import Record, Service, DoctorInfo, VisitImage
 from rest_framework.response import Response
 from main.serializers import RecordSerialize, ServiceSerializer, DoctorInfoSerializer, VisitImageSerializer
 from rest_framework import generics
+from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -75,3 +76,11 @@ class VisitImageMetaClass(ModelViewSet):
     queryset = VisitImage.objects.all()
     permission_classes = (IsAdminUser,)
     
+
+class TestClass(APIView):
+    """Just returns a status of server"""
+
+    http_method_names = ["get"]
+
+    def get(self, request, *args, **kwargs):
+        return Response({"status": "ok"})

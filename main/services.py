@@ -67,7 +67,7 @@ def get_last_name(request: object) -> str:
 	try:
 		return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.last_name
 	except KeyError:
-		return request.user.last_name
+		return None
 
 def get_user(request) -> str:
 	"""Returns user's username"""
@@ -84,7 +84,7 @@ def get_first_name(request: object) -> str:
 	try:
 		return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.first_name
 	except KeyError:
-		return request.user.first_name
+		return None
 
 def encode_phone_number(number: Union[int, str, None]) -> str:
 	"""Returns already encoded user's number"""
@@ -193,6 +193,7 @@ def get_newest_services() -> list:
 		range_date = datetime.datetime(today.year, today.month-1, days_in_month[today.month-1]-7, 0, 0, 0, tzinfo=pytz.UTC)
 	return Service.objects.filter(made_time__gte=range_date, pk__gt=Service.objects.first().pk)
 
+
 def get_service_info(pk) -> object:
 	"""Returns the exact service gotten by pk"""
 
@@ -261,21 +262,21 @@ def get_user_data(request):
 
 	try:
 		data_list = [
-			("Email", get_email(request)),
-			("Логин", get_user(request)),
-			("Имя", get_first_name(request)),
-			("Фамилия", get_last_name(request)),
-			("Номер телефона", get_user_phone_number(request))
+			("Email", get_email(request.COOKIES["*1%"])),
+			("Логин", get_user(request.COOKIES["*1%"])),
+			("Имя", get_first_name(request.COOKIES["*1%"])),
+			("Фамилия", get_last_name(request.COOKIES["*1%"])),
+			("Номер телефона", get_user_phone_number(request=request))
 		]
 	except KeyError:
 		data_list = [
 			("Email", request.user.email),
 			("Логин", request.user.username),
-			("Имя", request.user.first_name),
-			("Фамилия", request.user.last_name),
+			("Имя", request.user.first_name if request.user.first_name != "" else None),
+			("Фамилия", request.user.last_name if request.user.last_name != "" else None),
 			("Номер телефона", get_user_phone_number(request=request))
 		]
-
+	
 	return data_list
 
 

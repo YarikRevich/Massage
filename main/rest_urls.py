@@ -1,5 +1,5 @@
-from django.urls import path,include
-from main.rest_view import RecordMetaClass, ServiceMetaClass, DoctorInfoMetaClass, VisitImageMetaClass
+from django.urls import path, include
+from main.rest_view import RecordMetaClass, ServiceMetaClass, DoctorInfoMetaClass, VisitImageMetaClass, TestClass
 from rest_framework.routers import DefaultRouter
 
 
@@ -12,4 +12,5 @@ router.register("visitimages", VisitImageMetaClass)
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("test/", TestClass.as_view())
     ]

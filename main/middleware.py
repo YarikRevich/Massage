@@ -12,12 +12,13 @@ class PathLog:
     def __call__(self ,request: object):
 
         def _append_new_path() -> None:
-            self.paths_que.append(request.get_full_path())
-            if len(self.paths_que) >= 3:
-                del self.paths_que[0]
+            if not "api" in request.get_full_path():
+                self.paths_que.append(request.get_full_path())
+                if len(self.paths_que) >= 3:
+                    del self.paths_que[0]
 
         _append_new_path()
-
+        
         try:
             request.session["previous_path"] = self.paths_que[0].split("/",2)[2]
         except (IndexError, Error):
