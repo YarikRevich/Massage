@@ -20,7 +20,7 @@
     
         <div class="service-image">
             <img class="service-img" width="720em" height="500em" src="{% static 'media/'|add_picture:service.photo %}">
-            <div class="help-text"><span>*Для того чтобы записаться,сперва нужно зарегистрироваться, и войти в аккаунт</span></div>
+            <div class="help-text"><span>{% trans '*Для того чтобы записаться,сперва нужно зарегистрироваться, и войти в аккаунт'%}</span></div>
         </div>
     
 
@@ -61,7 +61,7 @@
                 {% else %}
                     <div class="recording-button"><button type="button" class="red-button"><a class="made-record-a" href="{% url "Account" %}">{% trans 'Записаться'%}</a></button></div>
                 {% endif %}
-                <div class="help-text"><span>*Для того чтобы записаться,нажмите на красную кнопку</span></div>
+                <div class="help-text"><span>{% trans '*Для того чтобы записаться,нажмите на красную кнопку'%}</span></div>
                 <div class="modal fade menu" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">

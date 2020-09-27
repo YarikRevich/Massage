@@ -1,6 +1,6 @@
 from django.contrib import admin
 from social_django.models import UserSocialAuth
-from main.models import Service, Record, VisitImage, Review
+from main.models import Service, Record, VisitImage, Review, SocialLoginSettings
 # Register your models here.
 
 
@@ -55,4 +55,12 @@ class VisitImageAdmin(admin.ModelAdmin):
     """Registrates VisitImage model to Admin panel"""
 
     list_display = ("visit_image", )
+    list_per_page = 10
+
+
+@admin.register(SocialLoginSettings)
+class SocialLoginAdmin(admin.ModelAdmin):
+    """Registrates SocialAuth services"""
+
+    list_display = ("service", "status")
     list_per_page = 10

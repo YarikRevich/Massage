@@ -1,8 +1,9 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
 from django.core.exceptions import ObjectDoesNotExist
-from main.models import Record, ModificatedUser, Review, Service, DoctorInfo, VisitImage
+from main.models import Record, ModificatedUser, Review, Service, DoctorInfo, VisitImage, SocialLoginSettings
 from typing import Union,Dict
+from django.utils.translation import gettext_lazy as _
 
 import random
 import datetime
@@ -263,18 +264,18 @@ def get_user_data(request):
 	try:
 		data_list = [
 			("Email", get_email(request.COOKIES["*1%"])),
-			("Логин", get_user(request.COOKIES["*1%"])),
-			("Имя", get_first_name(request.COOKIES["*1%"])),
-			("Фамилия", get_last_name(request.COOKIES["*1%"])),
-			("Номер телефона", get_user_phone_number(request=request))
+			(_("Логин"), get_user(request.COOKIES["*1%"])),
+			(_("Имя"), get_first_name(request.COOKIES["*1%"])),
+			(_("Фамилия"), get_last_name(request.COOKIES["*1%"])),
+			(_("Номер телефона"), get_user_phone_number(request=request))
 		]
 	except KeyError:
 		data_list = [
 			("Email", request.user.email),
-			("Логин", request.user.username),
-			("Имя", request.user.first_name if request.user.first_name != "" else None),
-			("Фамилия", request.user.last_name if request.user.last_name != "" else None),
-			("Номер телефона", get_user_phone_number(request=request))
+			(_("Логин"), request.user.username),
+			(_("Имя"), request.user.first_name if request.user.first_name != "" else None),
+			(_("Фамилия"), request.user.last_name if request.user.last_name != "" else None),
+			(_("Номер телефона"), get_user_phone_number(request=request))
 		]
 	
 	return data_list
@@ -284,6 +285,13 @@ def get_all_made_orders() -> int:
 	"""Return the number of all existing records"""
 
 	return Record.objects.filter(status=True).count()
+
+
+def get_all_auth_service_status() -> list:
+	"""Returns a list with all the auth-services"""
+
+	return SocialLoginSettings.objects.all()
+
 
 class SplitedQuerySet:
 

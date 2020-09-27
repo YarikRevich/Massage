@@ -44,6 +44,10 @@
     margin-bottom: 1em;
 }
 
+.bigger-height {
+    height: 2.2em;
+}
+
 @media screen and (max-width:389px) {
     .auth-text {
         max-width: 95%;

@@ -5,13 +5,13 @@
 {% trans 'Контакты'%}
 {% endblock title%}
 {% block link %}
-<link rel="stylesheet" href="{% static "css/info15.css" %}">
+<link rel="stylesheet" href="{% static "css/info17.css" %}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
     <div class="main-info">
         <div class="info-block">
-            <div class="info-text"><span>{% trans 'Информация'%}</span></div>
+            <div class="info-text bigger-height"><span>{% trans 'Информация'%}</span></div>
         </div>
         <div class="about-block">
             <div class="about">
@@ -38,7 +38,11 @@
                 {% if  work_time_bool %}
                     <span style="color:green">{% trans 'Открыто,закрывается в'%} {{work_time}}</span>
                 {% else %}
-                    <span class="work-time-text" style="color:red">{% trans 'Закрыто,открываеться в'%} {{work_time}}</span>
+                    {% if lang_code == "ru" %}
+                        <span class="work-time-text" style="color:red">{% trans 'Закрыто,открываеться в'%} {{work_time}}</span>
+                    {% else %}
+                        <span class="work-time-text de_work_text" style="color:red">{% trans 'Закрыто,открываеться в'%} {{work_time}}</span>
+                    {% endif %}
                 {% endif %}
                     <div class="dropdown-arrow">
                         <img src="https://img.icons8.com/carbon-copy/30/000000/double-down.png"/>
@@ -53,7 +57,11 @@
             </div>
             <div class="about">
                 <div class="about-title">
-                    <span>{% trans 'Соц.сети'%}</span>
+                    {% if lang_code == "ru" %}
+                        <span>{% trans 'Соц.сети'%}</span>
+                    {% else %}
+                        <span class="de_work_time">{% trans 'Соц.сети'%}</span>
+                    {% endif %}
                 </div>
                 <div class="about-text">
                     <a class="social-media-icon-margin" href="#"><img src="https://img.icons8.com/fluent/50/000000/instagram-new.png"/></a>

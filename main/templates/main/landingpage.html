@@ -64,7 +64,7 @@
             <div class="updates-description">
                 <div class="updates-title"><div class="info-text new-updates-title">&#10071;{% trans 'Новые услуги уже доступны!'%}</div></div>
                 <div class="updates-aknowleadgment">{% trans 'Список самых новых услуг на'%} {{todays_data}}:</div>
-                {% if newest_services|length and first_service|length == 1 %}
+                {% if newest_services|length or first_service|length == 0 %}
                     <div class="updates-announsment">{% trans 'За последнюю неделю мы добавили'%} {{newest_services|length|add:1}} {% trans 'услугу!'%}</div>
                 {% elif newest_services|length and first_service|length <= 5 %}
                     <div class="updates-announsment">{% trans 'За последнюю неделю мы добавили'%} {{newest_services|length|add:1}} {% trans 'услуг!'%}</div>

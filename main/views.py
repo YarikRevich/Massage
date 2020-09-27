@@ -49,6 +49,7 @@ from main.services import (get_username_by_email,
 						get_all_visit_images,
 						get_first_visit_image,
 						do_logout__cookie,
+						get_all_auth_service_status,
 						SplitedQuerySet)
 
 
@@ -80,6 +81,7 @@ class Info(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["work_time_bool"],context["work_time"] = get_work_date()[0],get_work_date()[1]
+		context["lang_code"] = self.request.LANGUAGE_CODE
 		return context
 	
 
@@ -102,7 +104,7 @@ class Account(TemplateView):
 			}
 			return self.render_to_response(context=context)
 
-		return self.render_to_response(context={"form": AuthForm(request.GET)})
+		return self.render_to_response(context={"form": AuthForm(request.GET), "auth_services": get_all_auth_service_status()})
 
 	def post(self, request, *args, **kwargs) -> object:
 

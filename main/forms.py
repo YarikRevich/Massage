@@ -198,12 +198,13 @@ class RecordForm(forms.ModelForm):
 			try:
 				user = User.objects.get(username=self.request.user.username)
 			except:
-				return (False, "Пользователь с таким именем не найден")
+				return (False, _("Пользователь с таким именем не найден"))
 
 		if ModificatedUser.objects.filter(user=user) or self.request.POST.get("phone"):
-			return (False, "Вы уже сделали запись на сианс. Для того чтобы записаться нужно отменить запись на предыдущий в 'Карточке клиента'")\
-				if Record.objects.filter(author=user.first_name, status=False, seen=False) else (True, "Поздравляю! Вы были записаны")  
-		return (False, "Произошла ошибка, попробуйте снова через несколько минут")
+			if Record.objects.filter(author=user.first_name, status=False, seen=False):
+				return (False, _("Вы уже сделали запись на сеанс. Для того чтобы записаться нужно отменить запись на предыдущий в 'Карточке клиента'"))
+			return (True, _("Поздравляю! Вы были записаны"))  
+		return (False, _("Произошла ошибка, попробуйте снова через несколько минут"))
 
 		
 	def save(self, *args, **kwargs) -> object:

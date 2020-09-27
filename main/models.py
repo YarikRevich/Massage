@@ -5,9 +5,21 @@ from django.shortcuts import reverse, redirect
 from django.core.validators import MaxValueValidator
 
 
-class DoctorInfo(models.Model):
-    """In this one you can set all the doctor's data"""
+class SocialLoginSettings(models.Model):
+    """In this model you can make some settings with social-auth services."""
 
+    service = models.CharField(max_length=20, verbose_name="Сервисы")
+    status = models.BooleanField(default=True, verbose_name="Статус активации")
+
+    class Meta:
+
+        db_table = "social_auth"
+        verbose_name = "Настройки авторизации через соц.сети"
+        verbose_name_plural = "Настройки авторизации через соц.сети"
+
+
+class DoctorInfo(models.Model):
+    """In this one you can set all the doctor's data."""
 
     about_text = models.TextField(
         verbose_name="Про доктора", max_length=1000)

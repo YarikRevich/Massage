@@ -5,7 +5,7 @@
 {% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account37.css"%}">
+<link rel="stylesheet" href="{% static "css/account38.css"%}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
@@ -37,8 +37,14 @@
                         </div>
                         
                         <div class="auth-social-media">
-                            <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
-                            <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
+                            {% for auth_service in auth_services%}
+                                {% if auth_service.service == "google" and auth_service.status%}
+                                    <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
+                                {% endif %}
+                                {% if auth_service.service == "facebook" and auth_service.status%}
+                                    <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
+                                {% endif %}
+                            {% endfor %}                      
                         </div>
                         <div class="tips">                
                             <div><a href="{% url "PasswordReset" %}" class="regestration-link">{% trans 'Забыли пароль?|'%}</a></div>
@@ -52,7 +58,7 @@
             
             <!-- The part of the user's information -->
             <div class="info-block">
-                <div class="info-text">
+                <div class="info-text bigger-height">
                     <span>{% trans 'Карточка клиента'%}</span>
                 </div>
             </div>
