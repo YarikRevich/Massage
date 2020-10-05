@@ -26,6 +26,7 @@ from django.core.mail import send_mail
 from django.utils.html import strip_tags
 from django.core.mail import EmailMessage
 from main.validators import LoginUserValidator
+from django.utils.translation import gettext_lazy as _
 from main.services import (get_username_by_email,
 						check_admin,
 						made_records,
@@ -94,7 +95,6 @@ class Account(TemplateView):
 	def get(self, request, *args, **kwargs) -> object:
 
 		# Checks if user is authentifiacated or has cookies user_id for the authentification
-		
 		if request.user.is_authenticated or request.COOKIES.get("*1%"):
 			context = {
 				"form": None,
@@ -110,28 +110,28 @@ class Account(TemplateView):
 
 		# Gets username from form
 		username = get_username_by_email(email=request.POST["username"])
-		
 		if username:
 			validator = LoginUserValidator(username)
 			if request.POST.get("check"):
 				if validated_user := validator.validate_user__check_on(request):
 					login(request, validated_user, backend='django.contrib.auth.backends.ModelBackend')
-					add_message(request, SUCCESS, "Вы вошли в аккаунт!")
+					add_message(request, SUCCESS, _("Вы вошли в аккаунт!"))
 					return redirect("Account")
-				add_message(request, ERROR,"Данные пользователя введены не правильно")
+				add_message(request, ERROR, _("Данные пользователя введены не правильно"))
 				return redirect("Account")
 			else:
 				if validated_user := validator.validate_user__check_off():
-					if not isinstance(validated_user, (int,str)):
-						login(request, validated_user, backend='django.contrib.auth.backends.ModelBackend')
-						add_message(request, SUCCESS, "Вы вошли в аккаунт!")
-						return redirect("Account")
-					response = redirect("Account")
-					response.set_cookie("*1%", validated_user)
-					return response
-				add_message(request, ERROR, "Данные пользователя введены не правильно")
+					if isinstance(validated_user, int):
+						add_message(request, SUCCESS, _("Вы вошли в аккаунт!"))
+						response = redirect("Account")
+						response.set_cookie("*1%", validated_user)
+						return response
+					login(request, validated_user, backend='django.contrib.auth.backends.ModelBackend')
+					add_message(request, SUCCESS, _("Вы вошли в аккаунт!"))
+					return redirect("Account")
+				add_message(request, ERROR, _("Данные пользователя введены не правильно"))
 				return redirect("Account")
-		add_message(request, ERROR, "Вы не указали E-mail")
+		add_message(request, ERROR, _("Вы не указали E-mail"))
 		return redirect("Account")
 
 
@@ -142,6 +142,11 @@ class Regestration(FormView):
 	template_name = "main/reg.html"
 	form_class = RegForm
 	success_url = reverse_lazy("Account")
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context["auth_services"] = get_all_auth_service_status()
+		return context
 
 	def form_valid(self,form) -> object:
 		if form.is_valid():

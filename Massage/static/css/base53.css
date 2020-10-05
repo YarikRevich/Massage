@@ -183,6 +183,10 @@
     background-color: rgb(0, 0, 0, .4);
 }
 
+.add_margin {
+    margin-top: -60em !important;
+}
+
 .toast {
     z-index: 1200;
     position: fixed;

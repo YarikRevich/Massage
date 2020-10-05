@@ -30,11 +30,11 @@ DEBUG = True
 if DEBUG:
 	ALLOWED_HOSTS = ["*"]
 else:
-	ALLOWED_HOSTS = ["massage.cu.ua", "www.massage.cu.ua"]
+	ALLOWED_HOSTS = ["emassage.top", "www.emassage.top"]
 if DEBUG:
     DOMAIN = "127.0.0.1:8000"
 else:
-    DOMAIN = "massage.cu.ua"
+    DOMAIN = "www.emassage.top"
 
 # Application definition
 
@@ -71,7 +71,44 @@ MIDDLEWARE = [
     'main.middleware.PathLog',
 ]
 
+ADMINS = [("Yaroslav", "yariksvitlitskiy81@gmail.com")]
+
+MANAGERS = ADMINS
+
 ROOT_URLCONF = 'Massage.urls'
+
+EXCEPTION_CATCHER = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'main_formatter': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'main_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'main_formatter',
+            'filename': os.path.join(os.getcwd(), 'main.log'),
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'main': {
+            'handlers': ['main_handler'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
 
 TEMPLATES = [
     {
@@ -139,6 +176,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = "/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+SERVER_EMAIL = 'yariksvitlitskiy81@gmail.com'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST_USER = "emassagemanager@gmail.com"

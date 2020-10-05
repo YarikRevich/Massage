@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from social_django.models import UserSocialAuth
 from django.contrib.auth import logout
 from django.core.exceptions import ObjectDoesNotExist
 from main.models import Record, ModificatedUser, Review, Service, DoctorInfo, VisitImage, SocialLoginSettings
@@ -10,13 +11,17 @@ import datetime
 import pytz
 
 
-def get_username_by_email(email) -> Union[str,None]:
+def get_username_by_email(email: str) -> Union[str, None]:
 	"""Returns user's username got by email"""
 
-	try:
-		return User.objects.get(email=email).username
-	except ObjectDoesNotExist:
-		return None
+	users = User.objects.filter(email=email)
+	if len(users) > 1:
+		for user in users:
+			if not UserSocialAuth.objects.filter(user=user):
+				user_to_login = user
+		return user_to_login.username
+	return User.objects.get(email=email).username
+
 
 def create_user_id() -> int:
 	"""Returns a random special user_id to check whether user is authentificated"""
@@ -54,23 +59,23 @@ def get_user_id_by_username(username: str) -> Union[object, None]:
 	except ObjectDoesNotExist:
 		return None
 
-def get_email(request: object) -> str:
+def get_email(user_id: str) -> str:
 	"""Returns user's email"""
 
 	try:
-		return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.email
-	except KeyError:
+		return ModificatedUser.objects.select_related("user").get(number_of_user=user_id).user.email
+	except ObjectDoesNotExist:
 		return request.user.email
 
-def get_last_name(request: object) -> str:
+def get_last_name(user_id: str) -> str:
 	"""Returns user's last_name"""
 
 	try:
-		return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.last_name
-	except KeyError:
+		return ModificatedUser.objects.select_related("user").get(number_of_user=user_id).user.last_name
+	except ObjectDoesNotExist:
 		return None
 
-def get_user(request) -> str:
+def get_user(request: object) -> str:
 	"""Returns user's username"""
 
 	try:
@@ -79,12 +84,12 @@ def get_user(request) -> str:
 		return request.user.username
 
 
-def get_first_name(request: object) -> str:
+def get_first_name(user_id: str) -> str:
 	"""Retuns user's first_name"""
 
 	try:
-		return ModificatedUser.objects.select_related("user").get(number_of_user=request.COOKIES["*1%"]).user.first_name
-	except KeyError:
+		return ModificatedUser.objects.select_related("user").get(number_of_user=user_id).user.first_name
+	except ObjectDoesNotExist:
 		return None
 
 def encode_phone_number(number: Union[int, str, None]) -> str:
@@ -114,7 +119,6 @@ def get_user_phone_number(request) -> str or None:
 
 def made_records(request) -> Union[bool,None]:
 	"""Checks whether user has already made any records"""
-
 
 	try:
 		return ModificatedUser.objects.get(number_of_user=request.COOKIES["*1%"]).made_records
@@ -264,7 +268,7 @@ def get_user_data(request):
 	try:
 		data_list = [
 			("Email", get_email(request.COOKIES["*1%"])),
-			(_("Логин"), get_user(request.COOKIES["*1%"])),
+			(_("Логин"), get_user(request)),
 			(_("Имя"), get_first_name(request.COOKIES["*1%"])),
 			(_("Фамилия"), get_last_name(request.COOKIES["*1%"])),
 			(_("Номер телефона"), get_user_phone_number(request=request))

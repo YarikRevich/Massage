@@ -8,7 +8,7 @@
 
 {% block link %}
 <link rel="stylesheet" href="{% static 'css/reg14.css' %}">
-<link rel="stylesheet" href="{% static 'css/account38.css'%}">
+<link rel="stylesheet" href="{% static 'css/account39.css'%}">
 {% endblock link %}
 
 <!-- A part of the name of action -->
@@ -32,8 +32,14 @@
     <button type="submit" class="orange-button login-button">{% trans 'Зарегистрироваться'%}</button>
 </div>
 <div class="auth-social-media">
-    <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
-    <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
+    {% for auth_service in auth_services%}
+        {% if auth_service.service == "google" and auth_service.status%}
+            <a href="{% url "social:begin" "google-oauth2" %}"><img width="50em" src="{%static 'favicon/au-google.png' %}"></a>
+        {% endif %}
+        {% if auth_service.service == "facebook" and auth_service.status%}
+            <a href="{% url 'social:begin' 'facebook' %}"><img width="50em" src="{% static 'favicon/facebook.png' %}"></a>
+        {% endif %}
+    {% endfor %}                      
 </div>
 {% endblock auth_or_reg_form %}
 
