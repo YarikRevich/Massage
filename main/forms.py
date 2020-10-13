@@ -122,6 +122,8 @@ class RegForm(forms.Form):
 		"""Cleans phone"""
 
 		data = self.cleaned_data["phone"]
+		if ModificatedUser.objects.filter(number=data):
+			raise ValidationError(_("Пользователь с таким номером телефона уже существует"))
 		return data
 
 

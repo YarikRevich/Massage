@@ -117,7 +117,7 @@ def get_user_phone_number(request) -> str or None:
 		return None
 
 
-def made_records(request) -> Union[bool,None]:
+def made_records(request) -> Union[bool, None]:
 	"""Checks whether user has already made any records"""
 
 	try:
@@ -299,73 +299,28 @@ def get_all_auth_service_status() -> list:
 
 class SplitedQuerySet:
 
-	def _create_separated_query_set(self, model: object) -> None:
-		"""
-		Separates query_set on two parts
-		(consists of len of the query_set)
-		"""
-
-		self.query_set = model.objects.all()
-		self.first_part = int(len(self.query_set) / 2)
-		self.second_part = len(self.query_set) - self.first_part
-
-	def _create_first_list(self) -> object:
-		"""Returns parts of the first query_set"""
-
-		if self.first_part == self.second_part:
-			for article in range(0, self.first_part):
-				yield self.query_set[article]
-		else:
-			for article in range(0, self.first_part + 1):
-				yield self.query_set[article]
-
-	def _create_second_list(self) -> object:
-		"""Returns parts of the second query_set"""
-
-		for article in range(self.second_part, len(self.query_set)):
-			yield self.query_set[article]
-
-	def _get_first_list(self) -> None:
-		"""Creates the first separated list"""
-
-		self.first = self._create_first_list()
-
-	def _get_second_list(self) -> None:
-		"""Creates the second separated list"""
-
-		self.second = self._create_second_list()
-
-	def _first_gen(self) -> Union[object,None]:
-		"""Returns the parts of the first generator"""
-
-		try:
-			return next(self.first)
-		except StopIteration:
-			pass
-
-	def _second_gen(self) -> Union[object,None]:
-		"""Returns the parts of the second generator"""
-
-		try:
-			return next(self.second)
-		except StopIteration:
-			pass
-
-	def _get_finall_list(self) -> list:
-		"""Returns the finall list of separated query_set"""
-
-		return [
-				(self._first_gen(), self._second_gen())
-				for _ in range(0, self.second_part)
-			]
+	def _get_filtered_list(self, model, category):
+		if category == "all":
+			head_massage = model.objects.filter(category="Массаж головы")
+			foot_massage = model.objects.filter(category="Массаж ног")
+			back_massage = model.objects.filter(category="Массаж спины")
+			return back_massage.union(foot_massage, head_massage)
+		return model.objects.filter(category=category)
 
 
-	def get_list(self, model) -> object:
-		"""Does all the methods to return the finall list"""
+	def get_list(self, model: object, category: str) -> list:
 
-		self._create_separated_query_set(model)
-		self._create_first_list()
-		self._create_second_list()
-		self._get_first_list()
-		self._get_second_list()
-		return self._get_finall_list()
+		query_set = self._get_filtered_list(model, category)
+		list_with_filtered_services = []
+		index_to_except = None
+		for index in range(len(query_set)):
+			try:
+				if index_to_except != index:
+					list_with_filtered_services.append((query_set[index], query_set[index+1]))
+					index_to_except = index + 1
+			except IndexError:
+				list_with_filtered_services.append((query_set[index], None))
+				break
+		return list_with_filtered_services
+
+

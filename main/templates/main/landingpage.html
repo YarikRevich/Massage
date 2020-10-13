@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load filterandtag %}
 {% block link%}
-<link rel="stylesheet" href="{% static 'css/landing21.css' %}"> 
+<link rel="stylesheet" href="{% static 'css/landing24.css' %}"> 
 {% endblock link %}
 {% block title %}
 {% trans 'Домашняя страница'%}
@@ -52,7 +52,7 @@
         <!-- The part of some information about doctor -->
         <div class="info">
             <div class="text-title">
-                <div class="info-text advanced-info">{% trans 'Вас приветствует массажный салон Emassage!'%}</div>
+                <div class="info-text advanced-info">{% trans 'Вас приветствует Emassage!'%}</div>
             </div>
             <div class="main-info-about-doctor">
                 {{info_about_doctor}}
@@ -68,10 +68,10 @@
             <div class="updates-description">
                 <div class="updates-title"><div class="info-text new-updates-title">&#10071;{% trans 'Новые услуги уже доступны!'%}</div></div>
                 <div class="updates-aknowleadgment">{% trans 'Список самых новых услуг на'%} {{todays_data}}:</div>
-                {% if newest_services|length or first_service|length == 0 %}
+                {% if newest_services|length == 0 %}
                     <div class="updates-announsment">{% trans 'За последнюю неделю мы добавили'%} {{newest_services|length|add:1}} {% trans 'услугу!'%}</div>
-                {% elif newest_services|length and first_service|length <= 5 %}
-                    <div class="updates-announsment">{% trans 'За последнюю неделю мы добавили'%} {{newest_services|length|add:1}} {% trans 'услуг!'%}</div>
+                {% elif newest_services|length <= 3 %}
+                    <div class="updates-announsment">{% trans 'За последнюю неделю мы добавили'%} {{newest_services|length|add:1}} {% trans 'услуги!'%}</div>
                 {% else %}
                     <div class="updates-announsment">{% trans 'За последнюю неделю мы добавили'%} {{newest_services|length|add:1}} {% trans 'услуг!'%}</div>
                 {% endif %}
@@ -91,7 +91,7 @@
                     {% endif %}
                     </div>
                 </div>
-                <div class="ads-text"><span><a href="{% url 'Services' %}" class="new-service-link">{% trans 'Заходи, и запишись!'%}</a></span></div>
+                <div class="ads-text"><span><a href="{% url 'Services' filter='all'%}" class="new-service-link">{% trans 'Заходи, и запишись!'%}</a></span></div>
             </div>
 
             <!-- The part of the updates slider-->
@@ -101,7 +101,11 @@
                         <div class="carousel-item active update-carousel-item">
                             <img class="d-block w-100 main-image" src="{% static 'media/'|add_picture:first_service.photo %}" alt="First slide">
                             <div class="new-service-announsment">
-                                <div class="text-about-service">{% trans 'Хочешь на'%} {{first_service.name}}? {% trans 'Тогда нажимай на кнопку ниже'%}</div>
+                                {% if language_code == "ru"%}
+                                    <div class="text-about-service">{% trans 'Хочешь на'%} {{first_service.name}}? {% trans 'Тогда нажимай на кнопку ниже'%}</div>
+                                {% else %}
+                                    <div class="text-about-service">{% trans 'Хочешь на'%} {{first_service.name_de}}? {% trans 'Тогда нажимай на кнопку ниже'%}</div>
+                                {% endif %}
                                 <a href="{% url 'ServiceInfo' pk=first_service.pk %}"><button class="orange-button image-button">{% trans 'Детальнее' %}</button></a>
                             </div>
                         </div>
@@ -109,7 +113,11 @@
                         <div class="carousel-item update-carousel-item">
                             <img class="d-block w-100 main-image" src="{% static 'media/'|add_picture:service.photo %}" alt="First slide">
                             <div class="new-service-announsment">
-                                <div class="text-about-service">{% trans 'Хочешь на'%} {{service.name}}? {% trans 'Тогда нажимай на кнопку ниже'%}</div>
+                                {% if language_code == "ru"%}
+                                    <div class="text-about-service">{% trans 'Хочешь на'%} {{service.name}}? {% trans 'Тогда нажимай на кнопку ниже'%}</div>
+                                {% else %}
+                                    <div class="text-about-service">{% trans 'Хочешь на'%} {{service.name_de}}? {% trans 'Тогда нажимай на кнопку ниже'%}</div>
+                                {% endif %}
                                 <a href="{% url 'ServiceInfo' pk=service.pk %}"><button class="orange-button image-button">{% trans 'Детальнее' %}</button></a>
                             </div>
                         </div>

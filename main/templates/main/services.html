@@ -6,8 +6,12 @@
 {% trans 'Услуги'%}
 {% endblock title %}
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/services11.css' %}">
+<link rel="stylesheet" href="{% static 'css/services17.css' %}">
 {% endblock link %}
+
+{% block toast_box%}
+    <div id="window" class="toast add_margin">
+{% endblock toast_box%}
 
 {% block content %}
 <div class="articles">
@@ -24,9 +28,20 @@
             </p>
         </div>
 
+        <div class="filters">
+            <form method="POST">
+                {% csrf_token %}
+                <select name="filter" onchange="this.form.submit()" class="select-filter">
+                    <option value="" selected hidden disabled>{% trans 'Выберите фильтр'%}</option>
+                    <option value="Массаж спины">{% trans 'Массаж спины'%}</option>
+                    <option value="Массаж ног">{% trans 'Массаж ног'%}</option>
+                    <option value="Массаж головы">{% trans 'Массаж головы'%}</option>
+                </select>
+            </form>
+        </div>
         <!-- All the services -->
         <div class="services">
-            {% for service1,service2 in services %}
+            {% for service1, service2 in services %}
             <div class="list-service">
 
                 <!-- The first part of services -->

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 import phone_field
 from django.shortcuts import reverse, redirect
 from django.core.validators import MaxValueValidator
+from django.utils.translation import gettext_lazy as _
 
 
 class SocialLoginSettings(models.Model):
@@ -79,6 +80,12 @@ class ModificatedUser(models.Model):
 class Service(models.Model):
     """In this model you can add a service"""
 
+    CATEGORIES = (
+        ("Массаж спины", "Массаж спины"),
+        ("Массаж головы", "Массаж головы"),
+        ("Массаж ног", "Массаж ног")
+        )
+
     name = models.CharField(
         max_length=200, verbose_name="Название услуги")
     name_de = models.CharField(
@@ -95,6 +102,8 @@ class Service(models.Model):
         max_length=10, verbose_name="Валюта")
     made_time = models.DateTimeField(
         verbose_name="Время создания услуги", auto_now_add=True)
+    category = models.CharField(
+        choices=CATEGORIES, verbose_name="Категория услуги", max_length=20)
 
     def __str__(self):
         return self.name
@@ -108,9 +117,7 @@ class Service(models.Model):
     def get_absolute_url(self):
         return reverse("ServiceInfo", kwargs={"pk": self.pk})
 
-
     class Meta:
-
         db_table = "services"
         verbose_name_plural = "Услуги"
         verbose_name = "Услуга"

@@ -160,7 +160,6 @@ class Regestration(FormView):
 		return super().form_invalid(form)
 
 
-
 class ServiceList(ListView):
 	"""Shows us Service List page"""
 
@@ -170,14 +169,16 @@ class ServiceList(ListView):
 
 	def get_queryset(self) -> object:
 		splited_query = SplitedQuerySet()
-		queryset = splited_query.get_list(model=Service)
+		queryset = splited_query.get_list(model=Service, category=self.kwargs["filter"])
 		return queryset
 
-	
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["language_code"] = self.request.LANGUAGE_CODE
 		return context
+
+	def post(self, request, *args, **kwargs):
+		return redirect("Services", filter=request.POST["filter"])		
 	
 
 class ServiceInfo(DetailView, FormView):
@@ -189,12 +190,10 @@ class ServiceInfo(DetailView, FormView):
 	model = Service
 	form_class = RecordForm
 
-
 	def get_success_url(self) -> str:
 
 		self.success_url = reverse_lazy("ServiceInfo", kwargs={"pk": self.kwargs["pk"]})
 		return self.success_url
-
 
 	def get_context_data(self, **kwargs) -> dict:
 
@@ -209,14 +208,18 @@ class ServiceInfo(DetailView, FormView):
 		context["has_number"] = get_user_phone_number(self.request)
 		context["service_info"] = get_service_info(self.kwargs["pk"])
 		context["language_code"] = self.request.LANGUAGE_CODE
+		if self.request.get_full_path() != "/{}/{}".format(self.request.LANGUAGE_CODE, self.request.session.get("previous_path")):
+			context["previous_page"] = "/{}/{}".format(self.request.LANGUAGE_CODE, self.request.session.get("previous_path"))
+			context["previous_page_status"] = True
+		else:
+			context["previous_page"] = "/{}/home/services/".format(self.request.LANGUAGE_CODE)
+			context["previous_page_status"] = False
 		return context
-
 
 	def post(self, request, *args, **kwargs):
 
 		self.object = self.get_object()
 		return super().post(request, *args, **kwargs)
-
 
 	def form_valid(self, form):
 		
@@ -231,7 +234,6 @@ class ServiceInfo(DetailView, FormView):
 		add_message(self.request, ERROR,
 					ckecking_result[1])
 		return super().form_invalid(form)
-
 
 	def form_invalid(self, form):
 

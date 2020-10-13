@@ -5,7 +5,7 @@
 {% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account39.css"%}">
+<link rel="stylesheet" href="{% static "css/account48.css"%}">
 {% endblock link %}
 {% block content %}
 <div class="articles">
@@ -35,7 +35,6 @@
                         <div class="login-button-parent">
                             <button type="submit" class="orange-button login-button-additional">{% trans 'Войти'%}</button>
                         </div>
-                        
                         <div class="auth-social-media">
                             {% for auth_service in auth_services%}
                                 {% if auth_service.service == "google" and auth_service.status%}
@@ -101,26 +100,26 @@
                     {% for record in records %}
 
                         <!-- The part of the record cards -->
-                        <div class="card">
+                        <div class="card_">
                             <div class="card-header">
                                 <div class="name_of_service">{% trans 'Услуга:'%} {{record.name}}</div>
                             </div>
                             <div class="card-body">
-                                <p class="card-text">{{record.description}}</p>
+                                <div class="card-text">{{record.description}}</div>
                                 <div class="status-bar-line"></div>
                                 {% if record.seen %}
-                                    <p>{% trans 'Статус заявки:'%} <span class="record-text">{% trans 'Просмотрено'%}</span></p>
+                                    <div>{% trans 'Статус заявки:'%} <span class="record-text">{% trans 'Просмотрено'%}</span></div>
                                 {% else %}
-                                    <p>{% trans 'Статус заявки:'%} <span class="record-text">{% trans 'Отослано'%}</span></p>
+                                    <div>{% trans 'Статус заявки:'%} <span class="record-text">{% trans 'Отослано'%}</span></div>
                                 {% endif %}
                                         
                                  {% if record.status %}
-                                    <p>{% trans 'Статус выполнения:'%} <span class="record-text">{% trans 'Завершено'%}</span></p>
+                                    <div>{% trans 'Статус выполнения:'%} <span class="record-text">{% trans 'Завершено'%}</span></div>
                                     <div class="button-div">
                                         <button type="button" class="rec-button-disabled"><span title="{% trans "Вы не можете удалить запись, так как, сеанс уже был завершен" %}">{% trans 'Удалить запись'%}</span></button>
                                     </div>
                                 {% else %}
-                                    <p>С{% trans 'Статус выполнения:'%} <span class="record-text">{% trans 'Неизвестно'%}</span></p>
+                                    <div>{% trans 'Статус выполнения:'%} <span class="record-text">{% trans 'Неизвестно'%}</span></div>
                                     <div class="button-div">
                                         <a href="{% url 'DeleteRecord' pk=record.pk %}"><button type="button" class="red-button">{% trans 'Удалить запись'%}</button></a>
                                     </div>

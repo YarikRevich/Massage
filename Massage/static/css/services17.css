@@ -10,10 +10,6 @@
     min-height: 100vh;
 }
 
-.toast {
-    margin-top: -173em !important
-}
-
 
 /* Jumbotron */
 
@@ -44,6 +40,28 @@
         align-items: center;
         font-size: 1.2em !important
     }
+}
+
+.filters {
+    align-self: flex-end;
+    margin-right: 1.5em
+}
+
+@media screen and (max-width: 537px) {
+    .filters {
+        align-self: center;
+        margin: 0;
+    }
+}
+
+.select-filter {
+    background-color: #e9ecef;
+    border-radius: 2px;
+    border: 1px solid #cdcecf;
+    border-radius: 5px;
+    width: 11em;
+    height: 3em;
+    text-align: center;
 }
 
 
@@ -87,6 +105,13 @@
     width: 18rem;
     margin-top: 2em;
     margin-bottom: 2em
+}
+
+.card-text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
 }
 
 .bigger-button {

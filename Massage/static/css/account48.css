@@ -241,7 +241,7 @@
     margin-bottom: 2em;
     max-width: 95%;
     width: 40em;
-    height: 23em;
+    max-height: 25em;
     border-radius: 1%;
 }
 
@@ -272,13 +272,12 @@
 }
 
 .cards {
-    max-width: 95%;
-    margin-left: .5em;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     overflow: auto;
-    min-height: 19em;
-    width: 43em;
+    height: 100% !important;
 }
 
 
@@ -286,16 +285,16 @@
 -----------------------------
 */
 
-.card {
+.card_ {
+    border: 1px solid rgba(0, 0, 0, .125);
     width: 30em;
     max-width: 95%;
-    max-height: 100%;
     font-size: 20px;
     margin-top: 1em;
+    height: 100% !important;
 }
 
 .name_of_service {
-    height: 1.3em;
     text-align: left;
     font-family: 'Alata', sans-serif;
 }
@@ -316,6 +315,7 @@
     align-items: center;
     width: 100%;
     max-width: 100%;
+    margin-top: 1em;
 }
 
 .rec-button-disabled {
@@ -354,6 +354,7 @@
     align-items: center;
     text-align: center;
     margin-top: 5em;
+    height: 10em !important;
 }
 
 @media screen and (max-width:350px) {

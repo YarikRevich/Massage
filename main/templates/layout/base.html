@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="{% static "favicon/icons.png"%}">
     <title>{%block title%}{% endblock title%}</title>
-    <link rel="stylesheet" href="{% static 'css/base53.css' %}"> {% block link%}
+    <link rel="stylesheet" href="{% static 'css/base69.css' %}"> {% block link%}
     <link rel="stylesheet" href="{% static 'css/landing2.css' %}">{% endblock link %}
     <script src="{% static 'js/scrollup_and_close_message1.js' %}"></script>
     <script src="{% static 'js/review_markk.js' %}"></script>
@@ -30,7 +30,7 @@
                 <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{{Review}}">{% trans 'Отзывы' %}</a></button>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
-                <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{{Service}}">{% trans 'Услуги' %}</a></button>
+                <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Services" filter='all'%}">{% trans 'Услуги' %}</a></button>
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
                 <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Info" %}">{% trans 'Контакты' %}</a></button>
@@ -106,10 +106,10 @@
 <div class="footer">
     <div class="sub-footer">
         <div class="creator-info">
-            <div class="footer-buttons"><a href="https://mail.google.com/mail/u/1/#inbox?compose=new" class="footer-link" target="_blank">{% trans 'Плоблемы?Обращайтесь!' %}</a></div>
+            <div class="footer-buttons"><a href="https://mail.google.com/mail/u/1/#inbox?compose=new" class="footer-link" target="_blank">{% trans 'Проблемы?Обращайтесь!' %}</a></div>
             <div class="footer-buttons button-margin-left"><a class="footer-link" href="{% url 'Landing' %}">{% trans 'Главная' %}</a></div>
             <div class="footer-buttons button-margin-left"><a class="footer-link" href="{% url 'Reviews' page=1 %}">{% trans 'Отзывы' %}</a></div>
-            <div class="footer-buttons button-margin-left"><a class="footer-link" href="{% url 'Services' %}">{% trans 'Услуги' %}</a></div>
+            <div class="footer-buttons button-margin-left"><a class="footer-link" href="{% url 'Services' filter='all'%}">{% trans 'Услуги' %}</a></div>
             <div class="footer-buttons button-margin-left"><a class="footer-link" href="{% url 'Info' %}">{% trans 'Контакты' %}</a></div>
         </div>
         <div class="contacts-with-creator">

@@ -22,7 +22,7 @@ urlpatterns = [
     path("reviews/delete/<int:pk>", exceptions_catcher(DeleteReviewClass.as_view()), name = DeleteReviewClass.name),
     path("reviews/<int:page>", exceptions_catcher(ReviewPage.as_view()), name = ReviewPage.name),
     path("services/info/<int:pk>", exceptions_catcher(ServiceInfo.as_view()), name = ServiceInfo.name),
-    path("services/", exceptions_catcher(ServiceList.as_view()), name = ServiceList.name),
+    path("services/?filter=<str:filter>", exceptions_catcher(ServiceList.as_view()), name = ServiceList.name),
     path("info/", exceptions_catcher(Info.as_view()), name = Info.name),
     path("mailinglist-subscribing", mailinglist_subscribing, name="Mailinglist-subscribing"),
     path("account/", exceptions_catcher(Account.as_view()), name = Account.name),

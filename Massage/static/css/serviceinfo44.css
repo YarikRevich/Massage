@@ -2,6 +2,8 @@
 
 .about {
     max-width: 100%;
+    margin-top: 2em;
+    margin-bottom: 2em;
     width: 47em;
     height: 100%;
     display: flex;
@@ -11,9 +13,46 @@
     background-color: rgb(0, 0, 0, 0);
 }
 
+@media screen and (min-height: 1080px) {
+    .about {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+@media screen and (min-height: 945px) {
+    .about {
+        margin-bottom: 4em;
+    }
+}
+
+@media screen and (min-height: 980px) {
+    .about {
+        margin-bottom: 6em;
+    }
+}
+
 @media screen and (max-width:781px) {
     .about {
         flex-direction: column;
+        margin: 0 !important;
+    }
+    .button-to-return {
+        margin-left: -1em !important;
+        align-self: center !important;
+        text-align: start;
+    }
+}
+
+@media screen and (max-width: 254px) {
+    .button-to-return {
+        font-size: .8em !important;
+    }
+}
+
+@media screen and (max-width: 222px) {
+    .button-to-return {
+        font-size: .7em !important;
     }
 }
 
@@ -34,6 +73,9 @@
     .service-image {
         margin-right: 0em;
         align-self: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     .desc {
         min-height: 27em !important;
@@ -55,10 +97,55 @@
 .service-img {
     max-width: 100%;
     border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width:781px) {
+    .service-img {
+        width: 35em !important;
+        height: 33em !important
+    }
+}
+
+@media screen and (max-width: 515px) {
+    .service-img {
+        height: 29em !important;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .service-img {
+        height: 27em !important;
+    }
+}
+
+@media screen and (max-width: 382px) {
+    .service-img {
+        height: 25em !important;
+    }
+}
+
+@media screen and (max-width: 329px) {
+    .service-img {
+        height: 23em !important;
+    }
+}
+
+@media screen and (max-width: 296px) {
+    .service-img {
+        height: 21em !important;
+    }
+}
+
+@media screen and (max-width: 251px) {
+    .service-img {
+        height: 19em !important;
+    }
 }
 
 .help-text {
-    margin-top: .3em;
+    margin-top: 1.4em;
     margin-bottom: .5em;
     color: grey;
     text-align: center;
@@ -66,6 +153,46 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.button-to-return {
+    font-size: .9em;
+    margin-bottom: 2em;
+    margin-left: 3em;
+    align-self: flex-start;
+    text-align: start;
+}
+
+.link-to-return {
+    margin-left: .4em;
+    color: #000000
+}
+
+.link-to-return:hover {
+    color: grey;
+    text-decoration: underline;
+}
+
+@media screen and (max-width:319px) {
+    .link-to-prev {
+        font-size: .9em
+    }
+}
+
+@media screen and (max-width:289px) {
+    .link-to-prev {
+        display: none;
+    }
+    .button-to-return {
+        align-self: flex-start !important;
+        margin-left: 1em !important;
+    }
+}
+
+@media screen and (max-width:246px) {
+    .link-to-return {
+        display: none;
+    }
 }
 
 
@@ -158,21 +285,23 @@
     flex: 0;
     font-size: 1.25em;
     width: 100%;
-    max-width: 90%;
+    max-width: 97%;
     border-top: solid .06em grey;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .title {
-    margin-left: 1em;
     max-width: 100%;
     font-weight: bold;
+    text-align: center;
     word-break: break-word;
 }
 
 .description {
+    margin-top: 1em;
+    margin-bottom: 1em;
     max-width: 100%;
     height: 100%;
     font-weight: bold;
@@ -180,9 +309,18 @@
 }
 
 .price {
+    text-align: center;
     margin-right: .6em;
-    margin-top: .8em;
     font-weight: bold;
+}
+
+.callforhelp-link {
+    color: grey;
+}
+
+.callforhelp-link:hover {
+    text-emphasis: none;
+    color: grey;
 }
 
 
@@ -191,7 +329,7 @@
 .recording-button {
     flex: 1;
     max-width: 100%;
-    margin-top: .5em;
+    margin-top: .8em;
     margin-bottom: .4em;
     width: 15em;
     height: 3em;

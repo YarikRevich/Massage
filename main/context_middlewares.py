@@ -1,14 +1,15 @@
 from main.models import Review, Service
 
-def add_service_record_urls(request: object) -> dict:
-    """Adds some context to all the pages"""
+# def add_service_record_urls(request: object) -> dict:
+#     """Adds some context to all the pages"""
 
-    review = Review()
-    service = Service()
-    return {
-        "Review":review.get_absolute_url(),
-        "Service":service.get_absolute_url_landing()
-    }
+#     review = Review()
+#     service = Service()
+#     print("{}/?filter=all".format(service.get_absolute_url_landing()))
+#     return {
+#         "Review":review.get_absolute_url(),
+#         "Service": "{}/?filter=all".format(service.get_absolute_url_landing())
+#     }
 
 
 def is_authenticated(request: object) -> bool:

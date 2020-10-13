@@ -77,7 +77,7 @@ MANAGERS = ADMINS
 
 ROOT_URLCONF = 'Massage.urls'
 
-EXCEPTION_CATCHER = True
+EXCEPTION_CATCHER = False
 
 LOGGING = {
     'version': 1,
@@ -123,7 +123,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
-                'main.context_middlewares.add_service_record_urls',
                 'main.context_middlewares.is_authenticated'
             ],
             "libraries":{
@@ -244,6 +243,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "muZEglriskwlOWsp50b7aMAC"
 
 SOCIAL_AUTH_FACEBOOK_KEY = "411250786517398"
 SOCIAL_AUTH_FACEBOOK_SECRET = "73e65ffe0b2f2cb034ab2771da00ac82"
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_IGNORE_DEFAULT_AX_ATTRS = True
@@ -282,7 +282,6 @@ REST_FRAMEWORK = {
     ),
 
 }
-
 
 
 TEST_RUNNER = "django_nose.NoseTestSuiteRunner"

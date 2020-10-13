@@ -7,7 +7,7 @@
 {% endblock title %}
 
 {% block link %}
-<link rel="stylesheet" href="{% static 'css/serviceinfo31.css' %}">
+<link rel="stylesheet" href="{% static 'css/serviceinfo44.css' %}">
 {% endblock link %}
 
 {% block content %}
@@ -19,7 +19,7 @@
         <!-- The part of the service image -->
     
         <div class="service-image">
-            <img class="service-img" width="720em" height="500em" src="{% static 'media/'|add_picture:service.photo %}">
+            <img class="service-img" src="{% static 'media/'|add_picture:service.photo %}">
             <div class="help-text"><span>{% trans '*Для того чтобы записаться,сперва нужно зарегистрироваться, и войти в аккаунт'%}</span></div>
         </div>
     
@@ -50,7 +50,11 @@
                     </div>
                     <div class="service-price">
                         <div class="price">
-                            {% trans 'Стоимость услуги: '%}{{service_info.price}} {{service_info.currency}}
+                            {% if service_info.price and service_info.currency%}
+                                {% trans 'Стоимость услуги: '%}{{service_info.price}} {{service_info.currency}}
+                            {% else %}
+                                <u><br><a class="callforhelp-link" href="tel: +41-76-319-81-80">{% trans 'Стоимость уточните у массажиста'%}</a></u>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -99,6 +103,11 @@
             </div>
         </div>
     </div>
+    {% if previous_page_status%}
+        <div class="button-to-return"><span><a href={{previous_page}}><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 172 172" style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ff6d00"><path d="M30.96,158.24h110.08c9.4944,0 17.2,-7.7056 17.2,-17.2v-110.08c0,-9.4944 -7.7056,-17.2 -17.2,-17.2h-110.08c-9.4944,0 -17.2,7.7056 -17.2,17.2v110.08c0,9.4944 7.7056,17.2 17.2,17.2zM100.7576,42.2776c0.688,-0.6536 1.548,-0.9976 2.4424,-0.9976c0.8944,0 1.7544,0.344 2.4424,0.9976c1.3416,1.3416 1.3416,3.5432 0,4.8848l-38.872,38.8376l38.872,38.8376c1.3416,1.3416 1.3416,3.5432 0,4.8848c-1.3416,1.3416 -3.5432,1.3416 -4.8848,0l-43.688,-43.7224z"></path></g></g></svg></a><a class="link-to-return link-to-prev" href={{previous_page}}>{% trans 'Вернуться на предыдущюю страницу'%}</a></span></div>
+    {% else %}
+        <div class="button-to-return"><span><a href="{% url "Services" filter='all' %}"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 172 172" style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#ff6d00"><path d="M30.96,158.24h110.08c9.4944,0 17.2,-7.7056 17.2,-17.2v-110.08c0,-9.4944 -7.7056,-17.2 -17.2,-17.2h-110.08c-9.4944,0 -17.2,7.7056 -17.2,17.2v110.08c0,9.4944 7.7056,17.2 17.2,17.2zM100.7576,42.2776c0.688,-0.6536 1.548,-0.9976 2.4424,-0.9976c0.8944,0 1.7544,0.344 2.4424,0.9976c1.3416,1.3416 1.3416,3.5432 0,4.8848l-38.872,38.8376l38.872,38.8376c1.3416,1.3416 1.3416,3.5432 0,4.8848c-1.3416,1.3416 -3.5432,1.3416 -4.8848,0l-43.688,-43.7224z"></path></g></g></svg></a><a class="link-to-return" href="{% url "Services" filter='all' %}">{% trans 'Вернуться на страницу услуг'%}</a></span></div>
+    {% endif %}
 </div>
 
 {% endblock content %}

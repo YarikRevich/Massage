@@ -13,6 +13,7 @@ class ServiceAdmin(admin.ModelAdmin):
         "name_de",
         "description",
         "description_de",
+        "category",
         "photo",
         "price",
         "currency",
