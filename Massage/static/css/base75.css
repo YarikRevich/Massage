@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-* {
+body {
+    background-image: url("https://images.wallpaperscraft.ru/image/romashka_listia_minimalizm_123533_3840x2400.jpg");
     font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -20,10 +21,16 @@
 /* A part for the head part styles */
 
 .header {
-    background-color: #748f8a !important;
+    background-color: rgba(0, 0, 0, .2) !important;
     min-height: 4.5em !important;
     display: -webkit-box !important;
     max-width: 100% !important
+}
+
+@media screen and (max-width:575px) {
+    .header {
+        background-color: rgba(0, 0, 0, .09) !important;
+    }
 }
 
 .row-params {
@@ -53,9 +60,26 @@
 /* A part for the landing button */
 
 .landing-button {
-    float: left;
     height: 3.5em;
-    max-width: 100%
+    max-width: 100%;
+    float: left
+}
+
+@media screen and (max-width: 575px) {
+    .landing-button {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-top: .5em;
+        margin-bottom: 1.7em;
+    }
+}
+
+@media screen and (max-width: 329px) {
+    .landing-button {
+        align-items: center !important;
+        justify-content: center !important;
+    }
 }
 
 
@@ -140,8 +164,8 @@
 
 .account-dropdown-menu-margin {
     color: #ffffff;
-    margin-top: .8em;
-    margin-bottom: 1em;
+    margin-top: .8em !important;
+    margin-bottom: 1em !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -169,7 +193,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url("https://images.wallpaperscraft.ru/image/romashka_listia_minimalizm_123533_3840x2400.jpg");
     background-position: center;
 }
 
@@ -523,8 +546,8 @@
     max-width: 100%;
     width: 10em;
     font-size: 1.2em;
-    background-color: #ff6d00;
-    box-shadow: 0 4px 0px .5px #c45604;
+    background-color: #9e69bf;
+    box-shadow: 0 4px 0px .5px #7c5196;
     color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -625,16 +648,22 @@
     margin-top: .5em;
     border: 0px;
     color: #ffffff;
-    background-color: #ff6d00;
+    background-color: #45cf0a;
     width: 10em;
-    box-shadow: 0 2px .3px 3px #c45604;
+    box-shadow: 0 2px .3px 3px #35a106;
     border-radius: 20px;
     transition: all .3s;
 }
 
+.mod-nav-but {
+    background-color: #ff7205 !important;
+    box-shadow: 0 2px .3px 3px #d96002 !important;
+    margin: 0;
+}
+
 .orange-button-for-nav:hover {
-    background-color: #e06404;
-    box-shadow: 0 1px .3px 1px #c45604;
+    background-color: #e06404 !important;
+    box-shadow: 0 1px .3px 1px #c45604 !important;
 }
 
 .orange-button-for-nav:focus {
@@ -703,16 +732,30 @@
 }
 
 .emassage {
-    text-shadow: 0px 0px 20px white;
-    font-size: 2.5em;
+    /* animation: massage-pulse 2s infinite; */
+    /* text-shadow: 0px 0px 20px white; */
+    font-size: 45px;
     font-family: 'Lobster', cursive;
-    transition: all 10s;
-    animation: massage-pulse 2s infinite;
+    text-shadow: -5px -5px 0px #9e69bf;
+    background: radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: auto;
+    background-clip: border-box;
+    background-size: 4px 4px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: table;
 }
 
 @media screen and (max-width: 670px) {
     .emassage {
-        font-size: 1.5em;
+        font-size: 2em;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .emassage {
+        font-size: 3em;
+        animation: none;
     }
 }
 
@@ -728,8 +771,8 @@
         text-shadow: 0px 0px 20px white;
     }
     50% {
-        color: #0cf046;
-        text-shadow: 0px 0px 40px #0cf046;
+        color: #0be342;
+        text-shadow: 0px 0px 40px #0be342;
     }
     100% {
         color: #ffffff;

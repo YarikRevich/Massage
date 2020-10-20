@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="{% static "favicon/icons.png"%}">
     <title>{%block title%}{% endblock title%}</title>
-    <link rel="stylesheet" href="{% static 'css/base69.css' %}"> {% block link%}
+    <link rel="stylesheet" href="{% static 'css/base75.css' %}"> {% block link%}
     <link rel="stylesheet" href="{% static 'css/landing2.css' %}">{% endblock link %}
     <script src="{% static 'js/scrollup_and_close_message1.js' %}"></script>
     <script src="{% static 'js/review_markk.js' %}"></script>
@@ -26,15 +26,17 @@
             <div class="col-sm-3 col-md-3 col-lg-3 landing-button">
                 <a class="emassage a-modification" href="{% url "Landing" %}">Emassage</a>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
-                <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{{Review}}">{% trans 'Отзывы' %}</a></button>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
-                <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Services" filter='all'%}">{% trans 'Услуги' %}</a></button>
-            </div>
-            <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
-                <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Info" %}">{% trans 'Контакты' %}</a></button>
-            </div>
+            
+                <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
+                    <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Reviews" page=1%}">{% trans 'Отзывы' %}</a></button>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
+                    <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Services" filter='all'%}">{% trans 'Услуги' %}</a></button>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2 reviews-services-info-buttons">
+                    <button type="button" class="orange-button-for-nav"><a class="a-modification" href="{% url "Info" %}">{% trans 'Контакты' %}</a></button>
+                </div>
+            
             <div class="col-sm-3 col-md-3 col-lg-3 account">
                 <div class="flags">
                     
@@ -47,9 +49,9 @@
                             <img class="cross-image" src="https://img.icons8.com/color/50/000000/joyent--v1.png"/>
                             <div class="account-dropdown-menu">
                                 <div class="account-dropdown-menu-detailed">
-                                    <a href="{% url 'Account' %}" class="orange-button-for-nav account-dropdown-menu-margin"><span>{% trans 'Карта клиента' %}</span></a>
+                                    <a href="{% url 'Account' %}" class="orange-button-for-nav mod-nav-but account-dropdown-menu-margin"><span>{% trans 'Карта клиента' %}</span></a>
                                     {% if user_is_authenticated %}
-                                        <a href="{% url 'Logout' %}" class="account-dropdown-menu-margin"><button class="orange-button-for-nav"><span>{% trans 'Выйти из аккаунта' %}</span></button></a>
+                                        <a href="{% url 'Logout' %}" class="account-dropdown-menu-margin"><button class="orange-button-for-nav mod-nav-but"><span>{% trans 'Выйти из аккаунта' %}</span></button></a>
                                     {% endif %}
                                 </div>
                             </div>

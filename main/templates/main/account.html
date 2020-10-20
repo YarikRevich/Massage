@@ -5,13 +5,16 @@
 {% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account48.css"%}">
+<link rel="stylesheet" href="{% static "css/account58.css"%}">
+<script src="{% static 'js/utils3.js'%}"></script>
 {% endblock link %}
 {% block content %}
 <div class="articles">
 
     <!-- The main part of the account page-->
     <div class="everything">
+        <div hidden="true" id="hidder" class="hidder">
+        </div>
         <div class="main-info">
 
             <!-- The part of the authentication-->
@@ -57,8 +60,24 @@
             
             <!-- The part of the user's information -->
             <div class="info-block">
-                <div class="info-text bigger-height">
+                <div onmouseover="hidden_off()" class="info-text bigger-height">
                     <span>{% trans 'Карточка клиента'%}</span>
+                    <div id="user-static" class="user-static" onmouseout="hidden_on()">
+                        <div class="number-of-visits">
+                            <span class="label">Количество визитов</span>
+                            <div class="info-about-visits">
+                                <img src="https://img.icons8.com/color/50/000000/postcard-with-barcode.png"/>
+                                <span class="visit-times">{{made_visits}}</span>
+                            </div>
+                        </div>
+                        <div class="all-made-records">
+                            <span class="label-records">Количество сделаных записей</span>
+                            <div class="info-about-visits">
+                                <img src="https://img.icons8.com/color/46/000000/door-opened.png"/>
+                                <span class="visit-times">{{number_of_made_records}}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="about-block">
@@ -85,7 +104,7 @@
                 {% endfor %}
             </div>
             {% endif %}
-        </div>    
+        </div>  
 
         <!-- The part of some information about made records -->
         <div class="info">
@@ -138,7 +157,7 @@
                     <!-- A part of the message which is stated when user has never made any records -->
                     <div class="empty-message-area">
                         <h2 class="big-text">{% trans 'У вас пока не было записей'%}</h2>
-                        <a class="orange-button" href="{% url 'Services' %}">{% trans 'Записаться впервые!'%}</a>
+                        <a class="orange-button" href="{% url 'Services' filter='all' %}">{% trans 'Записаться впервые!'%}</a>
                     </div>
                     {% endif %}
                     {% endfor %}

@@ -51,6 +51,8 @@ from main.services import (get_username_by_email,
 						get_first_visit_image,
 						do_logout__cookie,
 						get_all_auth_service_status,
+						get_number_of_made_records,
+						get_number_of_visits,
 						SplitedQuerySet)
 
 
@@ -100,7 +102,9 @@ class Account(TemplateView):
 				"form": None,
 				"user_data": get_user_data(request),
 				"records": get_users_records(request),
-				"made_records": made_records(request)
+				"made_records": made_records(request),
+				"made_visits": get_number_of_visits(request),
+				"number_of_made_records": get_number_of_made_records(request),
 			}
 			return self.render_to_response(context=context)
 

@@ -5,6 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from main.models import Record, ModificatedUser, Review, Service, DoctorInfo, VisitImage, SocialLoginSettings
 from typing import Union,Dict
 from django.utils.translation import gettext_lazy as _
+from pymemcache.client import base
+from Massage.settings import MEMCACHE_SERVER
 
 import random
 import datetime
@@ -263,7 +265,7 @@ def do_logout__cookie(request: object) -> None:
 	
 
 def get_user_data(request):
-	"""Returns all the data about regestrated user"""
+	"""Returns all the data about regestrated user."""
 
 	try:
 		data_list = [
@@ -275,26 +277,36 @@ def get_user_data(request):
 		]
 	except KeyError:
 		data_list = [
-			("Email", request.user.email),
+			("Email", request.user.email if request.user.email else None),
 			(_("Логин"), request.user.username),
-			(_("Имя"), request.user.first_name if request.user.first_name != "" else None),
-			(_("Фамилия"), request.user.last_name if request.user.last_name != "" else None),
+			(_("Имя"), request.user.first_name if request.user.first_name else None),
+			(_("Фамилия"), request.user.last_name if request.user.last_name else None),
 			(_("Номер телефона"), get_user_phone_number(request=request))
 		]
-	
 	return data_list
 
 
 def get_all_made_orders() -> int:
-	"""Return the number of all existing records"""
+	"""Return the number of all existing records."""
 
 	return Record.objects.filter(status=True).count()
 
 
 def get_all_auth_service_status() -> list:
-	"""Returns a list with all the auth-services"""
+	"""Returns a list with all the auth-services."""
 
 	return SocialLoginSettings.objects.all()
+
+
+def get_number_of_made_records(request: object) -> int:
+	"""Returns info about number of made records."""
+
+	return ModificatedUser.objects.get_static_info(request, "number_of_made_records")
+
+def get_number_of_visits(request: object) -> int:
+	"""Returns info about number of made visits."""
+
+	return ModificatedUser.objects.get_static_info(request, "number_of_visites")
 
 
 class SplitedQuerySet:
@@ -322,5 +334,37 @@ class SplitedQuerySet:
 				list_with_filtered_services.append((query_set[index], None))
 				break
 		return list_with_filtered_services
+
+
+class MemcacheClient:
+	"""Controls sessions key saving to the mem storage."""
+
+	def _add_user_to_mem(self, user, request):
+		"""Adds new session key to the user's storage contatiner."""
+
+		MEMCACHE_SERVER.set(user, request.session.session_key)
+
+
+	def check_whether_session_is_the_same(self, user, request):
+		"""Checks whether session key is not renewed.
+		:: If user's starage is empty it saves new session key.
+		:: If user's session key is the same as current session key
+		   it doesn't do anything .
+		:: If user's session key differs with the current session key
+		   it updates it in user's storage. 
+
+		"""
+
+		if not MEMCACHE_SERVER.get(user):
+			self._add_user_to_mem(user, request)
+			return False
+		elif MEMCACHE_SERVER.get(user).decode() == request.session.session_key:
+			return True
+		elif MEMCACHE_SERVER.get(user).decode() != request.session.session_key:
+			self._add_user_to_mem(user, request)
+			return False
+
+
+
 
 

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from django.utils.translation import ugettext_lazy as _
+from pymemcache.client import base
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'main.middleware.PathLog',
+    'main.middleware.VisitLog'
 ]
 
 ADMINS = [("Yaroslav", "yariksvitlitskiy81@gmail.com")]
@@ -78,6 +80,8 @@ MANAGERS = ADMINS
 ROOT_URLCONF = 'Massage.urls'
 
 EXCEPTION_CATCHER = False
+
+MEMCACHE_SERVER = base.Client(("localhost", "11211"))
 
 LOGGING = {
     'version': 1,

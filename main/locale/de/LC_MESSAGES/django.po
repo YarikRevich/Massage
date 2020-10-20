@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-09 12:36+0300\n"
+"POT-Creation-Date: 2020-10-14 09:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgid "Уведомление"
 msgstr "Benachrichtigung"
 
 #: templates/layout/base.html:109
-msgid "Плоблемы?Обращайтесь!"
+msgid "Проблемы?Обращайтесь!"
 msgstr "Probleme?Kontaktiere uns!"
 
 #: templates/layout/base.html:110
@@ -192,73 +192,73 @@ msgstr "Standard Login"
 msgid "Войти"
 msgstr "Betreten"
 
-#: templates/main/account.html:50
+#: templates/main/account.html:49
 msgid "Забыли пароль?|"
 msgstr "Passwort vergessen?|"
 
-#: templates/main/account.html:51
+#: templates/main/account.html:50
 msgid "Зарегистрироваться!"
 msgstr "Jetzt registrieren!"
 
-#: templates/main/account.html:62
+#: templates/main/account.html:61
 msgid "Карточка клиента"
 msgstr "Kundenkarte"
 
-#: templates/main/account.html:94
+#: templates/main/account.html:93
 msgid "История записей"
 msgstr "Geschichte"
 
-#: templates/main/account.html:106
+#: templates/main/account.html:105
 msgid "Услуга:"
 msgstr "Dienst:"
 
-#: templates/main/account.html:112 templates/main/account.html:114
+#: templates/main/account.html:111 templates/main/account.html:113
 msgid "Статус заявки:"
 msgstr "Bewerbungsstatus:"
 
-#: templates/main/account.html:112
+#: templates/main/account.html:111
 msgid "Просмотрено"
 msgstr "Gesehen"
 
-#: templates/main/account.html:114
+#: templates/main/account.html:113
 msgid "Отослано"
 msgstr "Geschickt"
 
-#: templates/main/account.html:118 templates/main/account.html:123
+#: templates/main/account.html:117 templates/main/account.html:122
 msgid "Статус выполнения:"
 msgstr "Ausführungsstatus"
 
-#: templates/main/account.html:118
+#: templates/main/account.html:117
 msgid "Завершено"
 msgstr "Abgeschlossen"
 
-#: templates/main/account.html:120
+#: templates/main/account.html:119
 msgid "Вы не можете удалить запись, так как, сеанс уже был завершен"
 msgstr ""
 "Sie können den Eintrag nicht löschen, da die Sitzung bereits abgeschlossen "
 "wurde"
 
-#: templates/main/account.html:120 templates/main/account.html:125
+#: templates/main/account.html:119 templates/main/account.html:124
 msgid "Удалить запись"
 msgstr "Eintrag löschen"
 
-#: templates/main/account.html:123
+#: templates/main/account.html:122
 msgid "Неизвестно"
 msgstr "Unbekannt"
 
-#: templates/main/account.html:135
+#: templates/main/account.html:134
 msgid "Ваш архив пуст"
 msgstr "Ihr Archiv ist leer"
 
-#: templates/main/account.html:141
+#: templates/main/account.html:140
 msgid "У вас пока не было записей"
 msgstr "Sie haben noch keine Einträge"
 
-#: templates/main/account.html:142
+#: templates/main/account.html:141
 msgid "Записаться впервые!"
 msgstr "Vereinbaren Sie einen Termin!"
 
-#: templates/main/account.html:151
+#: templates/main/account.html:150
 msgid "Вы не авторизованы!"
 msgstr "Sie sind nicht berechtigt!"
 
@@ -303,8 +303,8 @@ msgid "Домашняя страница"
 msgstr "Startseite"
 
 #: templates/main/landingpage.html:55
-msgid "Вас приветствует массажный салон Emassage!"
-msgstr "Willkommen im Massagesalon Emassage!"
+msgid "Вас приветствует Emassage!"
+msgstr "Willkommen bei Emassage!"
 
 #: templates/main/landingpage.html:69
 msgid "Новые услуги уже доступны!"
@@ -323,7 +323,13 @@ msgstr "In der letzten Woche haben wir hinzugefügt"
 msgid "услугу!"
 msgstr "Dienst"
 
-#: templates/main/landingpage.html:74 templates/main/landingpage.html:76
+#: templates/main/landingpage.html:74
+#, fuzzy
+#| msgid "Услуги"
+msgid "услуги!"
+msgstr "Dienst"
+
+#: templates/main/landingpage.html:76
 msgid "услуг!"
 msgstr "Dienst"
 
@@ -342,7 +348,7 @@ msgid "Тогда нажимай на кнопку ниже"
 msgstr "Klicken Sie dann auf die Schaltfläche unten"
 
 #: templates/main/landingpage.html:109 templates/main/landingpage.html:121
-#: templates/main/services.html:48 templates/main/services.html:66
+#: templates/main/services.html:60 templates/main/services.html:78
 msgid "Детальнее"
 msgstr "Mehr Details"
 
@@ -473,6 +479,14 @@ msgstr "Absagung"
 msgid "Готово!"
 msgstr "Getan!"
 
+#: templates/main/serviceinfo.html:107
+msgid "Вернуться на предыдущюю страницу"
+msgstr "auf die vorherige Seite zurückkehren"
+
+#: templates/main/serviceinfo.html:109
+msgid "Вернуться на страницу услуг"
+msgstr "Zurück zur Serviceseite"
+
 #: templates/main/services.html:22
 msgid "Привет!"
 msgstr "Hallo!"
@@ -512,17 +526,33 @@ msgstr ""
 msgid "Перейти к регистрации"
 msgstr "Zur Registrierung gehen"
 
+#: templates/main/services.html:35
+msgid "Выберите фильтр"
+msgstr "Filter auswählen"
+
+#: templates/main/services.html:36
+msgid "Все виды"
+msgstr "Alle Arten"
+
+#: templates/main/services.html:37
+msgid "Массажи спины"
+msgstr "Rückenmassagen"
+
+#: templates/main/services.html:38
+msgid "Массажи ног"
+msgstr "Fußmassagen"
+
+#: templates/main/services.html:39
+msgid "Массажи головы"
+msgstr "Kopfmassagen"
+
 #: views.py:118 views.py:125 views.py:130
-#, fuzzy
-#| msgid "Выйти из аккаунта"
 msgid "Вы вошли в аккаунт!"
-msgstr "Ausloggen"
+msgstr "Du bist eingeloggt"
 
 #: views.py:120 views.py:132
-#, fuzzy
-#| msgid "Пользователь с таким именем не найден"
 msgid "Данные пользователя введены не правильно"
-msgstr "Benutzer mit diesem Login existiert bereits"
+msgstr "Benutzerdaten falsch eingegeben"
 
 #: views.py:134
 msgid "Вы не указали E-mail"
@@ -530,8 +560,3 @@ msgstr "Sie haben keine E-Mail angegeben"
 
 #~ msgid "Елена"
 #~ msgstr "Elena"
-
-#, fuzzy
-#~| msgid "Услуги"
-#~ msgid "услуги!"
-#~ msgstr "Dienst"

@@ -241,7 +241,9 @@ class RecordForm(forms.ModelForm):
 			author=author.first_name,
 			name=kwargs["service_name"],
 			description=self.cleaned_data["description"],
-			phone=phone)
+			phone=phone
+		)
+		ModificatedUser.objects.filter(user=author).update(number_of_made_records=F("number_of_made_records") + 1)
 		return new_record
 
 

@@ -33,9 +33,10 @@
                 {% csrf_token %}
                 <select name="filter" onchange="this.form.submit()" class="select-filter">
                     <option value="" selected hidden disabled>{% trans 'Выберите фильтр'%}</option>
-                    <option value="Массаж спины">{% trans 'Массаж спины'%}</option>
-                    <option value="Массаж ног">{% trans 'Массаж ног'%}</option>
-                    <option value="Массаж головы">{% trans 'Массаж головы'%}</option>
+                    <option value="all">{% trans 'Все виды'%}</option>
+                    <option value="Массаж спины">{% trans 'Массажи спины'%}</option>
+                    <option value="Массаж ног">{% trans 'Массажи ног'%}</option>
+                    <option value="Массаж головы">{% trans 'Массажи головы'%}</option>
                 </select>
             </form>
         </div>
