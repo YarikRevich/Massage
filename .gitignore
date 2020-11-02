@@ -5,6 +5,7 @@ requirements.txt
 start_services.sh
 docker-compose.yml
 mysql_config/
+myconf/
 massage_site/
 apache_config/
 db_data/

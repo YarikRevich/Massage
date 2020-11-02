@@ -62,7 +62,7 @@ class ModificatedUserManager(models.Manager):
 				user = User.objects.get(username=request.user.username)
 				mod_user_obj = ModificatedUser.objects.get(user=user)
 			except ObjectDoesNotExist:
-				return None
+				return 0
 		return getattr(mod_user_obj, option)
 		
 
@@ -78,7 +78,7 @@ class ModificatedUser(models.Model):
 		User, on_delete=models.CASCADE
 	)
 	number = phone_field.PhoneField(
-		blank=True, verbose_name="Номер телефона", unique=True, null=True
+		verbose_name="Номер телефона", blank=True, null=True
 	)
 	number_of_user = models.IntegerField(
 		verbose_name="Номер пользователя", default=0

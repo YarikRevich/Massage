@@ -5,8 +5,8 @@
 {% trans 'Учётная запись'%}
 {% endblock title%}
 {% block link%} 
-<link rel="stylesheet" href="{% static "css/account58.css"%}">
-<script src="{% static 'js/utils3.js'%}"></script>
+<link rel="stylesheet" href="{% static "css/account61.css"%}">
+<script src="{% static 'js/utils4.js'%}"></script>
 {% endblock link %}
 {% block content %}
 <div class="articles">
@@ -63,18 +63,23 @@
                 <div onmouseover="hidden_off()" class="info-text bigger-height">
                     <span>{% trans 'Карточка клиента'%}</span>
                     <div id="user-static" class="user-static" onmouseout="hidden_on()">
-                        <div class="number-of-visits">
-                            <span class="label">Количество визитов</span>
-                            <div class="info-about-visits">
-                                <img src="https://img.icons8.com/color/50/000000/postcard-with-barcode.png"/>
-                                <span class="visit-times">{{made_visits}}</span>
-                            </div>
+                        <div class="close-button-div">
+                            <button onclick="close_static()" type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">&times;</button>
                         </div>
-                        <div class="all-made-records">
-                            <span class="label-records">Количество сделаных записей</span>
-                            <div class="info-about-visits">
-                                <img src="https://img.icons8.com/color/46/000000/door-opened.png"/>
-                                <span class="visit-times">{{number_of_made_records}}</span>
+                        <div class="all-info">
+                            <div class="number-of-visits">
+                                <span class="label">Количество визитов</span>
+                                <div class="info-about-visits">
+                                    <img src="https://img.icons8.com/color/50/000000/postcard-with-barcode.png"/>
+                                    <span class="visit-times">{{made_visits}}</span>
+                                </div>
+                            </div>
+                            <div class="all-made-records">
+                                <span class="label-records">Количество сделаных записей</span>
+                                <div class="info-about-visits">
+                                    <img src="https://img.icons8.com/color/46/000000/door-opened.png"/>
+                                    <span class="visit-times">{{number_of_made_records}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

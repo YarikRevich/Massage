@@ -1,6 +1,13 @@
 from django.contrib import admin
 from social_django.models import UserSocialAuth
-from main.models import Service, Record, VisitImage, Review, SocialLoginSettings
+from main.models import (
+    Service, 
+    Record, 
+    VisitImage, 
+    Review, 
+    SocialLoginSettings,
+    ModificatedUser
+    )
 # Register your models here.
 
 
@@ -65,3 +72,10 @@ class SocialLoginAdmin(admin.ModelAdmin):
 
     list_display = ("service", "status")
     list_per_page = 10
+
+
+@admin.register(ModificatedUser)
+class ModUserAdmin(admin.ModelAdmin):
+    """Registrates ModUser model to Admin panel."""
+
+    pass

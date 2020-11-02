@@ -29,7 +29,7 @@ body {
 
 @media screen and (max-width:575px) {
     .header {
-        background-color: rgba(0, 0, 0, .09) !important;
+        background-color: #f3d2dc !important;
     }
 }
 
@@ -746,9 +746,33 @@ body {
     display: table;
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 726px) {
     .emassage {
-        font-size: 2em;
+        font-size: 2.6em;
+    }
+}
+
+@media screen and (max-width: 679px) {
+    .emassage {
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (max-width: 651px) {
+    .emassage {
+        font-size: 2.4em;
+    }
+}
+
+@media screen and (max-width: 621px) {
+    .emassage {
+        font-size: 2.3em;
+    }
+}
+
+@media screen and (max-width: 605px) {
+    .emassage {
+        font-size: 2.2em;
     }
 }
 
